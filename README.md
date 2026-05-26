@@ -209,6 +209,22 @@ Las habilidades del kit residen en `ai-specs/skills/` y guían al agente en tare
 
 ---
 
+## 🙏 Agradecimientos y Créditos
+
+Este repositorio ha sido desarrollado tomando inspiración y adaptando patrones de:
+- El framework de desarrollo OpenSpec de [Fission AI](https://github.com/Fission-AI/OpenSpec).
+- Los programas formativos de desarrollo con IA de [LIDR.co](https://lidr.co/ia-devs).
+- El kit de herramientas y agentes de [Superpowers](https://github.com/obra/superpowers/tree/main), especialmente en los flujos de:
+  - `using-git-worktrees`
+  - `writing-skills`
+- La habilidad de `code-auditing` está inspirada y adaptada de [jeffrigby/somepulp-agents](https://github.com/jeffrigby/somepulp-agents/tree/main).
+
+**Hecho con 🤖 por la comunidad de LIDR**
+
+Para más información, dudas o sugerencias sobre la formación en ingeniería de IA para desarrolladores, visite [LIDR.co](https://lidr.co/ia-devs).
+
+---
+
 ## 📄 Licencia
 
 ```text
