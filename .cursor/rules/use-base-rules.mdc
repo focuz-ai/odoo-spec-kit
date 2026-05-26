@@ -1,0 +1,24 @@
+---
+description: Dirige a todos los agentes de IA a utilizar las reglas consolidadas en base-standards.md.
+globs: *
+alwaysApply: true
+---
+
+# Uso de Reglas Base de Desarrollo
+
+Todos los agentes de IA que trabajen en este proyecto deben seguir estrictamente las reglas de desarrollo y directrices unificadas definidas en:
+
+**📋 [docs/base-standards.md](docs/base-standards.md)**
+
+## Directrices Clave
+
+- **Única Fuente de Verdad**: Todas las reglas de desarrollo, estándares de codificación, prácticas de pruebas y requisitos del flujo de trabajo se mantienen en `docs/base-standards.md`.
+- **Estricto Español**: Todos los comentarios, nombres de variables, métodos de negocio y documentación técnica deben ser escritos obligatoriamente en español.
+- **Sin Duplicidad**: No haga referencia a otros archivos de reglas dispersos. `base-standards.md` contiene el conjunto definitivo y autorizado.
+
+## Cumplimiento Obligatorio
+
+Antes de comenzar cualquier cambio o escribir código:
+1. Leer y asimilar las directrices en `docs/base-standards.md`.
+2. Seguir la metodología de Spec-Driven Development (SDD) e implementar pruebas de verificación post-implementación.
+3. Consultar las guías de backend (`docs/backend-standards.md`) y frontend (`docs/frontend-standards.md`) según corresponda.

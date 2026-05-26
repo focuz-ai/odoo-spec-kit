@@ -1,0 +1,35 @@
+[MASTER]
+# Cargar el plugin oficial de Odoo para Pylint
+load-plugins=pylint_odoo
+
+[MESSAGES CONTROL]
+# Habilitar o deshabilitar advertencias específicas
+disable=
+    missing-docstring,
+    invalid-name,
+    too-few-public-methods,
+    duplicate-code,
+    import-outside-toplevel,
+    protected-access
+
+[REPORTS]
+# Reporte simplificado
+output-format=colorized
+reports=no
+
+[BASIC]
+# Convenciones de nomenclatura para variables y métodos
+method-rgx=[a-z_][a-z0-9_]{2,40}$
+attr-rgx=[a-z_][a-z0-9_]{2,40}$
+
+[FORMAT]
+max-line-length=120
+
+[ODOO]
+# Configuración del plugin pylint-odoo
+# Nivel de chequeo: warn, error
+odoo-status=warn
+# Versión de Odoo objetivo
+manifest-required-authors=Focuz AI
+manifest-required-keys=name,version,depends,data,license
+manifest-deprecated-keys=active
