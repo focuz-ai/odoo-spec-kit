@@ -199,6 +199,24 @@ El kit impulsa un flujo de trabajo estructurado en base a las siguientes directi
    - `/code-review` ejecuta la auditoría estática de seguridad, valida accesos y activa el **Bucle de Autoreparación** si hay fallos en las pruebas.
 5. **`/archive` + `/commit-odoo`**: Archiva el ciclo de cambios y empaqueta el commit con el formato oficial de Odoo (ej. `[ADD] mi_modulo: agregar facturación local`).
 
+### 💡 Ejemplo: Flujo de Extremo a Extremo (End-to-End)
+
+Ejecute estos comandos en secuencia para desarrollar una tarea:
+
+*Paso inicial opcional (recomendado): Crear un entorno aislado utilizando la skill de git worktrees antes de arrancar.*
+
+```bash
+/enrich-us TICKET-101
+/propose TICKET-101
+/apply TICKET-101
+/verify TICKET-101
+/code-review TICKET-101
+/archive TICKET-101
+/commit-odoo
+```
+
+Los artefactos se gestionan y guardan a través de las carpetas de OpenSpec durante este flujo, incluyendo los reportes de pruebas unitarias y de revisión adversarial de seguridad.
+
 ---
 
 ## 🛠️ Habilidades de IA (Skills) Destacadas
