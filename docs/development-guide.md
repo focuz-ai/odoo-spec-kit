@@ -31,7 +31,7 @@ cd odoo18-env
 git clone https://github.com/odoo/odoo.git --depth 1 --branch 18.0 community
 # Clonar Odoo Enterprise (si tiene acceso a la rama 18.0)
 git clone https://github.com/odoo/enterprise.git --depth 1 --branch 18.0 enterprise
-# Clonar su repositorio de módulos personalizados (ej. odoo-specboot)
+# Clonar su repositorio de módulos personalizados (ej. odoo-spec-kit)
 git clone <url_su_repositorio> custom_addons
 ```
 
@@ -86,7 +86,7 @@ db_password = odoo_pwd
 addons_path = 
     D:/Projects/Odoo/odoo18-env/community/addons,
     D:/Projects/Odoo/odoo18-env/enterprise,
-    D:/Projects/AI/odoo-specboot
+    D:/Projects/AI/odoo-spec-kit
 
 ; Configuración de desarrollo y rendimiento
 admin_passwd = admin_master_password

@@ -1,5 +1,5 @@
 ---
-description: Estándares y mejores prácticas para la documentación técnica y las especificaciones de IA en odoo-specboot, incluyendo reglas de idioma, triggers de actualización y auto-mejora.
+description: Estándares y mejores prácticas para la documentación técnica y las especificaciones de IA en odoo-spec-kit, incluyendo reglas de idioma, triggers de actualización y auto-mejora.
 alwaysApply: true
 ---
 
