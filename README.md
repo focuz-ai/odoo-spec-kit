@@ -251,9 +251,9 @@ Este repositorio ha sido desarrollado tomando inspiración y adaptando patrones 
   - `writing-skills`
 - La habilidad de `code-auditing` está inspirada y adaptada de [jeffrigby/somepulp-agents](https://github.com/jeffrigby/somepulp-agents/tree/main).
 
-**Hecho con 🤖 por la comunidad de LIDR**
+**Hecho con 🤖 por el equipo de Focuz**
 
-Para más información, dudas o sugerencias sobre la formación en ingeniería de IA para desarrolladores, visite [LIDR.co](https://lidr.co/ia-devs).
+Para más información, dudas o sugerencias sobre desarrollo de software y automatizaciones asistidas por IA, visítenos en [focuz.io](https://focuz.io).
 
 ---
 
