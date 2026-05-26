@@ -14,15 +14,21 @@ Este documento define las directrices obligatorias para la creación, mantenimie
 
 ---
 
-## 2. Regla de Idioma: Estricto Español
+## 2. Regla de Idioma: Documentación y Código
 
 > [!IMPORTANT]
-> **Todo artefacto técnico y de documentación debe ser escrito en Español.**
-> Esto aplica rigurosamente a:
-> - Comentarios dentro del código Python, JavaScript y XML.
-> - Descripciones de campos (`string`, `help`) y mensajes de error orientados al usuario final o desarrollador.
-> - Archivos de especificación técnica, modelos de datos, APIs y README.
-> - Mensajes de commit de Git (utilizando el inglés únicamente para los tags de Odoo como `[FIX]`, `[ADD]`, `[IMP]`, etc., pero describiendo el contenido en español).
+> **La documentación y los artefactos de OpenSpec se escriben exclusivamente en Español, mientras que toda la programación y código fuente se escribe estrictamente en Inglés.**
+>
+> **En Español (Documentación y Especificaciones):**
+> - Archivos de especificación técnica de OpenSpec (historias de usuario, especificaciones de diseño, planes de implementación, walkthroughs y `tasks.md`).
+> - README del repositorio y guías de instalación.
+>
+> **En Inglés (Toda la Programación):**
+> - Todo el código fuente de programación (Python, JavaScript, XML, CSV).
+> - Comentarios dentro del código, nombres de variables, funciones, clases y métodos.
+> - Mensajes de error técnicos, logs, descripciones de campos de modelos de Odoo (`string="..."`, `help="..."`).
+> - Archivo de manifiesto de Odoo (`__manifest__.py`), incluyendo el sumario y descripción.
+> - Commits de Git y descripciones de Pull Requests.
 
 ---
 
@@ -53,7 +59,7 @@ Los agentes de IA deben aprender continuamente de las interacciones y el feedbac
 4. **Confirmación**: Una vez aprobado, aplicar el cambio y confirmar su aplicación al usuario antes de proceder con el código.
 
 ### Antipatrones a Evitar por la IA:
-- **Ignorar el Idioma**: Escribir comentarios, nombres de variables o explicaciones en inglés.
+- **Ignorar el Idioma**: Escribir comentarios, nombres de variables o código fuente en español, o redactar especificaciones, planes y documentación técnica externa en inglés.
 - **Falta de Trazabilidad**: Cambiar directrices de desarrollo de forma proactiva sin una justificación o feedback previo del usuario.
 - **Placeholders**: Dejar secciones vacías con comentarios como "TODO" o "TBD" en los archivos de documentación o especificaciones. Todo debe estar completamente desarrollado.
 - **Actualizar sin Aprobación**: Modificar archivos de directrices centrales durante la codificación activa sin haber corrido el workflow de aprobación del plan.

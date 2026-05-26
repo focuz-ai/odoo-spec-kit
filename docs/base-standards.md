@@ -14,14 +14,16 @@ alwaysApply: true
 
 ## 2. Estándares de Idioma
 
-- **Solo Español**: Todos los artefactos técnicos deben utilizar estrictamente el idioma español, incluyendo:
-    - Código (nombres de variables, funciones, clases, comentarios, mensajes de error y logs).
-    - Documentación (README, guías, especificaciones, documentación de APIs).
-    - Tickets y tareas (títulos, descripciones, comentarios).
-    - Esquemas de datos y nombres de bases de datos.
-    - Archivos de configuración y scripts.
-    - Mensajes de commit de Git (siguiendo el formato Odoo con tags en español o inglés técnico estándar de tag).
-    - Nombres y descripciones de pruebas (tests).
+- **Español (Solo para Documentación y Artefactos OpenSpec)**:
+    - Artefactos de diseño de OpenSpec (historias de usuario, especificaciones técnicas de diseño, planes de implementación, walkthroughs y `tasks.md`).
+    - Documentación técnica orientada al repositorio (README del proyecto y guías de configuración externas).
+- **Inglés (Para toda la Programación y Código Fuente)**:
+    - Código fuente Python (modelos, campos, métodos, decoradores, comentarios, mensajes de error técnicos y logs).
+    - Código fuente JavaScript (componentes OWL, lógica de frontend, comentarios y JSDoc).
+    - Vistas XML, reportes XML, data XML y archivos de seguridad CSV (nombres técnicos de grupos y reglas).
+    - El archivo de manifiesto de Odoo (`__manifest__.py`), incluyendo el título, descripción, sumario y metadatos del addon.
+    - Pruebas y tests (nombres de métodos de test, aserciones y descripciones de pruebas en Python y JS Hoot).
+    - Mensajes de commit de Git y descripciones de Pull Requests (siguiendo el formato oficial de Odoo, ej: `[ADD] module_name: add invoice generation logic`).
 
 ## 3. Estándares Específicos
 
