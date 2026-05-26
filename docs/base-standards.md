@@ -7,6 +7,7 @@ alwaysApply: true
 
 - **Tareas pequeñas, una a la vez**: Trabajar siempre en pasos pequeños (baby steps). Nunca avanzar más de un paso a la vez.
 - **Spec-Driven Development (SDD)**: Comenzar definiendo las especificaciones detalladas del desarrollo antes de escribir código. Diseñar modelos, vistas, seguridad y flujos de negocio primero. Los tests unitarios y de integración se construyen y ejecutan como herramientas de verificación post-implementación.
+- **Anti-Vibe-Coding**: Bajo ninguna circunstancia se debe saltar de la historia de usuario (User Story) directamente a escribir código. Las fases de propuesta (`proposal.md`), diseño (`design.md`) y lista de tareas (`tasks.md` / `task.md`) son obligatorias antes de proceder con el desarrollo físico de los cambios.
 - **Seguridad de tipos**: Todo el código debe estar debidamente tipado (Type Hints en Python y JSDoc/OWL tipado en JavaScript).
 - **Nombres claros**: Utilizar nombres claros y descriptivos para todas las variables, métodos y modelos (siguiendo las convenciones de Odoo).
 - **Cambios incrementales**: Preferir cambios pequeños y enfocados sobre modificaciones grandes y complejas.
