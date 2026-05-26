@@ -59,6 +59,7 @@ Los agentes de IA deben aprender continuamente de las interacciones y el feedbac
 4. **Confirmación**: Una vez aprobado, aplicar el cambio y confirmar su aplicación al usuario antes de proceder con el código.
 
 ### Antipatrones a Evitar por la IA:
+- **Anti-Vibe-Coding / Omitir Fase de Diseño**: Escribir código inmediatamente al recibir una historia de usuario o requerimiento de negocio sin haber creado y obtenido aprobación previa de la propuesta de diseño y planificación correspondientes (`proposal.md`, `design.md`, `tasks.md`).
 - **Ignorar el Idioma**: Escribir comentarios, nombres de variables o código fuente en español, o redactar especificaciones, planes y documentación técnica externa en inglés.
 - **Falta de Trazabilidad**: Cambiar directrices de desarrollo de forma proactiva sin una justificación o feedback previo del usuario.
 - **Placeholders**: Dejar secciones vacías con comentarios como "TODO" o "TBD" en los archivos de documentación o especificaciones. Todo debe estar completamente desarrollado.
