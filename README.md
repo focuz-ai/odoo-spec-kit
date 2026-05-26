@@ -173,6 +173,20 @@ context: |
 
 ---
 
+## ✅ Verificación de la Configuración (Obligatorio)
+
+Realice este paso de validación después de completar los pasos de configuración y setup descritos anteriormente.
+
+Su copilot o agente de IA debería cargar automáticamente el archivo de configuración base al iniciar su sesión:
+
+- **Claude CLI / Cursor**: Carga `CLAUDE.md` → Enlazado a `docs/base-standards.md`.
+- **GitHub Copilot**: Carga `codex.md` → Enlazado a `docs/base-standards.md`.
+- **Gemini**: Carga `GEMINI.md` → Enlazado a `docs/base-standards.md`.
+
+Todas las rutas de directrices técnicas y las habilidades específicas de los agentes están mapeadas para funcionar correctamente y ser auto-cargadas sin necesidad de realizar ajustes manuales.
+
+---
+
 ## 🔄 Workflow de Desarrollo OpenSpec
 
 El kit impulsa un flujo de trabajo estructurado en base a las siguientes directivas de ejecución:
