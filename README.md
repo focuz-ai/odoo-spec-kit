@@ -1,6 +1,6 @@
-# Odoo Specboot — Kit de Desarrollo Asistido por IA en Odoo 18.0
+# Odoo Spec Kit — Kit de Desarrollo Asistido por IA en Odoo 18.0
 
-**odoo-specboot** es un kit de configuración y estándares técnicos portable diseñado para optimizar el desarrollo de módulos en **Odoo 18.0** (Community y Enterprise) mediante asistentes de Inteligencia Artificial (copilots como Claude, Cursor, Gemini/Antigravity y Copilot).
+**odoo-spec-kit** es un kit de configuración y estándares técnicos portable diseñado para optimizar el desarrollo de módulos en **Odoo 18.0** (Community y Enterprise) mediante asistentes de Inteligencia Artificial (copilots como Claude, Cursor, Gemini/Antigravity y Copilot).
 
 El kit establece un entorno unificado con foco inicial en **Contabilidad** (Accounting) y obliga a los agentes a adherirse estrictamente a las directrices oficiales de desarrollo y estilo de Odoo.
 
@@ -29,7 +29,7 @@ El kit establece un entorno unificado con foco inicial en **Contabilidad** (Acco
 ## 📂 Estructura del Proyecto
 
 ```text
-odoo-specboot/
+odoo-spec-kit/
 ├── docs/                             # Contexto y directrices de ingeniería
 │   ├── base-standards.md             # Reglas maestras (SDD, español, workflow)
 │   ├── backend-standards.md          # Estándares ORM, Seguridad, SQL y XML views
@@ -47,8 +47,15 @@ odoo-specboot/
 │   │
 │   └── skills/                       # Skills de automatización (procesos)
 │       ├── enrich-us/                # Enriquecimiento de requerimientos (Jira/Plane MCP)
-│       ├── code-review/              # Revisión adversarial y bucle de autoreparación
-│       └── commit-odoo/              # Creación de commits estilo Odoo y PRs
+│       ├── code-review/              # Revisión adversarial, seguridad estática y autoreparación
+│       ├── commit-odoo/              # Creación de commits estilo Odoo y PRs con gh CLI
+│       ├── code-auditing/            # Auditoría sistemática de calidad y linter de Odoo
+│       ├── explain/                  # Mentoría conceptual de Odoo con quizzes interactivos
+│       ├── odoo-scaffold/            # Generación del andamiaje físico de nuevos módulos
+│       ├── odoo-test-runner/         # Formulación y ejecución de comandos de prueba
+│       ├── sync-agent-symlinks/      # Sincronización de espejos (.claude, .cursor, .agents)
+│       ├── update-docs/              # Actualización de documentación técnica según cambios
+│       └── writing-skills/           # Metodología TDD para creación de nuevas skills
 │
 ├── AGENTS.md, CLAUDE.md, GEMINI.md   # Accesos de copilots apuntando a base-standards
 ├── .ruff.toml                        # Configuración de linter Ruff para Python/Odoo
@@ -62,7 +69,7 @@ odoo-specboot/
 Para utilizar este kit en cualquier repositorio de desarrollo de Odoo:
 
 ### 1. Copiar el kit
-Copie todo el contenido de `odoo-specboot/` en la raíz de su repositorio o espacio de trabajo de Odoo.
+Copie todo el contenido de `odoo-spec-kit/` en la raíz de su repositorio o espacio de trabajo de Odoo.
 
 ### 2. Configurar Enlaces de Agentes (Junctions y Hardlinks)
 En sistemas Windows, ejecute el siguiente comando desde una consola PowerShell para inicializar los entry points de los editores y copilots:
