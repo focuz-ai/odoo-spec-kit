@@ -65,12 +65,12 @@ Se recomienda encarecidamente utilizar este kit en combinación con frameworks d
 
 ## 🤖 Soporte Multi-Copiloto
 
-Este repositorio utiliza **enlaces duros (hardlinks)** y **uniones de directorio (junctions)** para dar soporte a múltiples copilots de IA de forma nativa sin duplicar archivos en el espacio de trabajo:
+Este repositorio utiliza **enlaces simbólicos (symlinks)** y **convenciones de nombres** para dar soporte a múltiples copilots de IA de forma nativa sin duplicar archivos en el espacio de trabajo:
 
 - **`AGENTS.md`** → Reglas genéricas de agentes (compatible con la mayoría de copilots).
-- **`CLAUDE.md`** → Optimizado para Claude CLI / Claude Code.
+- **`CLAUDE.md`** → Optimizado para Claude/Cursor.
 - **`GEMINI.md`** → Optimizado para Google Gemini.
-- **`codex.md`** → Optimizado para GitHub Copilot.
+- **`codex.md`** → Optimizado para GitHub Copilot / Codex.
 
 Todos estos archivos enlazan a la misma fuente de verdad en `docs/base-standards.md`, asegurando la coherencia entre diferentes herramientas de IA y permitiendo personalizaciones para copilots específicos.
 
