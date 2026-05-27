@@ -118,6 +118,25 @@ Este paso es obligatorio. Si lo omite, su asistente de IA utilizará contexto t�
 
 Actualice los archivos en `docs/` para que coincidan con su base de datos de desarrollo, módulos personalizados, dependencias de Odoo, flujos contables y localizaciones requeridas. Consulte la sección [Personalización](#-personalización) para obtener instrucciones detalladas.
 
+### 3.1) Configurar Rutas Locales de Odoo (Obligatorio para `/enrich-us`)
+
+Para mantener la portabilidad del kit, las rutas locales no se hardcodean en las skills.
+Configure su entorno local con:
+
+```bash
+python scripts/setup_assistant.py init
+python scripts/setup_assistant.py check
+python scripts/setup_assistant.py show
+```
+
+Reglas:
+- `odoo_community_root`: obligatoria.
+- `odoo_enterprise_root`: opcional.
+
+Archivos de configuración:
+- Plantilla versionada: `config/local.paths.example.json`
+- Config local (ignorada por git): `config/local.paths.json`
+
 ### 4) Apuntar la Configuración de OpenSpec a `docs/` y `ai-specs/`
 
 Después de inicializar OpenSpec e importar el kit, debe indicarle a OpenSpec cómo cargar y usar las reglas y agentes del proyecto. Envíe el siguiente prompt a su copilot para configurar de forma automática el archivo `config.yml`:
