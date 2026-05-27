@@ -1,6 +1,6 @@
 # Odoo Spec Kit: Desarrollo de Odoo Asistido por IA y OpenSpec
 
-**odoo-spec-kit** es un kit de configuración y estándares técnicos portable diseñado para optimizar el desarrollo de módulos en **Odoo 16.0** (Community y Enterprise) mediante asistentes de Inteligencia Artificial (copilots como Claude, Cursor, Gemini/Antigravity y Copilot).
+**odoo-spec-kit** es un kit de configuración y estándares técnicos portable diseñado para optimizar el desarrollo de módulos en **Odoo** (Community y Enterprise) mediante asistentes de Inteligencia Artificial (copilots como Claude, Cursor, Gemini/Antigravity y Copilot).
 
 Este repositorio contiene un conjunto exhaustivo de reglas de desarrollo, directrices de estilo y configuraciones de agentes de IA diseñadas para trabajar sin fisuras con múltiples herramientas de desarrollo asistido. La configuración es portable y puede importarse a cualquier proyecto Odoo para proporcionar una asistencia coherente y de alta calidad.
 
@@ -280,7 +280,7 @@ Requisitos:
 
 ### Ejemplos de Referencia (Contabilidad Odoo)
 
-Los siguientes archivos están incluidos en este kit como ejemplos de referencia basados en el dominio de Contabilidad de Odoo 16.0:
+Los siguientes archivos están incluidos en este kit como ejemplos de referencia basados en el dominio de Contabilidad de Odoo:
 
 - **Especificación de API/Controllers**: [docs/api-spec.md](docs/api-spec.md) (Endpoints JSON-RPC/REST).
 - **Modelos de Datos**: [docs/data-model.md](docs/data-model.md) (Estructura de `account.move` y diagrama ERD).
