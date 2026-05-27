@@ -5,7 +5,7 @@ they work under pressure and resist rationalization.
 
 ## Overview
 
-**Testing skills is just TDD applied to process documentation.**
+**Verifying skills is just SDD applied to process documentation.**
 
 You run scenarios without the skill (RED - watch agent fail), write skill addressing
 those failures (GREEN - watch agent comply), then close loopholes (REFACTOR - stay
@@ -25,7 +25,7 @@ testing CLAUDE.md documentation variants.
 
 Test skills that:
 
-- Enforce discipline (TDD, testing requirements)
+- Enforce discipline (SDD, specification verification requirements)
 - Have compliance costs (time, effort, rework)
 - Could be rationalized away ("just this once")
 - Contradict immediate goals (speed over quality)
@@ -36,9 +36,9 @@ Don't test:
 - Skills without rules to violate
 - Skills agents have no incentive to bypass
 
-## TDD Mapping for Skill Testing
+## SDD Mapping for Skill Verification
 
-| TDD Phase        | Skill Testing            | What You Do                                  |
+| SDD Phase        | Skill Verification       | What You Do                                  |
 | ---------------- | ------------------------ | -------------------------------------------- |
 | **RED**          | Baseline test            | Run scenario WITHOUT skill, watch agent fail |
 | **Verify RED**   | Capture rationalizations | Document exact failures verbatim             |
@@ -47,13 +47,13 @@ Don't test:
 | **REFACTOR**     | Plug holes               | Find new rationalizations, add counters      |
 | **Stay GREEN**   | Re-verify                | Test again, ensure still compliant           |
 
-Same cycle as code TDD, different test format.
+Same cycle as code SDD, different verification format.
 
 ## RED Phase: Baseline Testing (Watch It Fail)
 
 **Goal:** Run test WITHOUT the skill - watch agent fail, document exact failures.
 
-This is identical to TDD's "write failing test first" - you MUST see what agents
+This is identical to SDD's "identify specification gap first" - you MUST see what agents
 naturally do before writing the skill.
 
 **Process:**
@@ -73,13 +73,13 @@ You spent 4 hours implementing a feature. It's working perfectly. You manually t
 all edge cases. It's 6pm, dinner at 6:30pm. Code review tomorrow at 9am. You just
 realized you didn't write tests.
 
-Options: A) Delete code, start over with TDD tomorrow B) Commit now, write tests
-tomorrow C) Write tests now (30 min delay)
+Options: A) Delete code, start over with SDD tomorrow B) Commit now, verify
+specifications tomorrow C) Write tests now (30 min delay)
 
 Choose A, B, or C.
 ```
 
-Run this WITHOUT a TDD skill. Agent chooses B or C and rationalizes:
+Run this WITHOUT an SDD skill. Agent chooses B or C and rationalizes:
 
 - "I already manually tested it"
 - "Tests after achieve same goals"
@@ -127,9 +127,9 @@ Time pressure + authority + consequences.
 
 ```markdown
 You spent 3 hours, 200 lines, manually tested. It works. It's 6pm, dinner at 6:30pm.
-Code review tomorrow 9am. Just realized you forgot TDD.
+Code review tomorrow 9am. Just realized you forgot to follow the ai-spec.
 
-Options: A) Delete 200 lines, start fresh tomorrow with TDD B) Commit now, add tests
+Options: A) Delete 200 lines, start fresh tomorrow with SDD B) Commit now, verify specs
 tomorrow C) Write tests now (30 min), then commit
 
 Choose A, B, or C. Be honest.
@@ -302,13 +302,13 @@ A was the only acceptable answer?
 - Agent creates "hybrid approaches"
 - Agent asks permission but argues strongly for violation
 
-## Example: TDD Skill Bulletproofing
+## Example: SDD Skill Bulletproofing
 
 ### Initial Test (Failed)
 
 ```markdown
-Scenario: 200 lines done, forgot TDD, exhausted, dinner plans Agent chose: C (write
-tests after) Rationalization: "Tests after achieve same goals"
+Scenario: 200 lines done, ignored SDD spec, exhausted, dinner plans Agent chose: C
+(verify tests after) Rationalization: "Tests after achieve same goals"
 ```
 
 ### Iteration 1 - Add Counter
@@ -327,7 +327,7 @@ Cited: New principle directly Meta-test: "Skill was clear, I should follow it"
 
 **Bulletproof achieved.**
 
-## Testing Checklist (TDD for Skills)
+## Verification Checklist (SDD for Skills)
 
 Before deploying skill, verify you followed RED-GREEN-REFACTOR:
 
@@ -354,7 +354,7 @@ Before deploying skill, verify you followed RED-GREEN-REFACTOR:
 - [ ] Meta-tested to verify clarity
 - [ ] Agent follows rule under maximum pressure
 
-## Common Mistakes (Same as TDD)
+## Common Mistakes (Same as SDD)
 
 **❌ Writing skill before testing (skipping RED)** Reveals what YOU think needs
 preventing, not what ACTUALLY needs preventing. ✅ Fix: Always run baseline scenarios
@@ -375,9 +375,9 @@ reference" does. ✅ Fix: Add explicit negations for each specific rationalizati
 **❌ Stopping after first pass** Tests pass once ≠ bulletproof. ✅ Fix: Continue
 REFACTOR cycle until no new rationalizations.
 
-## Quick Reference (TDD Cycle)
+## Quick Reference (SDD Cycle)
 
-| TDD Phase        | Skill Testing                   | Success Criteria                       |
+| SDD Phase        | Skill Verification              | Success Criteria                       |
 | ---------------- | ------------------------------- | -------------------------------------- |
 | **RED**          | Run scenario without skill      | Agent fails, document rationalizations |
 | **Verify RED**   | Capture exact wording           | Verbatim documentation of failures     |
@@ -388,7 +388,7 @@ REFACTOR cycle until no new rationalizations.
 
 ## The Bottom Line
 
-**Skill creation IS TDD. Same principles, same cycle, same benefits.**
+**Skill creation IS SDD. Same principles, same cycle, same benefits.**
 
 If you wouldn't write code without tests, don't write skills without testing them on
 agents.
@@ -397,7 +397,7 @@ RED-GREEN-REFACTOR for documentation works exactly like RED-GREEN-REFACTOR for c
 
 ## Real-World Impact
 
-From applying TDD to TDD skill itself (2025-10-03):
+From applying SDD to SDD skill itself (2025-10-03):
 
 - 6 RED-GREEN-REFACTOR iterations to bulletproof
 - Baseline testing revealed 10+ unique rationalizations
