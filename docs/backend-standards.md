@@ -1,4 +1,4 @@
-# Estándares de Desarrollo Backend y Vistas XML en Odoo 18.0 (Backend Standards)
+# Estándares de Desarrollo Backend y Vistas XML en Odoo 19.0 (Backend Standards)
 
 > [!IMPORTANT]
 > Este documento rige todas las decisiones de diseño técnico, estructura y codificación del backend y las vistas XML del proyecto. Todos los agentes de IA deben utilizarlo como la guía maestra de estándares backend.
@@ -7,9 +7,9 @@
 
 ## 1. Stack Tecnológico
 
-- **Lenguaje**: Python 3.11+
-- **Plataforma**: Odoo 18.0 (Community y Enterprise)
-- **Base de Datos**: PostgreSQL 15+
+- **Lenguaje**: Python 3.11+ (Soporte optimizado para 3.12 y 3.13+)
+- **Plataforma**: Odoo 19.0 (Community y Enterprise)
+- **Base de Datos**: PostgreSQL 16+
 - **API**: JSON-RPC 2.0 y XML-RPC para integraciones externas.
 
 ---
@@ -22,10 +22,16 @@ Odoo cuenta con tres clases base fundamentales para la persistencia de datos:
 - **`models.TransientModel`**: Modelos temporales para Wizards. Se limpian periódicamente de la base de datos de forma automática.
 - **`models.AbstractModel`**: Modelos abstractos que no tienen tabla física propia, pero sirven para heredar campos y comportamientos a múltiples modelos.
 
-### Buenas Prácticas y Patrones de Odoo 18.0:
+### Buenas Prácticas y Patrones de Odoo 19.0:
 - **Decorador `@api.model_create_multi`**: Obligatorio en todos los métodos `create(self, vals_list)`. Este decorador permite que Odoo procese la creación de registros en lotes eficientes (batching), reduciendo el número de queries `INSERT`.
 - **Atributo `precompute=True`**: Utilizar en campos computados almacenados (`store=True`) que se necesiten calcular antes de escribir el registro en la base de datos (evitando una query `UPDATE` posterior).
 - **Atributo `check_company=True`**: Obligatorio en todos los campos relacionales (`Many2one`, `Many2many`, `One2many`) que involucren modelos multi-compañía para forzar la restricción del entorno (evita que un usuario asocie un registro de la Compañía A con uno de la Compañía B).
+- **Tipado Estático Obligatorio (Odoo 19.0)**: Odoo 19.0 exporta tipos de Python nativos en `odoo.api` para firmas estáticas robustas. Es obligatorio usarlos en la firma de métodos del ORM:
+  - Importar tipos: `from odoo import api`
+  - `self: api.Self`: Para la referencia del recordset `self` del modelo.
+  - `vals: api.ValuesType` / `vals_list: list[api.ValuesType]`: Para los diccionarios de valores.
+  - `domain: api.DomainType`: Para expresiones de dominio.
+  - `context: api.ContextType`: Para variables de contexto.
 
 ```python
 from odoo import models, fields, api, _
@@ -44,15 +50,19 @@ class FacturaLocal(models.Model):
     currency_id = fields.Many2one('res.currency', related='company_id.currency_id')
 
     @api.depends('partner_id')
-    def _compute_monto_total(self):
+    def _compute_monto_total(self: api.Self) -> None:
         for record in self:
             # Lógica del cálculo
             record.monto_total = 100.0
 
     @api.model_create_multi
-    def create(self, vals_list):
-        # Implementación por lotes
+    def create(self: api.Self, vals_list: list[api.ValuesType]) -> api.Self:
+        # Implementación por lotes tipada
         return super().create(vals_list)
+
+    def write(self: api.Self, vals: api.ValuesType) -> bool:
+        # Métodos write tipados
+        return super().write(vals)
 ```
 
 ---
@@ -113,6 +123,9 @@ self.env.cr.execute(query)
 ## 6. Patrones de Vistas XML Declarativas
 
 Las vistas XML de Odoo deben ser limpias y usar herencia mediante expresiones `xpath` precisas.
+
+> [!IMPORTANT]
+> **Prohibición de `attrs`**: En Odoo 19.0 (al igual que en 18.0), el atributo `attrs` está completamente eliminado del core. Está estrictamente prohibido su uso. Use en su lugar los atributos booleanos directos con expresiones declarativas lógicas (ej. `invisible="state != 'draft'"`, `readonly="state == 'posted'"`, `required="state == 'open'"`).
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>

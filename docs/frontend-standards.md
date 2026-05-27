@@ -1,9 +1,4 @@
----
-description: Estándares de desarrollo frontend, mejores prácticas y convenciones para Odoo 18.0 utilizando OWL 2, QWeb, SCSS, registro de assets y pruebas con el framework HOOT.
-alwaysApply: true
----
-
-# Estándares de Desarrollo Frontend en Odoo 18.0 (Frontend Standards)
+# Estándares de Desarrollo Frontend en Odoo 19.0 (Frontend Standards)
 
 ## Tabla de Contenidos
 
@@ -21,13 +16,13 @@ alwaysApply: true
 
 ## 1. Stack Tecnológico
 
-El frontend del cliente web de Odoo 18.0 está construido sobre las siguientes tecnologías principales:
+El frontend del cliente web de Odoo 19.0 está construido sobre las siguientes tecnologías principales:
 
-- **OWL 2 (Odoo Web Library)**: Framework moderno de componentes reactivos basado en clases y hooks de JavaScript, inspirado en React y Vue.
+- **OWL 2 (Odoo Web Library)**: Framework moderno de componentes reactivos basado en clases y hooks de JavaScript, adaptado al nuevo DOM virtual rápido (blockdom).
 - **QWeb (XML)**: Motor de plantillas XML utilizado tanto para renderizado en servidor como para renderizado dinámico en cliente (JS).
 - **Bootstrap 5**: Framework CSS subyacente personalizado para la estructura y componentes UI nativos.
 - **SCSS**: Preprocesador de CSS utilizado para extender y modificar el diseño visual de Odoo.
-- **HOOT**: El nuevo y ultrarrápido framework de pruebas unitarias y de integración oficial de Odoo 18.0 para JavaScript, que reemplaza a QUnit.
+- **HOOT**: El framework de pruebas unitarias y de integración oficial de Odoo para JavaScript.
 
 ---
 
@@ -288,13 +283,14 @@ describe("MiComponente OWL Tests", () => {
 
 ## 8. Creación de Widgets de Campos Personalizados
 
-En Odoo 18.0, los widgets de campos del formulario se crean extendiendo del componente base de input o campo y registrándolos en el `fields` registry.
+En Odoo 19.0, los widgets de campos del formulario se crean heredando del componente base y registrándolos en el `fields` registry. Es altamente recomendado el uso del hook `useRecordObserver` para reaccionar ante cambios en los datos del recordset de forma limpia:
 
 ```javascript
 // static/src/js/campos/mi_campo_color.js
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
-import { Component } from "@odoo/owl";
+import { useRecordObserver } from "@web/model/relational_model/utils";
+import { Component, useState } from "@odoo/owl";
 
 export class MiCampoColor extends Component {
     static template = "mi_modulo.MiCampoColor";
@@ -302,8 +298,19 @@ export class MiCampoColor extends Component {
         ...standardFieldProps,
     };
 
+    setup() {
+        this.state = useState({
+            valorColor: "light",
+        });
+
+        // Escuchar cambios reactivos en el registro (Recomendado en Odoo 19.0)
+        useRecordObserver((record) => {
+            this.state.valorColor = record.data[this.props.name] || "light";
+        });
+    }
+
     get colorClass() {
-        return `bg-${this.props.record.data[this.props.name] || 'light'}`;
+        return `bg-${this.state.valorColor}`;
     }
 
     seleccionarColor(color) {
