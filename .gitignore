@@ -1,0 +1,4 @@
+.antigravitycli/
+config/local.paths.json
+
+__pycache__/
