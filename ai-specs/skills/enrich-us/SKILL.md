@@ -74,6 +74,6 @@ Retorne la respuesta en markdown estructurado en dos secciones principales:
 Si se encuentra en modo Jira/Plane:
 
 - Escriba la versión mejorada de regreso en el ticket correspondiente bajo las secciones
-  `h2` claras `[original]` y `[enhanced]` legibles.
+  claras `h2` `[original]` y `[enhanced]`, y que sea legible.
 - Si el estado actual del ticket es `To refine`, cámbielo a
   `Pending refinement validation`.
