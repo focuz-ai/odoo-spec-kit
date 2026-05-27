@@ -1,9 +1,9 @@
 ---
-description: Este documento contiene todas las reglas y directrices de desarrollo para este proyecto, aplicables a todos los agentes de IA (Claude, Cursor, Codex, Gemini, etc.) en Odoo 19.0.
+description: Este documento contiene todas las reglas y directrices de desarrollo para este proyecto, aplicables a todos los agentes de IA (Claude, Cursor, Codex, Gemini, etc.) en Odoo 17.0.
 alwaysApply: true
 ---
 
-# Reglas de Agentes y Estándares de Ingeniería (Odoo 19.0)
+# Reglas de Agentes y Estándares de Ingeniería (Odoo 17.0)
 
 
 ## 1. Principios Core
@@ -26,7 +26,7 @@ alwaysApply: true
     - Código fuente JavaScript (componentes OWL, lógica de frontend, comentarios y JSDoc).
     - Vistas XML, reportes XML, data XML y archivos de seguridad CSV (nombres técnicos de grupos y reglas).
     - El archivo de manifiesto de Odoo (`__manifest__.py`), incluyendo el título, descripción, sumario y metadatos del addon.
-    - Pruebas y tests (nombres de métodos de test, aserciones y descripciones de pruebas en Python y JS Hoot).
+    - Pruebas y tests (nombres de métodos de test, aserciones y descripciones de pruebas en Python y JS QUnit).
     - Mensajes de commit de Git y descripciones de Pull Requests (siguiendo el formato oficial de Odoo, ej: `[ADD] module_name: add invoice generation logic`).
 
 ## 3. Estándares Específicos
@@ -34,7 +34,7 @@ alwaysApply: true
 Para directrices y estándares específicos de diferentes áreas del proyecto, consulte:
 
 - [Estándares Backend](./backend-standards.md) - Desarrollo de modelos ORM, controladores web, wizards, reportes, seguridad y pruebas backend en Odoo.
-- [Estándares Frontend](./frontend-standards.md) - Componentes OWL 2, plantillas QWeb, SCSS, assets y pruebas unitarias con HOOT.
+- [Estándares Frontend](./frontend-standards.md) - Componentes OWL 2, plantillas QWeb, SCSS, assets y pruebas unitarias con QUnit.
 - [Directrices de Estilo de Código (Coding Guidelines)](./coding-guidelines.md) - Síntesis oficial de estilos de Odoo para Python, JS, CSS y XML.
 - [Directrices de Git (Git Guidelines)](./git-guidelines.md) - Estructura oficial de commits de Odoo y flujos de integración.
 - [Estándares de Documentación](./documentation-standards.md) - Estructura y mantenimiento de la documentación técnica y archivos de configuración de IA.

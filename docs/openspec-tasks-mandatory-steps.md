@@ -1,5 +1,5 @@
 ---
-description: Define los pasos obligatorios y las reglas de ejecución del workflow OpenSpec adaptado para Odoo 18.0 (enrich-us, propose, apply, verify, code-review, archive, commit-odoo).
+description: Define los pasos obligatorios y las reglas de ejecución del workflow OpenSpec adaptado para Odoo 17.0 (enrich-us, propose, apply, verify, code-review, archive, commit-odoo).
 alwaysApply: true
 ---
 
@@ -28,7 +28,7 @@ Todas las tareas de desarrollo deben incluir estos pasos exactamente en el orden
 - **Nomenclatura**: `feature/[id-ticket]` o `feature/[nombre-cambio]`.
 
 ### Paso N: Ejecución de Pruebas de Odoo (`verify`) (MANDATORIO)
-- **Acción**: Ejecución del conjunto de pruebas backend (`TransactionCase`/`HttpCase`) o frontend (`HOOT`) mediante el comando oficial de pruebas de Odoo.
+- **Acción**: Ejecución del conjunto de pruebas backend (`TransactionCase`/`HttpCase`) o frontend (`QUnit`) mediante el comando oficial de pruebas de Odoo.
 - **Comando de ejemplo**: `python odoo-bin -c odoo.conf -d bd_pruebas --test-enable --stop-after-init -i nombre_modulo`.
 - **Responsabilidad de la IA**: El agente de IA **debe ejecutar el comando directamente en la consola** utilizando la herramienta `run_command`. Está prohibido delegar la ejecución de las pruebas al usuario.
 - **Reporte de Verificación**: El agente debe documentar los resultados (pruebas pasadas, fallidas, tiempos) en un reporte guardado en la carpeta de especificaciones del cambio.

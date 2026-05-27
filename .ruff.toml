@@ -1,4 +1,4 @@
-# Configuración de Ruff para Odoo 18.0
+# Configuración de Ruff para Odoo 17.0
 
 # Nivel general de compatibilidad con Python
 target-version = "py311"

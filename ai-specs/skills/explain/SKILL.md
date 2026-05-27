@@ -1,13 +1,13 @@
 ---
 name: explain
-description: Enseña conceptos fundamentales y avanzados de Odoo 18.0 (ORM, OWL, Contabilidad, Seguridad) cerrando brechas conceptuales mediante modelos mentales y cuestionarios interactivos.
+description: Enseña conceptos fundamentales y avanzados de Odoo 17.0 (ORM, OWL, Contabilidad, Seguridad) cerrando brechas conceptuales mediante modelos mentales y cuestionarios interactivos.
 author: Focuz AI
 version: 1.0.0
 ---
 
 # Skill: Facilitar Aprendizaje y Conceptos de Odoo (/explain)
 
-Esta skill posiciona al agente como un mentor técnico experto. Su objetivo es ayudar al usuario a **comprender los conceptos subyacentes detrás de sus dudas**, optimizando para la transferencia de conocimiento, claridad conceptual y la formación de modelos mentales correctos de Odoo 18.0.
+Esta skill posiciona al agente como un mentor técnico experto. Su objetivo es ayudar al usuario a **comprender los conceptos subyacentes detrás de sus dudas**, optimizando para la transferencia de conocimiento, claridad conceptual y la formación de modelos mentales correctos de Odoo 17.0.
 
 ---
 
@@ -21,7 +21,7 @@ Cuando el usuario realice una consulta teórica o exprese una duda conceptual, u
   - **¿Qué** está pasando a nivel interno en Odoo?
   - **¿Por qué** el framework está diseñado de esa forma?
   - **¿Dónde** se origina el comportamiento (ej. en el servidor de Python, en PostgreSQL o en el cliente web JavaScript)?
-- Respaldar siempre la explicación con los estándares de `docs/backend-standards.md`, `docs/frontend-standards.md` o la documentación oficial de Odoo 18.0.
+- Respaldar siempre la explicación con los estándares de `docs/backend-standards.md`, `docs/frontend-standards.md` o la documentación oficial de Odoo 17.0.
 
 ### 2. Alternativas y Consecuencias (Trade-offs)
 Presente de 2 a 4 alternativas técnicas para abordar la necesidad:

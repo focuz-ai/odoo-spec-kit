@@ -7,7 +7,7 @@ version: 1.0.0
 
 # Skill: Ejecución de Tests Odoo (/odoo-test-runner)
 
-Esta skill proporciona los comandos y metodologías para lanzar y diagnosticar pruebas de Odoo 18.0.
+Esta skill proporciona los comandos y metodologías para lanzar y diagnosticar pruebas de Odoo 17.0.
 
 ---
 
@@ -40,7 +40,7 @@ python odoo-bin -c odoo.conf -d db_test --test-enable --stop-after-init --test-t
 
 ---
 
-## 3. Ejecución de Pruebas de Frontend (HOOT / Tours)
+## 3. Ejecución de Pruebas de Frontend (QUnit / Tours)
 
 Para los tests interactivos de tours frontend en Python:
 

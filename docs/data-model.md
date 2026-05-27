@@ -1,11 +1,11 @@
 ---
-description: Documentación y ejemplo del modelo de datos de Contabilidad (Accounting) en Odoo 18.0, detallando las entidades principales, campos clave, reglas relacionales y diagrama ER.
+description: Documentación y ejemplo del modelo de datos de Contabilidad (Accounting) en Odoo 17.0, detallando las entidades principales, campos clave, reglas relacionales y diagrama ER.
 alwaysApply: true
 ---
 
-# Modelo de Datos: Contabilidad en Odoo 18.0 (Data Model)
+# Modelo de Datos: Contabilidad en Odoo 17.0 (Data Model)
 
-Este documento detalla la arquitectura de base de datos y modelos del módulo de Contabilidad (`account`) de Odoo 18.0, sirviendo de referencia de diseño técnico para la creación o extensión de módulos contables.
+Este documento detalla la arquitectura de base de datos y modelos del módulo de Contabilidad (`account`) de Odoo 17.0, sirviendo de referencia de diseño técnico para la creación o extensión de módulos contables.
 
 ---
 
@@ -90,7 +90,7 @@ Define el cálculo de impuestos (IVA, retenciones, etc.) aplicables a las línea
 
 ## 2. Diagrama de Entidad-Relación (ERD)
 
-El siguiente diagrama representa cómo se vinculan los modelos de contabilidad en Odoo 18.0:
+El siguiente diagrama representa cómo se vinculan los modelos de contabilidad en Odoo 17.0:
 
 ```mermaid
 erDiagram
@@ -176,7 +176,7 @@ erDiagram
    Al crear o modificar líneas de un asiento contable (`account.move.line`), el sistema verifica mediante restricciones de base de datos y métodos ORM que la suma del Debe sea igual a la suma del Haber (`sum(debit) == sum(credit)`). Si esto no se cumple, el asiento no puede pasar del estado `draft` a `posted`.
 
 2. **Multicompañía Estricto**:
-   Odoo 18.0 valida rigurosamente los accesos multicompañía. Los campos `company_id` actúan como filtros duros. No se pueden mezclar líneas de asientos contables apuntando a cuentas de una Compañía A en un asiento perteneciente a la Compañía B.
+   Odoo 17.0 valida rigurosamente los accesos multicompañía. Los campos `company_id` actúan como filtros duros. No se pueden mezclar líneas de asientos contables apuntando a cuentas de una Compañía A en un asiento perteneciente a la Compañía B.
 
 3. **Cuentas por Tipo**:
    El campo `account_type` en `account.account` define el comportamiento contable. Por ejemplo, las líneas de facturas de clientes solo pueden apuntar a cuentas del tipo `asset_receivable`, y las de proveedores a `liability_payable`.

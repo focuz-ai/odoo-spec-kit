@@ -1,6 +1,6 @@
 # Odoo Spec Kit: Desarrollo de Odoo Asistido por IA y OpenSpec
 
-**odoo-spec-kit** es un kit de configuración y estándares técnicos portable diseñado para optimizar el desarrollo de módulos en **Odoo 18.0** (Community y Enterprise) mediante asistentes de Inteligencia Artificial (copilots como Claude, Cursor, Gemini/Antigravity y Copilot).
+**odoo-spec-kit** es un kit de configuración y estándares técnicos portable diseñado para optimizar el desarrollo de módulos en **Odoo 17.0** (Community y Enterprise) mediante asistentes de Inteligencia Artificial (copilots como Claude, Cursor, Gemini/Antigravity y Copilot).
 
 Este repositorio contiene un conjunto exhaustivo de reglas de desarrollo, directrices de estilo y configuraciones de agentes de IA diseñadas para trabajar sin fisuras con múltiples herramientas de desarrollo asistido. La configuración es portable y puede importarse a cualquier proyecto Odoo para proporcionar una asistencia coherente y de alta calidad.
 
@@ -31,7 +31,7 @@ Se recomienda encarecidamente utilizar este kit en combinación con frameworks d
 ├── docs/                             # Contexto técnico y estándares de ingeniería
 │   ├── base-standards.md             # Reglas maestras (SDD, español, workflow)
 │   ├── backend-standards.md          # Estándares ORM, Seguridad, SQL y XML views
-│   ├── frontend-standards.md         # Componentes OWL 2, SCSS y HOOT testing
+│   ├── frontend-standards.md         # Componentes OWL 2, SCSS y QUnit testing
 │   ├── coding-guidelines.md          # Directrices oficiales de código de Odoo
 │   ├── git-guidelines.md             # Reglas y tags oficiales de commits de Odoo
 │   ├── development-guide.md          # Guía de instalación y comandos odoo-bin
@@ -41,7 +41,7 @@ Se recomienda encarecidamente utilizar este kit en combinación con frameworks d
 ├── ai-specs/
 │   ├── agents/                       # Definiciones de roles de agentes de IA
 │   │   ├── odoo-module-developer.md  # Agente backend (Modelos, XML, Seguridad)
-│   │   ├── odoo-owl-developer.md     # Agente frontend (OWL 2, QWeb, HOOT)
+│   │   ├── odoo-owl-developer.md     # Agente frontend (OWL 2, QWeb, QUnit)
 │   │   └── product-strategy-analyst.md # Analista funcional de producto Odoo
 │   │
 │   └── skills/                       # Habilidades y flujos reutilizables (skills)
@@ -218,7 +218,7 @@ Todo el desarrollo del proyecto sigue los principios fundamentales definidos en 
 ### Estándares Específicos
 
 - **Estándares Backend**: [docs/backend-standards.md](docs/backend-standards.md) (ORM, herencias, seguridad estática, SQL y XML views).
-- **Estándares Frontend**: [docs/frontend-standards.md](docs/frontend-standards.md) (Componentes OWL 2, SCSS y HOOT testing).
+- **Estándares Frontend**: [docs/frontend-standards.md](docs/frontend-standards.md) (Componentes OWL 2, SCSS y QUnit testing).
 - **Estándares de Documentación**: [docs/documentation-standards.md](docs/documentation-standards.md) (Reglas de idioma, triggers de actualización y auto-mejora).
 
 ---
@@ -280,7 +280,7 @@ Requisitos:
 
 ### Ejemplos de Referencia (Contabilidad Odoo)
 
-Los siguientes archivos están incluidos en este kit como ejemplos de referencia basados en el dominio de Contabilidad de Odoo 18.0:
+Los siguientes archivos están incluidos en este kit como ejemplos de referencia basados en el dominio de Contabilidad de Odoo 17.0:
 
 - **Especificación de API/Controllers**: [docs/api-spec.md](docs/api-spec.md) (Endpoints JSON-RPC/REST).
 - **Modelos de Datos**: [docs/data-model.md](docs/data-model.md) (Estructura de `account.move` y diagrama ERD).

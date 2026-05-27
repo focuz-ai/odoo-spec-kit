@@ -1,13 +1,13 @@
 ---
 name: code-review
-description: Ejecuta la revisión adversarial de código, cruce estático de seguridad y el bucle autónomo de autoreparación ante fallos de pruebas en Odoo 18.0.
+description: Ejecuta la revisión adversarial de código, cruce estático de seguridad y el bucle autónomo de autoreparación ante fallos de pruebas en Odoo 17.0.
 author: Focuz AI
 version: 1.0.0
 ---
 
 # Skill: Revisión de Código y Bucle de Autoreparación (/code-review)
 
-Esta skill consolida la auditoría de calidad y seguridad adversarial y maneja de forma autónoma la corrección de errores de pruebas en Odoo 18.0.
+Esta skill consolida la auditoría de calidad y seguridad adversarial y maneja de forma autónoma la corrección de errores de pruebas en Odoo 17.0.
 
 ---
 
@@ -34,7 +34,7 @@ Realizar un escaneo del código desarrollado para detectar los siguientes riesgo
 Confirmar la compatibilidad estricta del código con:
 - `docs/coding-guidelines.md` (orden de atributos en modelos, nombres descriptivos, traducción con `%`).
 - `docs/backend-standards.md` (multicompañía, uso de helpers `Command`).
-- `docs/frontend-standards.md` (SCSS namespaces, reactividad de OWL, HOOT).
+- `docs/frontend-standards.md` (SCSS namespaces, reactividad de OWL, QUnit).
 
 ---
 
