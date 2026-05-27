@@ -1,25 +1,17 @@
-# Configuración de Ruff para Odoo Spec Kit (basado en OCA 18.0)
-
 target-version = "py310"
 fix = true
 
 [lint]
-extend-select = [
-    "B",
-    "C90",
-    "E501",  # line too long (default 88)
-    "I",  # isort
-    "UP",  # pyupgrade
-]
+extend-select = ["B","C90","E501","I","UP"]
 extend-safe-fixes = ["UP008"]
-exclude = ["setup/*", "odoo/*", "enterprise/*", "build/*", "dist/*"]
+exclude = ["setup/*"]
 
 [format]
-exclude = ["setup/*", "odoo/*", "enterprise/*", "build/*", "dist/*"]
+exclude = ["setup/*"]
 
 [lint.per-file-ignores]
-"__init__.py" = ["F401", "I001"]  # ignore unused and unsorted imports in __init__.py
-"__manifest__.py" = ["B018"]  # useless expression
+"__init__.py" = ["F401", "I001"]
+"__manifest__.py" = ["B018"]
 
 [lint.isort]
 section-order = ["future", "standard-library", "third-party", "odoo", "odoo-addons", "first-party", "local-folder"]

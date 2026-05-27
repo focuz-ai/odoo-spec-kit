@@ -93,7 +93,6 @@ JSON limpia, se configuran controladores en Odoo heredando de `http.Controller`.
 - **Ruta**: `/api/v1/facturas`
 - **Autenticación**: Token de API en cabecera (`X-API-Key`) o Sesión de Odoo.
 - **Parámetros de consulta (Query)**:
-
   - `limit` (opcional, entero): Número de registros a retornar (default: 20).
   - `state` (opcional, selección): Estado de la factura (`draft`, `posted`).
 
