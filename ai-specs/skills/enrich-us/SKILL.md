@@ -2,7 +2,7 @@
 name: enrich-us
 description:
   Analiza y enriquece historias de usuario (tickets) con detalles técnicos listos para
-  desarrollo en Odoo 16.0, obligando a verificar contexto real y conectando con Jira MCP
+  desarrollo en Odoo 17.0, obligando a verificar contexto real y conectando con Jira MCP
   / Plane MCP.
 author: Focuz AI
 version: 1.0.0
@@ -12,7 +12,7 @@ version: 1.0.0
 
 Esta skill guía al agente en el análisis de una solicitud de negocio o ticket para
 estructurarla con el nivel de detalle técnico que requiere el desarrollo autónomo en
-Odoo 16.0.
+Odoo 17.0.
 
 ---
 
@@ -34,10 +34,13 @@ estos pasos:
 - **Prohibido Adivinar**: El agente **NUNCA** debe adivinar nombres de campos, modelos
   de Odoo, estructuras XML o XML IDs de vistas nativas.
 - **Investigación Activa**: Es obligatorio buscar y validar los elementos directamente
-  en el código fuente del entorno de Odoo 16.0 (ej. en la ruta de enterprise
-  `D:\Projects\Odoo\o16-env\enterprise` o la carpeta community correspondiente) o
-  realizando consultas a la base de datos PostgreSQL activa para verificar la existencia
-  real de los campos.
+  en el código fuente del entorno de Odoo 17.0 o realizando consultas a la base de datos
+  PostgreSQL activa para verificar la existencia real de los campos.
+- **Rutas Locales Configurables**: Para ubicar el código de Odoo, use
+  `config/local.paths.json` (no versionado), creado con
+  `python scripts/setup_assistant.py init`:
+  - `odoo_community_root` (obligatoria)
+  - `odoo_enterprise_root` (opcional)
 
 ### 3. Validación de Completitud Técnica para Odoo
 
