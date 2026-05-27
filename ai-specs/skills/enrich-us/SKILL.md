@@ -20,8 +20,16 @@ Analice y enriquezca la historia de usuario recibida como argumento: `$ARGUMENTS
 - **Modo Jira / Plane**: Si se provee un ID de ticket o se solicita consultar la plataforma de gestión, intente cargar los detalles utilizando Jira MCP. Si no está configurado, utilice Plane MCP como alternativa.
 
 ### 2. Directiva de Búsqueda de Contexto Real (MANDATORIA)
-- **Prohibido Adivinar**: El agente **NUNCA** debe adivinar nombres de campos, modelos de Odoo, estructuras XML o XML IDs de vistas nativas.
-- **Investigación Activa**: Es obligatorio buscar y validar los elementos directamente en el código fuente del entorno de Odoo 18.0 (ej. en la ruta de enterprise `D:\Projects\Odoo\o18-env\enterprise` o la carpeta community correspondiente) o realizando consultas a la base de datos PostgreSQL activa para verificar la existencia real de los campos.
+- **Prohibido Adivinar**: El agente **NUNCA** debe adivinar nombres de campos, modelos
+  de Odoo, estructuras XML o XML IDs de vistas nativas.
+- **Investigación Activa**: Es obligatorio buscar y validar los elementos directamente
+  en el código fuente del entorno de Odoo 18.0 o realizando consultas a la base de datos
+  PostgreSQL activa para verificar la existencia real de los campos.
+- **Rutas Locales Configurables**: Para ubicar el código de Odoo, use
+  `config/local.paths.json` (no versionado), creado con
+  `python scripts/setup_assistant.py init`:
+  - `odoo_community_root` (obligatoria)
+  - `odoo_enterprise_root` (opcional)
 
 ### 3. Validación de Completitud Técnica para Odoo
 Asegúrese de mapear y enriquecer el ticket para que contenga:
