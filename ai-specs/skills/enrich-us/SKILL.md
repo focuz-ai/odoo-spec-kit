@@ -2,7 +2,7 @@
 name: enrich-us
 description:
   Analiza y enriquece historias de usuario (tickets) con detalles técnicos listos para
-  desarrollo en Odoo 17.0, obligando a verificar contexto real y conectando con Jira MCP
+  desarrollo en Odoo 16.0, obligando a verificar contexto real y conectando con Jira MCP
   / Plane MCP.
 author: Focuz AI
 version: 1.0.0
@@ -12,7 +12,7 @@ version: 1.0.0
 
 Esta skill guía al agente en el análisis de una solicitud de negocio o ticket para
 estructurarla con el nivel de detalle técnico que requiere el desarrollo autónomo en
-Odoo 17.0.
+Odoo 16.0.
 
 ---
 
@@ -34,7 +34,7 @@ estos pasos:
 - **Prohibido Adivinar**: El agente **NUNCA** debe adivinar nombres de campos, modelos
   de Odoo, estructuras XML o XML IDs de vistas nativas.
 - **Investigación Activa**: Es obligatorio buscar y validar los elementos directamente
-  en el código fuente del entorno de Odoo 17.0 o realizando consultas a la base de datos
+  en el código fuente del entorno de Odoo 16.0 o realizando consultas a la base de datos
   PostgreSQL activa para verificar la existencia real de los campos.
 - **Rutas Locales Configurables**: Para ubicar el código de Odoo, use
   `config/local.paths.json` (no versionado), creado con
@@ -52,7 +52,9 @@ Asegúrese de mapear y enriquecer el ticket para que contenga:
 - **Seguridad**: Identificar si requiere nuevos accesos en `ir.model.access.csv` o
   reglas de registro (`record rules`) en XML.
 - **Vistas XML**: Listar las vistas (Form, Tree, Kanban, etc.) que se modificarán o
-  crearán, incluyendo la ruta técnica de los campos y las expresiones XPath de herencia.
+  crearán, incluyendo la ruta técnica de los campos, las expresiones XPath de herencia y
+  el uso estricto de `attrs`/`states` para visibilidad dinámica (obligatorio en Odoo
+  16.0).
 - **Wizards y Acciones**: Definir si se requiere un `TransientModel` para flujos paso a
   paso o acciones de servidor.
 - **Estrategia de Verificación**: Especificar qué pruebas unitarias de backend
@@ -69,5 +71,9 @@ Retorne la respuesta en markdown estructurado en dos secciones principales:
 
 ### 5. Actualización en la Plataforma (Opcional)
 
-Si se encuentra en modo Jira/Plane, escriba la versión mejorada de regreso en el ticket
-correspondiente bajo las secciones `[original]` y `[enhanced]`.
+Si se encuentra en modo Jira/Plane:
+
+- Escriba la versión mejorada de regreso en el ticket correspondiente bajo las secciones
+  `h2` claras `[original]` y `[enhanced]` legibles.
+- Si el estado actual del ticket es `To refine`, cámbielo a
+  `Pending refinement validation`.

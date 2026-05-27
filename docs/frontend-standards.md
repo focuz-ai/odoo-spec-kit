@@ -149,7 +149,7 @@ reactiva ante los cambios del estado del componente.
 ### Directivas Esenciales:
 
 - **`t-esc` / `t-out`**: Para evaluar y escapar/renderizar variables de texto en el DOM
-  (en Odoo 18, `t-out` reemplaza en la mayoría de los casos a `t-raw` por seguridad
+  (en Odoo 16+, `t-out` reemplaza en la mayoría de los casos a `t-raw` por seguridad
   contra inyección XSS).
 - **`t-if` / `t-elif` / `t-else`**: Para renderizado condicional.
 - **`t-foreach` + `t-as`**: Para bucles iterativos. Es obligatorio incluir un atributo
