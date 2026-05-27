@@ -68,7 +68,8 @@ repos:
         verbose: true
         types: [javascript]
         language: node
-        additional_dependencies: ["eslint@9.35.0", "eslint-plugin-jsdoc@57.0.8", "globals@16.0.0"]
+        additional_dependencies:
+          ["eslint@9.35.0", "eslint-plugin-jsdoc@57.0.8", "globals@16.0.0"]
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:
