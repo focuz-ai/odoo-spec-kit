@@ -109,7 +109,7 @@ def cmd_check(_: argparse.Namespace) -> int:
     ent = data.get("odoo_enterprise_root", "")
     if not comm:
         hint = "python scripts/setup_assistant.py init"
-        print("Falta 'odoo_community_root'. " f"Ejecute: {hint}")
+        print(f"Falta 'odoo_community_root'. Ejecute: {hint}")
         return 1
     ok_comm, issues_comm = _validate_community(comm)
     if not ok_comm:
@@ -136,7 +136,7 @@ def cmd_show(_: argparse.Namespace) -> int:
     data = _load_config()
     if not data:
         hint = "python scripts/setup_assistant.py init"
-        print("No hay configuración local. " f"Ejecute: {hint}")
+        print(f"No hay configuración local. Ejecute: {hint}")
         return 1
     print(json.dumps(data, indent=2, ensure_ascii=False))
     return 0
