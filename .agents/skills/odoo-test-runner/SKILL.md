@@ -1,1 +1,0 @@
-../../../ai-specs/skills/odoo-test-runner/SKILL.md
