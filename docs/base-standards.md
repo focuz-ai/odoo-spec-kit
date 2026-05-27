@@ -1,9 +1,9 @@
 ---
-description: Este documento contiene todas las reglas y directrices de desarrollo para este proyecto, aplicables a todos los agentes de IA (Claude, Cursor, Codex, Gemini, etc.) en Odoo 17.0.
+description: Este documento contiene todas las reglas y directrices de desarrollo para este proyecto, aplicables a todos los agentes de IA (Claude, Cursor, Codex, Gemini, etc.) en Odoo 16.0.
 alwaysApply: true
 ---
 
-# Reglas de Agentes y Estándares de Ingeniería (Odoo 17.0)
+# Reglas de Agentes y Estándares de Ingeniería (Odoo 16.0)
 
 
 ## 1. Principios Core

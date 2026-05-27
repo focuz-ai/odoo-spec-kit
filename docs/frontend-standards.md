@@ -1,4 +1,4 @@
-# Estándares de Desarrollo Frontend en Odoo 17.0 (Frontend Standards)
+# Estándares de Desarrollo Frontend en Odoo 16.0 (Frontend Standards)
 
 ## Tabla de Contenidos
 
@@ -16,13 +16,13 @@
 
 ## 1. Stack Tecnológico
 
-El frontend del cliente web de Odoo 17.0 está construido sobre las siguientes tecnologías principales:
+El frontend del cliente web de Odoo 16.0 está construido sobre las siguientes tecnologías principales:
 
 - **OWL 2 (Odoo Web Library)**: Framework moderno de componentes reactivos basado en clases y hooks de JavaScript, adaptado al DOM virtual.
 - **QWeb (XML)**: Motor de plantillas XML utilizado tanto para renderizado en servidor como para renderizado dinámico en cliente (JS).
 - **Bootstrap 5**: Framework CSS subyacente personalizado para la estructura y componentes UI nativos.
 - **SCSS**: Preprocesador de CSS utilizado para extender y modificar el diseño visual de Odoo.
-- **QUnit**: El framework de pruebas unitarias y de integración oficial de Odoo 17.0 para JavaScript.
+- **QUnit**: El framework de pruebas unitarias y de integración oficial de Odoo 16.0 para JavaScript.
 
 ---
 
@@ -174,7 +174,7 @@ Odoo empaqueta todos los recursos de frontend (JS, CSS, SCSS, plantillas XML de 
 # __manifest__.py
 {
     'name': 'Mi Módulo Frontend',
-    'version': '17.0.1.0.0',
+    'version': '16.0.1.0.0',
     'depends': ['web'],
     'data': [
         # Archivos XML de backend tradicionales van aquí (vistas, security)
@@ -195,7 +195,7 @@ Odoo empaqueta todos los recursos de frontend (JS, CSS, SCSS, plantillas XML de 
 ```
 
 > [!IMPORTANT]
-> **Registro en Odoo 17.0**: En Odoo 17.0 (y 16.0+), las plantillas QWeb JS se registran directamente dentro del bundle principal (como `'web.assets_backend'`) y no bajo un bundle separado de QWeb. Además, todo recurso estático debe ser registrado en los assets del manifiesto y no importado mediante etiquetas de script/style en vistas XML.
+> **Registro en Odoo 16.0**: En Odoo 16.0+, las plantillas QWeb JS se registran directamente dentro del bundle principal (como `'web.assets_backend'`) y no bajo un bundle separado de QWeb. Además, todo recurso estático debe ser registrado en los assets del manifiesto y no importado mediante etiquetas de script/style en vistas XML.
 
 ---
 
@@ -226,7 +226,7 @@ Odoo empaqueta todos los recursos de frontend (JS, CSS, SCSS, plantillas XML de 
 
 ## 7. Pruebas Frontend con QUnit y Web Test Helpers
 
-Odoo 17.0 utiliza **QUnit** como su motor de pruebas unitarias y de integración oficial para JavaScript en el cliente web.
+Odoo 16.0 utiliza **QUnit** como su motor de pruebas unitarias y de integración oficial para JavaScript en el cliente web.
 
 ### Conceptos Clave de QUnit:
 - **`QUnit.module` / `QUnit.test`**: Para estructurar, agrupar y nombrar los casos de prueba.
@@ -289,7 +289,7 @@ QUnit.test("Debería renderizar el mensaje y reaccionar al click", async (assert
 
 ## 8. Creación de Widgets de Campos Personalizados
 
-En Odoo 17.0, los widgets de campos del formulario se crean extendiendo de `Component` de OWL 2, recibiendo propiedades estándar del formulario en `props` y registrándolos en el registry `fields`. Los datos del registro se leen directamente desde `props.record.data[props.name]`.
+En Odoo 16.0, los widgets de campos del formulario se crean extendiendo de `Component` de OWL 2, recibiendo propiedades estándar del formulario en `props` (como `value` para el valor del campo y `update` para actualizarlo) y registrando la clase directamente en el registry `fields`.
 
 ```javascript
 // static/src/js/campos/mi_campo_color.js
@@ -298,26 +298,24 @@ import { standardFieldProps } from "@web/views/fields/standard_field_props";
 import { Component } from "@odoo/owl";
 
 export class MiCampoColor extends Component {
-    static template = "mi_modulo.MiCampoColor";
-    static props = {
-        ...standardFieldProps,
-    };
-
     get colorClass() {
-        return `bg-${this.props.record.data[this.props.name] || 'light'}`;
+        return `bg-${this.props.value || 'light'}`;
     }
 
     seleccionarColor(color) {
-        // Actualizar el valor del campo en el recordset del formulario de forma síncrona
-        this.props.record.update({ [this.props.name]: color });
+        // Actualizar el valor del campo llamando a la función update provista en las props
+        this.props.update(color);
     }
 }
 
+MiCampoColor.template = "mi_modulo.MiCampoColor";
+MiCampoColor.props = {
+    ...standardFieldProps,
+};
+MiCampoColor.supportedTypes = ["char", "selection"];
+
 // Registrar el widget para hacerlo utilizable en XML mediante widget="mi_campo_color"
-registry.category("fields").add("mi_campo_color", {
-    component: MiCampoColor,
-    supportedTypes: ["char", "selection"],
-});
+registry.category("fields").add("mi_campo_color", MiCampoColor);
 ```
 
 ---

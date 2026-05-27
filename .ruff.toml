@@ -1,7 +1,7 @@
-# Configuración de Ruff para Odoo 17.0
+# Configuración de Ruff para Odoo 16.0
 
 # Nivel general de compatibilidad con Python
-target-version = "py311"
+target-version = "py310"
 
 # Longitud máxima de línea estándar en Odoo
 line-length = 120

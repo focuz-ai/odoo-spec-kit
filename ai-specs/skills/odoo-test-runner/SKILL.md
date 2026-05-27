@@ -7,7 +7,7 @@ version: 1.0.0
 
 # Skill: Ejecución de Tests Odoo (/odoo-test-runner)
 
-Esta skill proporciona los comandos y metodologías para lanzar y diagnosticar pruebas de Odoo 17.0.
+Esta skill proporciona los comandos y metodologías para lanzar y diagnosticar pruebas de Odoo 16.0.
 
 ---
 

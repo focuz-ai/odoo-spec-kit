@@ -1,4 +1,4 @@
-# Estándares de Desarrollo Backend y Vistas XML en Odoo 17.0 (Backend Standards)
+# Estándares de Desarrollo Backend y Vistas XML en Odoo 16.0 (Backend Standards)
 
 > [!IMPORTANT]
 > Este documento rige todas las decisiones de diseño técnico, estructura y codificación del backend y las vistas XML del proyecto. Todos los agentes de IA deben utilizarlo como la guía maestra de estándares backend.
@@ -8,8 +8,8 @@
 ## 1. Stack Tecnológico
 
 - **Lenguaje**: Python 3.10+
-- **Plataforma**: Odoo 17.0 (Community y Enterprise)
-- **Base de Datos**: PostgreSQL 15+
+- **Plataforma**: Odoo 16.0 (Community y Enterprise)
+- **Base de Datos**: PostgreSQL 12+
 - **API**: JSON-RPC 2.0 y XML-RPC para integraciones externas.
 
 ---
@@ -22,7 +22,7 @@ Odoo cuenta con tres clases base fundamentales para la persistencia de datos:
 - **`models.TransientModel`**: Modelos temporales para Wizards. Se limpian periódicamente de la base de datos de forma automática.
 - **`models.AbstractModel`**: Modelos abstractos que no tienen tabla física propia, pero sirven para heredar campos y comportamientos a múltiples modelos.
 
-### Buenas Prácticas y Patrones de Odoo 17.0:
+### Buenas Prácticas y Patrones de Odoo 16.0:
 - **Decorador `@api.model_create_multi`**: Obligatorio en todos los métodos `create(self, vals_list)`. Este decorador permite que Odoo procese la creación de registros en lotes eficientes (batching), reduciendo el número de queries `INSERT`.
 - **Atributo `precompute=True`**: Utilizar en campos computados almacenados (`store=True`) que se necesiten calcular antes de escribir el registro en la base de datos (evitando una query `UPDATE` posterior).
 - **Atributo `check_company=True`**: Obligatorio en todos los campos relacionales (`Many2one`, `Many2many`, `One2many`) que involucren modelos multi-compañía para forzar la restricción del entorno (evita que un usuario asocie un registro de la Compañía A con uno de la Compañía B).
@@ -52,11 +52,11 @@ class FacturaLocal(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        # Implementación por lotes tipada
+        # Implementación por lotes
         return super().create(vals_list)
 
-    def write(self: api.Self, vals: api.ValuesType) -> bool:
-        # Métodos write tipados
+    def write(self, vals) -> bool:
+        # Método write
         return super().write(vals)
 ```
 
@@ -98,18 +98,18 @@ Odoo soporta tres tipos principales de herencia:
 
 - **`ir.model.access.csv`**: Todo modelo debe estar declarado en este archivo con permisos de lectura, escritura, creación y eliminación para los grupos correspondientes.
 - **Record Rules (XML)**: Utilizar record rules con `domain_force` para restringir el acceso a nivel de fila (multi-compañía, multi-sucursal).
-- **Prevención de Inyección SQL**: **NUNCA** construya consultas crudas concatenando o formateando variables (`f"SELECT ... WHERE id = {mi_id}"`). Es obligatorio utilizar la clase `odoo.tools.SQL`:
+- **Prevención de Inyección SQL**: **NUNCA** construya consultas crudas concatenando o formateando variables (`f"SELECT ... WHERE id = {mi_id}"`). Es obligatorio utilizar la parametrización de consultas pasando los argumentos como una tupla o lista al método `execute`:
 ```python
-from odoo.tools import SQL
-
 # CORRECTO
-self.env.cr.execute(SQL("SELECT name FROM res_partner WHERE id = %s", partner_id))
+self.env.cr.execute("SELECT name FROM res_partner WHERE id = %s", (partner_id,))
 
-# CORRECTO (Usando SQL composition de Odoo 17.0)
-query = SQL("SELECT name FROM res_partner")
+# CORRECTO (Con composición condicional de consultas en Odoo 16.0)
+query = "SELECT name FROM res_partner"
+params = []
 if partner_id:
-    query = SQL("%s WHERE id = %s", query, partner_id)
-self.env.cr.execute(query)
+    query += " WHERE id = %s"
+    params.append(partner_id)
+self.env.cr.execute(query, tuple(params))
 ```
 - **Uso de `sudo()`**: Limitar el uso de `sudo()` únicamente para omitir validaciones de acceso en operaciones de sistema controladas. Inmediatamente después de `sudo()`, use `with_user()` para volver a limitar privilegios si es necesario.
 
@@ -120,7 +120,7 @@ self.env.cr.execute(query)
 Las vistas XML de Odoo deben ser limpias y usar herencia mediante expresiones `xpath` precisas.
 
 > [!IMPORTANT]
-> **Prohibición de `attrs`**: En Odoo 17.0, el atributo `attrs` está completamente eliminado del core. Está estrictamente prohibido su uso. Use en su lugar los atributos booleanos directos con expresiones declarativas lógicas (ej. `invisible="state != 'draft'"`, `readonly="state == 'posted'"`, `required="state == 'open'"`).
+> **Uso obligatorio de `attrs` y `states`**: En Odoo 16.0, para la visibilidad, obligatoriedad o edición dinámica de campos, se debe utilizar el atributo `attrs` en las vistas XML (ej. `attrs="{'invisible': [('state', '!=', 'draft')]}"`) o `states` (ej. `states="draft,sent"`). Los atributos booleanos directos con expresiones lógicas (ej. `invisible="state != 'draft'"`) no son soportados de forma nativa en la mayoría de los elementos de vista.
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -132,7 +132,7 @@ Las vistas XML de Odoo deben ser limpias y usar herencia mediante expresiones `x
         <field name="arch" type="xml">
             <form string="Factura Local">
                 <header>
-                    <button name="action_aprobar" string="Aprobar" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_aprobar" string="Aprobar" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,open,close"/>
                 </header>
                 <sheet>

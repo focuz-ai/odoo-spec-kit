@@ -1,7 +1,7 @@
 # Directrices de Estilo de Código de Odoo (Coding Guidelines)
 
 > [!IMPORTANT]
-> Este documento sintetiza las directrices oficiales de estilo de código de Odoo 17.0. Es obligatorio que todos los copilots de IA y agentes de desarrollo sigan estas reglas estrictamente para garantizar la legibilidad, mantenimiento y extensibilidad de los módulos.
+> Este documento sintetiza las directrices oficiales de estilo de código de Odoo 16.0. Es obligatorio que todos los copilots de IA y agentes de desarrollo sigan estas reglas estrictamente para garantizar la legibilidad, mantenimiento y extensibilidad de los módulos.
 
 ---
 

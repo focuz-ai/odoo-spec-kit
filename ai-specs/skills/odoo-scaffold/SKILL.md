@@ -1,6 +1,6 @@
 ---
 name: odoo-scaffold
-description: Use esta skill cuando necesite inicializar la estructura de carpetas y archivos base de un nuevo módulo o addon para Odoo 17.0.
+description: Use esta skill cuando necesite inicializar la estructura de carpetas y archivos base de un nuevo módulo o addon para Odoo 16.0.
 author: Focuz AI
 version: 1.0.0
 ---
@@ -52,7 +52,7 @@ Descripción detallada de los objetivos y alcance del módulo.
     'author': 'Focuz AI',
     'website': 'https://focuz.ai',
     'category': 'Accounting',  # Foco inicial
-    'version': '17.0.1.0.0',
+    'version': '16.0.1.0.0',
     'depends': ['base', 'account'],  # Dependencias contables por defecto
     'data': [
         'security/ir.model.access.csv',
