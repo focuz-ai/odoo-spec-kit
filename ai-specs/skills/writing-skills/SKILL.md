@@ -9,10 +9,11 @@ description:
 
 ## Overview
 
-**Writing skills IS Test-Driven Development applied to process documentation.**
+**Writing skills IS Specification-Driven Development (SDD) applied to process
+documentation.**
 
-**Personal skills live in agent-specific directories (`~/.claude/skills` for Claude
-Code, `~/.agents/skills/` for Codex)**
+**Las skills del proyecto viven en el directorio canónico (`ai-specs/skills/`) y se
+enlazan mediante symlinks a carpetas espejo (`.claude/`, `.cursor/`, `.agents/`)**
 
 You write test cases (pressure scenarios with subagents), watch them fail (baseline
 behavior), write the skill (documentation), watch tests pass (agents comply), and
@@ -21,13 +22,13 @@ refactor (close loopholes).
 **Core principle:** If you didn't watch an agent fail without the skill, you don't know
 if the skill teaches the right thing.
 
-**REQUIRED BACKGROUND:** You MUST understand superpowers:test-driven-development before
-using this skill. That skill defines the fundamental RED-GREEN-REFACTOR cycle. This
-skill adapts TDD to documentation.
+**REQUIRED BACKGROUND:** You MUST understand
+superpowers:specification-driven-development before using this skill. That skill defines
+the fundamental SPECIFY-IMPLEMENT-REVIEW cycle. This skill adapts SDD to documentation.
 
 **Official guidance:** For Anthropic's official skill authoring best practices, see
 anthropic-best-practices.md. This document provides additional patterns and guidelines
-that complement the TDD-focused approach in this skill.
+that complement the SDD-focused approach in this skill.
 
 ## What is a Skill?
 
@@ -38,22 +39,22 @@ future Claude instances find and apply effective approaches.
 
 **Skills are NOT:** Narratives about how you solved a problem once
 
-## TDD Mapping for Skills
+## SDD Mapping for Skills
 
-| TDD Concept             | Skill Creation                                   |
-| ----------------------- | ------------------------------------------------ |
-| **Test case**           | Pressure scenario with subagent                  |
-| **Production code**     | Skill document (SKILL.md)                        |
-| **Test fails (RED)**    | Agent violates rule without skill (baseline)     |
-| **Test passes (GREEN)** | Agent complies with skill present                |
-| **Refactor**            | Close loopholes while maintaining compliance     |
-| **Write test first**    | Run baseline scenario BEFORE writing skill       |
-| **Watch it fail**       | Document exact rationalizations agent uses       |
-| **Minimal code**        | Write skill addressing those specific violations |
-| **Watch it pass**       | Verify agent now complies                        |
-| **Refactor cycle**      | Find new rationalizations → plug → re-verify     |
+| SDD Concept                   | Skill Creation                                   |
+| ----------------------------- | ------------------------------------------------ |
+| **Specification scenario**    | Pressure scenario with subagent                  |
+| **Implementation**            | Skill document (SKILL.md)                        |
+| **Specification gap (FAIL)**  | Agent violates rule without skill (baseline)     |
+| **Specification met (ALIGN)** | Agent complies with skill present                |
+| **Review and Refine**         | Close loopholes while maintaining compliance     |
+| **Define spec first**         | Run baseline scenario BEFORE writing skill       |
+| **Identify gaps**             | Document exact rationalizations agent uses       |
+| **Targeted implementation**   | Write skill addressing those specific violations |
+| **Verify alignment**          | Verify agent now complies                        |
+| **Refinement cycle**          | Find new rationalizations → plug → re-verify     |
 
-The entire skill creation process follows RED-GREEN-REFACTOR.
+The entire skill creation process follows SPECIFY-IMPLEMENT-REVIEW.
 
 ## When to Create a Skill
 
@@ -76,11 +77,11 @@ The entire skill creation process follows RED-GREEN-REFACTOR.
 
 ### Technique
 
-Concrete method with steps to follow (condition-based-waiting, root-cause-tracing)
+Concrete method with steps to follow (odoo-scaffold, commit-odoo)
 
 ### Pattern
 
-Way of thinking about problems (flatten-with-flags, test-invariants)
+Way of thinking about problems (extending-models, handling-qweb-inheritance)
 
 ### Reference
 
@@ -196,7 +197,7 @@ The skill body becomes documentation Claude skips.
 description: Use when executing plans - dispatches subagent per task with code review between tasks
 
 # ❌ BAD: Too much process detail
-description: Use for TDD - write test first, watch it fail, write minimal code, refactor
+description: Use for SDD - define spec first, check for gap, write implementation, review
 
 # ✅ GOOD: Just triggering conditions, no workflow summary
 description: Use when executing implementation plans with independent tasks in the current session
@@ -226,10 +227,10 @@ description: I can help you with async tests when they're flaky
 description: Use when tests use setTimeout/sleep and are flaky
 
 # ✅ GOOD: Starts with "Use when", describes problem, no workflow
-description: Use when tests have race conditions, timing dependencies, or pass/fail inconsistently
+description: Use when OWL component tests have race conditions, timing dependencies, or pass/fail inconsistently
 
 # ✅ GOOD: Technology-specific skill with explicit trigger
-description: Use when using React Router and handling authentication redirects
+description: Use when extending res.partner or adding new invoicing flows
 ```
 
 ### 2. Keyword Coverage
@@ -246,7 +247,7 @@ Use words Claude would search for:
 **Use active voice, verb-first:**
 
 - ✅ `creating-skills` not `skill-creation`
-- ✅ `condition-based-waiting` not `async-test-helpers`
+- ✅ `odoo-scaffold` not `module-creation-helpers`
 
 ### 4. Token Efficiency (Critical)
 
@@ -289,13 +290,14 @@ workflow.
 ```markdown
 # ❌ BAD: Verbose example (42 words)
 
-your human partner: "How did we handle authentication errors in React Router before?"
-You: I'll search past conversations for React Router authentication patterns. [Dispatch
-subagent with search query: "React Router authentication error handling 401"]
+your human partner: "How did we handle overriding the action_post in account.move
+before?" You: I'll search past conversations for account.move action_post inheritance
+patterns. [Dispatch subagent with search query: "account.move action_post super
+inheritance"]
 
 # ✅ GOOD: Minimal example (20 words)
 
-Partner: "How did we handle auth errors in React Router?" You: Searching... [Dispatch
+Partner: "How did we extend action_post in account.move?" You: Searching... [Dispatch
 subagent → synthesis]
 ```
 
@@ -315,10 +317,10 @@ wc -w skills/path/SKILL.md
 
 **Name by what you DO or core insight:**
 
-- ✅ `condition-based-waiting` > `async-test-helpers`
+- ✅ `odoo-scaffold` > `module-creation-helpers`
 - ✅ `using-skills` not `skill-usage`
-- ✅ `flatten-with-flags` > `data-structure-refactoring`
-- ✅ `root-cause-tracing` > `debugging-techniques`
+- ✅ `extending-models` > `inheritance-refactoring`
+- ✅ `debugging-qweb` > `view-debugging-techniques`
 
 **Gerunds (-ing) work well for processes:**
 
@@ -385,9 +387,9 @@ render a skill's flowcharts to SVG:
 
 Choose most relevant language:
 
-- Testing techniques → TypeScript/JavaScript
-- System debugging → Shell/Python
-- Data processing → Python
+- Testing techniques → Python (Odoo tests) / JS (OWL/QWeb)
+- System debugging → Python / PostgreSQL logs
+- Data processing / ORM → Python
 
 **Good example:**
 
@@ -419,9 +421,9 @@ When: All content fits, no heavy reference needed
 ### Skill with Reusable Tool
 
 ```
-condition-based-waiting/
+odoo-test-runner/
   SKILL.md    # Overview + patterns
-  example.ts  # Working helpers to adapt
+  example.py  # Working helpers to adapt
 ```
 
 When: Tool is reusable code, not just narrative
@@ -438,16 +440,16 @@ pptx/
 
 When: Reference material too large for inline
 
-## The Iron Law (Same as TDD)
+## The Iron Law (Same as SDD)
 
 ```
-NO SKILL WITHOUT A FAILING TEST FIRST
+NO SKILL WITHOUT A CLEAR SPECIFICATION FIRST
 ```
 
 This applies to NEW skills AND EDITS to existing skills.
 
-Write skill before testing? Delete it. Start over. Edit skill without testing? Same
-violation.
+Write skill before specifying? Delete it. Start over. Edit skill without checking
+alignment? Same violation.
 
 **No exceptions:**
 
@@ -455,11 +457,11 @@ violation.
 - Not for "just adding a section"
 - Not for "documentation updates"
 - Don't keep untested changes as "reference"
-- Don't "adapt" while running tests
+- Don't "adapt" while reviewing specification
 - Delete means delete
 
-**REQUIRED BACKGROUND:** The superpowers:test-driven-development skill explains why this
-matters. Same principles apply to documentation.
+**REQUIRED BACKGROUND:** The superpowers:specification-driven-development skill explains
+why this matters. Same principles apply to documentation.
 
 ## Testing All Skill Types
 
@@ -467,7 +469,7 @@ Different skill types need different test approaches:
 
 ### Discipline-Enforcing Skills (rules/requirements)
 
-**Examples:** TDD, verification-before-completion, designing-before-coding
+**Examples:** SDD, verification-before-completion, designing-before-coding
 
 **Test with:**
 
@@ -480,7 +482,7 @@ Different skill types need different test approaches:
 
 ### Technique Skills (how-to guides)
 
-**Examples:** condition-based-waiting, root-cause-tracing, defensive-programming
+**Examples:** odoo-scaffold, commit-odoo, debugging-qweb
 
 **Test with:**
 
@@ -531,7 +533,7 @@ Different skill types need different test approaches:
 
 ## Bulletproofing Skills Against Rationalization
 
-Skills that enforce discipline (like TDD) need to resist rationalization. Agents are
+Skills that enforce discipline (like SDD) need to resist rationalization. Agents are
 smart and will find loopholes when under pressure.
 
 **Psychology note:** Understanding WHY persuasion techniques work helps you apply them
@@ -599,7 +601,7 @@ Make it easy for agents to self-check when rationalizing:
 - "It's about spirit not ritual"
 - "This is different because..."
 
-**All of these mean: Delete code. Start over with TDD.**
+**All of these mean: Delete code. Start over with SDD.**
 ```
 
 ### Update CSO for Violation Symptoms
@@ -611,11 +613,11 @@ description:
   use when implementing any feature or bugfix, before writing implementation code
 ```
 
-## RED-GREEN-REFACTOR for Skills
+## SPECIFY-IMPLEMENT-REVIEW for Skills
 
-Follow the TDD cycle:
+Follow the SDD cycle:
 
-### RED: Write Failing Test (Baseline)
+### SPECIFY/FAIL: Define Baseline Gap
 
 Run pressure scenario with subagent WITHOUT the skill. Document exact behavior:
 
@@ -626,14 +628,14 @@ Run pressure scenario with subagent WITHOUT the skill. Document exact behavior:
 This is "watch the test fail" - you must see what agents naturally do before writing the
 skill.
 
-### GREEN: Write Minimal Skill
+### ALIGN: Targeted Implementation
 
 Write skill that addresses those specific rationalizations. Don't add extra content for
 hypothetical cases.
 
 Run same scenarios WITH skill. Agent should now comply.
 
-### REFACTOR: Close Loopholes
+### REVIEW: Close Loopholes
 
 Agent found new rationalization? Add explicit counter. Re-test until bulletproof.
 
@@ -685,17 +687,17 @@ helper1, helper2, step3, pattern4 **Why bad:** Labels should have semantic meani
 Deploying untested skills = deploying untested code. It's a violation of quality
 standards.
 
-## Skill Creation Checklist (TDD Adapted)
+## Skill Creation Checklist (SDD Adapted)
 
 **IMPORTANT: Use TodoWrite to create todos for EACH checklist item below.**
 
-**RED Phase - Write Failing Test:**
+**SPECIFY Phase - Define Baseline Gap:**
 
 - [ ] Create pressure scenarios (3+ combined pressures for discipline skills)
 - [ ] Run scenarios WITHOUT skill - document baseline behavior verbatim
 - [ ] Identify patterns in rationalizations/failures
 
-**GREEN Phase - Write Minimal Skill:**
+**IMPLEMENT Phase - Targeted Implementation:**
 
 - [ ] Name uses only letters, numbers, hyphens (no parentheses/special chars)
 - [ ] YAML frontmatter with required `name` and `description` fields (max 1024 chars;
@@ -709,7 +711,7 @@ standards.
 - [ ] One excellent example (not multi-language)
 - [ ] Run scenarios WITH skill - verify agents now comply
 
-**REFACTOR Phase - Close Loopholes:**
+**REVIEW Phase - Close Loopholes:**
 
 - [ ] Identify NEW rationalizations from testing
 - [ ] Add explicit counters (if discipline skill)
@@ -744,11 +746,11 @@ How future Claude finds your skill:
 
 ## The Bottom Line
 
-**Creating skills IS TDD for process documentation.**
+**Creating skills IS SDD for process documentation.**
 
-Same Iron Law: No skill without failing test first. Same cycle: RED (baseline) → GREEN
-(write skill) → REFACTOR (close loopholes). Same benefits: Better quality, fewer
-surprises, bulletproof results.
+Same Iron Law: No skill without clear specification first. Same cycle: SPECIFY (baseline
+gap) → IMPLEMENT (targeted solution) → REVIEW (close loopholes). Same benefits: Better
+quality, fewer surprises, bulletproof results.
 
-If you follow TDD for code, follow it for skills. It's the same discipline applied to
+If you follow SDD for code, follow it for skills. It's the same discipline applied to
 documentation.

@@ -24,7 +24,7 @@ N=28,000 AI conversations. Persuasion techniques more than doubled compliance ra
 
 **When to use:**
 
-- Discipline-enforcing skills (TDD, verification requirements)
+- Discipline-enforcing skills (SDD, verification requirements)
 - Safety-critical practices
 - Established best practices
 
