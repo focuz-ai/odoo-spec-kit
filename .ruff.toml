@@ -1,33 +1,24 @@
-# Configuración de Ruff para Odoo 18.0
-
-# Nivel general de compatibilidad con Python
-target-version = "py311"
-
-# Longitud máxima de línea estándar en Odoo
-line-length = 120
+target-version = "py310"
+fix = true
 
 [lint]
-# Reglas seleccionadas
-# E: pycodestyle
-# F: Pyflakes
-# I: isort
-# UP: pyupgrade
-# B: flake8-bugbear
-# C90: mccabe (complejidad)
-select = ["E", "F", "I", "UP", "B", "C90"]
+extend-select = ["B","C90","E501","I","UP"]
+extend-safe-fixes = ["UP008"]
+exclude = ["setup/*"]
 
-# Reglas ignoradas para compatibilidad con el diseño dinámico de Odoo
-ignore = [
-    "UP031",  # Ignorar: "Use format specifiers instead of percent format". Odoo requiere formateo '%' para traducción.
-    "B008",   # Ignorar: "Do not perform function call in argument defaults". Odoo usa fields.Date.today() en defaults.
-    "E501",   # Ignorar: Line too long (ya tenemos line-length pero evitamos fallos duros en XML inline strings).
-    "C901",   # Ignorar: Estructuras complejas heredadas que requieran overrides monolíticos inevitables.
-]
+[format]
+exclude = ["setup/*"]
+
+[lint.per-file-ignores]
+"__init__.py" = ["F401", "I001"]
+"__manifest__.py" = ["B018"]
 
 [lint.isort]
-# Orden de importación específico de Odoo
-section-order = ["future", "standard-library", "third-party", "odoo", "first-party", "local-folder"]
+section-order = ["future", "standard-library", "third-party", "odoo", "odoo-addons", "first-party", "local-folder"]
 
 [lint.isort.sections]
-# Definir sección especial para Odoo para priorizar importaciones del core
-"odoo" = ["odoo", "odoo.tools"]
+"odoo" = ["odoo"]
+"odoo-addons" = ["odoo.addons"]
+
+[lint.mccabe]
+max-complexity = 16
