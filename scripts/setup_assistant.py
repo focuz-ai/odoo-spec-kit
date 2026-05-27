@@ -27,7 +27,9 @@ def _validate_community(path_str: str) -> tuple[bool, list[str]]:
     if not (path / "odoo-bin").exists():
         issues.append("No se encontró 'odoo-bin' en la raíz indicada.")
     if not ((path / "odoo" / "addons").exists() or (path / "addons").exists()):
-        issues.append("No se encontró carpeta de addons esperada ('odoo/addons' o 'addons').")
+        issues.append(
+            "No se encontró carpeta de addons esperada ('odoo/addons' o 'addons')."
+        )
     return len(issues) == 0, issues
 
 
@@ -51,7 +53,9 @@ def _load_config() -> dict:
 
 def _save_config(data: dict) -> None:
     CONFIG_DIR.mkdir(parents=True, exist_ok=True)
-    CONFIG_PATH.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    CONFIG_PATH.write_text(
+        json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
 
 
 def cmd_init(args: argparse.Namespace) -> int:
@@ -78,7 +82,9 @@ def cmd_init(args: argparse.Namespace) -> int:
 
     enterprise = args.enterprise
     if enterprise is None:
-        enterprise = input("Ruta Odoo Enterprise (opcional, Enter para omitir): ").strip()
+        enterprise = input(
+            "Ruta Odoo Enterprise (opcional, Enter para omitir): "
+        ).strip()
     enterprise = _normalize(enterprise) if enterprise else ""
     if enterprise:
         ok_ent, issues_ent = _validate_enterprise(enterprise)
@@ -103,7 +109,7 @@ def cmd_check(_: argparse.Namespace) -> int:
     ent = data.get("odoo_enterprise_root", "")
     if not comm:
         hint = "python scripts/setup_assistant.py init"
-        print("Falta 'odoo_community_root'. " f"Ejecute: {hint}")
+        print(f"Falta 'odoo_community_root'. Ejecute: {hint}")
         return 1
     ok_comm, issues_comm = _validate_community(comm)
     if not ok_comm:
@@ -130,7 +136,7 @@ def cmd_show(_: argparse.Namespace) -> int:
     data = _load_config()
     if not data:
         hint = "python scripts/setup_assistant.py init"
-        print("No hay configuración local. " f"Ejecute: {hint}")
+        print(f"No hay configuración local. Ejecute: {hint}")
         return 1
     print(json.dumps(data, indent=2, ensure_ascii=False))
     return 0
@@ -147,13 +153,19 @@ def cmd_doctor(_: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Asistente de configuración local para Odoo paths.")
+    parser = argparse.ArgumentParser(
+        description="Asistente de configuración local para Odoo paths."
+    )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     parser_init = subparsers.add_parser("init", help="Inicializa configuración local.")
     parser_init.add_argument("--community", help="Ruta absoluta de Odoo Community.")
-    parser_init.add_argument("--enterprise", help="Ruta absoluta de Odoo Enterprise (opcional).")
-    parser_init.add_argument("--reset", action="store_true", help="Sobrescribir configuración existente.")
+    parser_init.add_argument(
+        "--enterprise", help="Ruta absoluta de Odoo Enterprise (opcional)."
+    )
+    parser_init.add_argument(
+        "--reset", action="store_true", help="Sobrescribir configuración existente."
+    )
     parser_init.set_defaults(func=cmd_init)
 
     parser_check = subparsers.add_parser("check", help="Valida configuración actual.")
@@ -162,7 +174,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser_show = subparsers.add_parser("show", help="Muestra configuración actual.")
     parser_show.set_defaults(func=cmd_show)
 
-    parser_doctor = subparsers.add_parser("doctor", help="Diagnóstico y siguiente acción.")
+    parser_doctor = subparsers.add_parser(
+        "doctor", help="Diagnóstico y siguiente acción."
+    )
     parser_doctor.set_defaults(func=cmd_doctor)
 
     return parser

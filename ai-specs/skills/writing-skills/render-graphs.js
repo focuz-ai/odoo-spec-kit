@@ -128,7 +128,9 @@ function main() {
     process.exit(0);
   }
 
-  console.log(`Found ${blocks.length} diagram(s) in ${path.basename(skillDir)}/SKILL.md`);
+  console.log(
+    `Found ${blocks.length} diagram(s) in ${path.basename(skillDir)}/SKILL.md`
+  );
 
   const outputDir = path.join(skillDir, "diagrams");
   if (!fs.existsSync(outputDir)) {

@@ -1,27 +1,8 @@
-# Configuration of Ruff for Odoo 17.0 and Enterprise compatibility
-
 target-version = "py310"
-line-length = 120
 fix = true
 
 [lint]
-# Select specific rules
-# E: pycodestyle
-# F: Pyflakes
-# I: isort
-# UP: pyupgrade
-# B: flake8-bugbear
-# C90: mccabe (complexity)
-select = ["E", "F", "I", "UP", "B", "C90"]
-
-# Specific ignore patterns for Odoo framework design
-ignore = [
-    "UP031",  # Ignore: "Use format specifiers instead of percent format". Odoo requires % formatting for translations.
-    "B008",   # Ignore: "Do not perform function call in argument defaults". Odoo fields define defaults with function calls.
-    "E501",   # Ignore: Line too long (we use line-length but avoid hard failures on inline XML strings/comments).
-    "C901",   # Ignore: McCabe complexity (Odoo inherited methods are frequently complex).
-]
-
+extend-select = ["B","C90","E501","I","UP"]
 extend-safe-fixes = ["UP008"]
 exclude = ["setup/*"]
 
@@ -29,8 +10,8 @@ exclude = ["setup/*"]
 exclude = ["setup/*"]
 
 [lint.per-file-ignores]
-"__init__.py" = ["F401", "I001"]  # Ignore unused and unsorted imports in __init__.py
-"__manifest__.py" = ["B018"]  # Ignore useless expressions in manifests
+"__init__.py" = ["F401", "I001"]
+"__manifest__.py" = ["B018"]
 
 [lint.isort]
 section-order = ["future", "standard-library", "third-party", "odoo", "odoo-addons", "first-party", "local-folder"]

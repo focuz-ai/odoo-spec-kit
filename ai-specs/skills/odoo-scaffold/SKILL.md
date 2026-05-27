@@ -1,13 +1,16 @@
 ---
 name: odoo-scaffold
-description: Use esta skill cuando necesite inicializar la estructura de carpetas y archivos base de un nuevo módulo o addon para Odoo 17.0.
+description:
+  Use esta skill cuando necesite inicializar la estructura de carpetas y archivos base
+  de un nuevo módulo o addon para Odoo 17.0.
 author: Focuz AI
 version: 1.0.0
 ---
 
 # Skill: Scaffolding de Módulos Odoo (/odoo-scaffold)
 
-Esta skill define la automatización del andamiaje (scaffold) para crear módulos Odoo robustos y alineados con las directrices de `docs/coding-guidelines.md`.
+Esta skill define la automatización del andamiaje (scaffold) para crear módulos Odoo
+robustos y alineados con las directrices de `docs/coding-guidelines.md`.
 
 ---
 
@@ -39,6 +42,7 @@ mi_modulo/
 ## Contenido de Archivos Plantilla (Español)
 
 ### 1. `__manifest__.py`
+
 El manifiesto debe incluir los metadatos y bundles vacíos iniciales:
 
 ```python
@@ -72,12 +76,15 @@ Descripción detallada de los objetivos y alcance del módulo.
 ```
 
 ### 2. `security/ir.model.access.csv`
+
 Encabezado estándar de ACLs de Odoo:
+
 ```csv
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 ```
 
 ### 3. Archivos `__init__.py`
+
 - Raíz:
   ```python
   # -*- coding: utf-8 -*-
