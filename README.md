@@ -203,36 +203,47 @@ Todas las rutas de directrices técnicas y las habilidades específicas de los a
 
 El desarrollo utilizando **odoo-spec-kit** sigue un ciclo de vida estrictamente verificado:
 
-1. **`/enrich-us`**: Analiza y enriquece el requerimiento de negocio conectándose a Jira o Plane MCP, y buscando de forma obligatoria en el código real de Odoo en lugar de adivinar nombres de campos.
+1. **`/odoo-enrich-us`**: Analiza y enriquece el requerimiento de negocio conectándose a Jira o Plane MCP, y buscando de forma obligatoria en el código real de Odoo en lugar de adivinar nombres de campos.
 2. **`/propose`**: Diseña la especificación técnica en markdown detallando modelos, campos, lógica de negocio y pruebas.
 3. **`/apply`**: Escribe el código fuente de forma incremental.
-4. **`/verify` + `/security-audit` + `/code-review-and-repair`**:
+4. **`/verify` + `/odoo-security-audit` + `/odoo-adversarial-review`**:
    - Tras completar el código, el agente prueba la especificación con `/verify`.
    - Luego, se ejecutan las auditorías de seguridad y funcionales que activan el **Bucle de Autoreparación** si hay fallos en las pruebas.
 5. **`/archive`**: Archiva el ciclo de cambios.
-6. **`/commit-odoo`**: Crea commits enfocados y gestiona PR después de la verificación con el formato oficial de Odoo (ej. `[ADD] mi_modulo: agregar facturación local`).
+6. **`/odoo-commit`**: Crea commits enfocados y gestiona PR después de la verificación con el formato oficial de Odoo (ej. `[ADD] mi_modulo: agregar facturación local`).
 
 ### Opcional: Integraciones MCP (Jira + Plane)
 
 Este flujo de trabajo se ve reforzado con servidores de Protocolo de Contexto de Modelo (MCP) integrados en el flujo. Estos son opcionales y pueden omitirse o reemplazarse por herramientas equivalentes:
 
-- **Jira MCP / Plane MCP (recomendados en `/enrich-us`)**: Permiten al agente leer directamente los tickets desde sus tableros de gestión para enriquecer las historias de usuario sin necesidad de copiar y pegar manualmente.
+- **Jira MCP / Plane MCP (recomendados en `/odoo-enrich-us`)**: Permiten al agente leer directamente los tickets desde sus tableros de gestión para enriquecer las historias de usuario sin necesidad de copiar y pegar manualmente.
 
 ### Ejemplo: Flujo de Extremo a Extremo (End-to-End)
 
-Usa estos comandos en secuencia:
+Primer paso opcional (recomendado para ambos flujos): crea un worktree dedicado antes de ejecutar el flujo de comandos y límpialo al terminar. El skill `using-git-worktrees` puede automatizar esto.
 
-Primer paso opcional (recomendado): crea un worktree dedicado antes de ejecutar el flujo de comandos y límpialo al terminar. El skill `using-git-worktrees` puede automatizar esto.
+#### 1. Flujo Core (Orquestado - 4 Pasos)
+Este es el flujo principal recomendado. Agrupa la construcción, auditoría, auto-reparación y cierre en orquestadores autónomos:
 
 ```bash
-/enrich-us TICKET-101
+/odoo-enrich-us TICKET-101
+/propose TICKET-101
+/odoo-build-and-qa TICKET-101
+/odoo-ship TICKET-101
+```
+
+#### 2. Flujo Extendido (Paso a Paso - 8 Pasos)
+Útil si necesitas control granular o depuración manual en cada fase de la implementación y auditoría:
+
+```bash
+/odoo-enrich-us TICKET-101
 /propose TICKET-101
 /apply TICKET-101
 /verify TICKET-101
-/security-audit TICKET-101
-/code-review-and-repair TICKET-101
+/odoo-security-audit TICKET-101
+/odoo-adversarial-review TICKET-101
 /archive TICKET-101
-/commit-odoo
+/odoo-commit
 ```
 
 Los artefactos se gestionan y guardan a través de las carpetas de OpenSpec durante este flujo, incluyendo los reportes de pruebas unitarias y de revisión adversarial de seguridad.
@@ -241,15 +252,17 @@ Los artefactos se gestionan y guardan a través de las carpetas de OpenSpec dura
 
 Las habilidades del kit residen en `ai-specs/skills/` y se vinculan a `.agents/skills/`, `.claude/skills/` y `.cursor/skills/` para facilitar su descubrimiento:
 
-- **`code-auditing`** — Metodología estructurada en español para realizar auditorías de calidad de código y detectar deuda técnica en módulos Odoo.
-- **`code-review-and-repair`** — Revisa la funcionalidad, rendimiento y cumplimiento de directrices del código Odoo. Incluye verificación contra el Spec Funcional (SDD) y un bucle de autoreparación autónomo ante fallos.
-- **`commit-odoo`** — Crea commits y abre Pull Requests estructurados siguiendo las directrices oficiales de Odoo (Git Guidelines) y en idioma español.
-- **`enrich-us`** — Analiza y enriquece historias de usuario con detalles técnicos completos y listos para implementación en Odoo EE siguiendo el Spec-Driven Development.
-- **`explain`** — Enseña conceptos fundamentales y avanzados de Odoo (ORM, OWL, Contabilidad, Seguridad) cerrando brechas conceptuales mediante modelos mentales y cuestionarios interactivos.
+- **`odoo-build-and-qa`** — Construye el código, verifica, realiza auditoría de seguridad y auto-repara en un bucle autónomo.
+- **`odoo-code-auditing`** — Metodología estructurada en español para realizar auditorías de calidad de código y detectar deuda técnica en módulos Odoo.
+- **`odoo-adversarial-review`** — Revisa la funcionalidad, rendimiento y cumplimiento de directrices del código Odoo. Incluye verificación contra el Spec Funcional (SDD) y un bucle de autoreparación autónomo ante fallos.
+- **`odoo-commit`** — Crea commits y abre Pull Requests estructurados siguiendo las directrices oficiales de Odoo (Git Guidelines) y en idioma español.
+- **`odoo-enrich-us`** — Analiza y enriquece historias de usuario con detalles técnicos completos y listos para implementación en Odoo EE siguiendo el Spec-Driven Development.
+- **`odoo-explain`** — Enseña conceptos fundamentales y avanzados de Odoo (ORM, OWL, Contabilidad, Seguridad) cerrando brechas conceptuales mediante modelos mentales y cuestionarios interactivos.
 - **`meta-prompt`** — Reescribe prompts utilizando las mejores prácticas de ingeniería de prompts para obtener resultados precisos y completos.
 - **`odoo-scaffold`** — Inicializa la estructura de carpetas y archivos base de un nuevo módulo o addon para Odoo.
 - **`odoo-test-runner`** — Ejecuta la suite de pruebas unitarias o de integración en Odoo, filtrando por módulo o etiqueta y extrayendo resultados detallados.
-- **`security-audit`** — Realiza la auditoría estática de seguridad y permisos en módulos de Odoo EE. Cruza ACLs, reglas de registro, detecta inyecciones SQL y previene XSS en vistas QWeb.
+- **`odoo-security-audit`** — Realiza la auditoría estática de seguridad y permisos en módulos de Odoo EE. Cruza ACLs, reglas de registro, detecta inyecciones SQL y previene XSS en vistas QWeb.
+- **`odoo-ship`** — Orquestador final que archiva el ticket completado y realiza el commit estructurado siguiendo los estándares de Odoo.
 - **`show-spec-working`** — Úselo cuando se solicite una demostración ("show me X", "demo X") o revisión interactiva de una especificación, característica o ticket.
 - **`sync-agent-symlinks`** — Analiza y sincroniza las habilidades de los agentes tras cambios en `ai-specs`. Mantiene alineados los symlinks de `.agents`, `.claude` y `.cursor`.
 - **`update-docs`** — Identifica y actualiza la documentación técnica requerida basándose en los cambios implementados.
@@ -363,7 +376,7 @@ Este repositorio ha sido desarrollado tomando inspiración y adaptando patrones 
 - El kit de herramientas y agentes de [Superpowers](https://github.com/obra/superpowers/tree/main), especialmente en los flujos de:
   - `using-git-worktrees`
   - `writing-skills`
-- La habilidad de `code-auditing` está inspirada y adaptada de [jeffrigby/somepulp-agents](https://github.com/jeffrigby/somepulp-agents/tree/main).
+- La habilidad de `odoo-code-auditing` está inspirada y adaptada de [jeffrigby/somepulp-agents](https://github.com/jeffrigby/somepulp-agents/tree/main).
 
 **Hecho con 🤖 por el equipo de Focuz**
 

@@ -1,5 +1,7 @@
 .antigravitycli/
 .vscode/
+.codex/
+.agent/
 .agents/
 .claude/
 .cursor/*

@@ -1,7 +1,6 @@
 # Metodología de Auditoría de Código (Odoo)
 
-Guía operativa para ejecutar auditorías técnicas de addons Odoo con foco en seguridad, comportamiento y
-mantenibilidad.
+Guía operativa para ejecutar auditorías técnicas de addons Odoo con foco en seguridad, comportamiento y mantenibilidad.
 
 ## 1. Preparación
 
@@ -38,7 +37,7 @@ mantenibilidad.
 ### 2.3 XML / Datos
 
 - Validar consistencia de XML IDs, referencias y secuencia de carga del manifest.
-- Revisar robustez de `xpath` y uso correcto de `attrs`/`states` en Odoo 16.
+- Revisar robustez de `xpath` y uso correcto de `attrs`/`states` en Odoo.
 - Verificar botones/acciones expuestas sin grupo o control de estado.
 
 ### 2.4 Frontend OWL/QWeb
