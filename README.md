@@ -36,6 +36,7 @@ Se recomienda encarecidamente utilizar este kit en combinación con frameworks d
 │   ├── git-guidelines.md             # Reglas y tags oficiales de commits de Odoo
 │   ├── development-guide.md          # Guía de instalación y comandos odoo-bin
 │   ├── data-model.md                 # Modelo de datos contable de ejemplo
+│   ├── openspec-tasks-mandatory-steps.md # Pasos obligatorios del framework
 │   └── api-spec.md                   # Especificación de endpoints y controladores
 │
 ├── ai-specs/
@@ -56,7 +57,14 @@ Se recomienda encarecidamente utilizar este kit en combinación con frameworks d
 │       ├── update-docs/              # Actualización de documentación técnica según cambios
 │       └── writing-skills/           # Metodología TDD para creación de nuevas skills
 │
+├── config/                           # Archivos de configuración local
+│   └── local.paths.example.json      # Plantilla de rutas locales (Odoo Community/Enterprise)
+│
+├── scripts/                          # Scripts utilitarios
+│   └── setup_assistant.py            # Asistente de configuración e inicialización de rutas
+│
 ├── AGENTS.md, CLAUDE.md, GEMINI.md   # Accesos de copilots apuntando a base-standards
+├── .pre-commit-config.yaml           # Configuración de hooks pre-commit para calidad de código
 ├── .ruff.toml                        # Configuración de linter Ruff para Python/Odoo
 └── .pylintrc                         # Configuración de linter Pylint (pylint-odoo)
 ```
