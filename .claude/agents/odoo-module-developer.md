@@ -1,1 +1,0 @@
-../../ai-specs/agents/odoo-module-developer.md

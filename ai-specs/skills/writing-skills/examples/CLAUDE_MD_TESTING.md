@@ -1,7 +1,6 @@
 # Testing CLAUDE.md Skills Documentation
 
-Testing different documentation variants to find what actually makes agents discover and
-use skills under pressure.
+Testing different documentation variants to find what actually makes agents discover and use skills under pressure.
 
 ## Test Scenarios
 
@@ -77,8 +76,7 @@ No mention of skills in CLAUDE.md at all.
 ```markdown
 ## Skills Library
 
-You have access to skills at `~/.claude/skills/`. Consider checking for relevant skills
-before working on tasks.
+You have access to skills at `~/.claude/skills/`. Consider checking for relevant skills before working on tasks.
 ```
 
 ### Variant B: Directive
@@ -86,8 +84,7 @@ before working on tasks.
 ```markdown
 ## Skills Library
 
-Before working on any task, check `~/.claude/skills/` for relevant skills. You should
-use skills when they exist.
+Before working on any task, check `~/.claude/skills/` for relevant skills. You should use skills when they exist.
 
 Browse: `ls ~/.claude/skills/` Search: `grep -r "keyword" ~/.claude/skills/`
 ```
@@ -135,8 +132,8 @@ Your workflow for every task:
 
 3. **Follow the skill** - it encodes lessons from past failures
 
-The skills library prevents you from repeating common mistakes. Not checking before you
-start is choosing to repeat those mistakes.
+The skills library prevents you from repeating common mistakes. Not checking before you start is choosing to repeat
+those mistakes.
 
 Start here: `skills/using-skills`
 ```

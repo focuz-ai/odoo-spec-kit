@@ -25,7 +25,7 @@ agentes de IA dentro de proyectos Odoo.
 
 ## 2. Regla de Idioma: Documentación y Código
 
-> [!IMPORTANT] **La documentación y los artefactos de OpenSpec se escriben
+> [!IMPORTANT] > **La documentación y los artefactos de OpenSpec se escriben
 > exclusivamente en Español, mientras que toda la programación y código fuente se
 > escribe estrictamente en Inglés.**
 >

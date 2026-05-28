@@ -2,11 +2,11 @@
 description:
   Este documento contiene todas las reglas y directrices de desarrollo para este
   proyecto, aplicables a todos los agentes de IA (Claude, Cursor, Codex, Gemini, etc.)
-  en Odoo 17.0.
+  en Odoo 16.0.
 alwaysApply: true
 ---
 
-# Reglas de Agentes y Estándares de Ingeniería (Odoo 17.0)
+# Reglas de Agentes y Estándares de Ingeniería (Odoo 16.0)
 
 ## 1. Principios Core
 
@@ -113,5 +113,5 @@ técnica en primer lugar:
    especificaciones técnicas y `tasks.md`).
 2. Implementar los cambios en el código únicamente después de que los artefactos de
    especificación reflejen la nueva solicitud.
-3. Ejecutar de nuevo la validación del workflow (`/verify` y `/code-review`) antes de
+3. Ejecutar de nuevo la validación del workflow (`/verify`, `/security-audit` y `/code-review-and-repair`) antes de
    archivar.

@@ -1,15 +1,15 @@
 ---
 description:
-  Guía de configuración del entorno de desarrollo para Odoo 17.0, incluyendo Python,
+  Guía de configuración del entorno de desarrollo para Odoo 16.0, incluyendo Python,
   PostgreSQL, archivo de configuración odoo.conf y comandos para ejecutar el servidor y
   las pruebas.
 alwaysApply: true
 ---
 
-# Guía de Setup y Desarrollo en Odoo 17.0 (Development Guide)
+# Guía de Setup y Desarrollo en Odoo 16.0 (Development Guide)
 
 Esta guía describe los pasos necesarios para configurar el entorno de desarrollo local
-para Odoo 17.0 (Community o Enterprise) y ejecutar pruebas.
+para Odoo 16.0 (Community o Enterprise) y ejecutar pruebas.
 
 ---
 
@@ -19,7 +19,7 @@ para Odoo 17.0 (Community o Enterprise) y ejecutar pruebas.
 
 Asegúrese de tener instalados los siguientes componentes en su sistema:
 
-- **Python 3.10 o 3.11** (versión recomendada para Odoo 17.0)
+- **Python 3.10** (versión recomendada para Odoo 16.0)
 - **PostgreSQL 15 o superior**
 - **Git**
 - **Node.js** y **npm** (necesarios para la compilación de recursos SCSS y la ejecución
@@ -33,12 +33,12 @@ Es recomendable tener una estructura donde residan Odoo Community, Enterprise (o
 y sus módulos personalizados:
 
 ```bash
-mkdir odoo17-env
-cd odoo17-env
-# Clonar Odoo Community (rama 17.0)
-git clone https://github.com/odoo/odoo.git --depth 1 --branch 17.0 community
-# Clonar Odoo Enterprise (si tiene acceso a la rama 17.0)
-git clone https://github.com/odoo/enterprise.git --depth 1 --branch 17.0 enterprise
+mkdir odoo16-env
+cd odoo16-env
+# Clonar Odoo Community (rama 16.0)
+git clone https://github.com/odoo/odoo.git --depth 1 --branch 16.0 community
+# Clonar Odoo Enterprise (si tiene acceso a la rama 16.0)
+git clone https://github.com/odoo/enterprise.git --depth 1 --branch 16.0 enterprise
 # Clonar su repositorio de módulos personalizados (ej. odoo-spec-kit)
 git clone <url_su_repositorio> custom_addons
 ```
@@ -94,8 +94,8 @@ db_password = odoo_pwd
 
 ; Rutas de Addons (separe por comas, priorizando core, luego enterprise y custom)
 addons_path =
-    D:/Projects/Odoo/o17-env/odoo/addons,
-    D:/Projects/Odoo/o17-env/enterprise,
+    D:/Projects/Odoo/o16-env/odoo/addons,
+    D:/Projects/Odoo/o16-env/enterprise,
     D:/Projects/AI/odoo-specboot
 
 ; Configuración de desarrollo y rendimiento
@@ -148,3 +148,44 @@ configurado Google Chrome en la máquina de ejecución:
 # Ejecutar el tour de interfaz de usuario de su módulo
 python odoo-bin -c odoo.conf -d bd_pruebas --test-enable --stop-after-init --test-tags /mi_modulo_personalizado:HttpCase
 ```
+
+---
+
+## 🛠️ Estándares de Programación y Calidad (Pre-commit)
+
+Este repositorio incorpora una pipeline local de inspección estática y formateo
+automático mediante **`pre-commit`**. Esto asegura la consistencia del código (Python,
+JavaScript, XML, etc.) antes de registrar commits en Git.
+
+### 1. Instalación de pre-commit
+
+Con su entorno virtual de Python activo, instale `pre-commit`:
+
+```bash
+python -m pip install pre-commit
+```
+
+### 2. Registrar los githooks en el repositorio
+
+Instale el hook en su configuración local de Git para que se ejecute automáticamente en
+cada `git commit`:
+
+```bash
+python -m pre_commit install
+```
+
+### 3. Ejecutar de forma manual
+
+Si desea correr todas las validaciones y aplicar el formateo automático sobre todos los
+archivos del proyecto sin realizar un commit, ejecute:
+
+```bash
+python -m pre_commit run --all-files
+```
+
+### Herramientas Integradas:
+
+- **Ruff**: Linter e importador (`isort`) ultrarrápido para archivos Python.
+- **Prettier**: Formateador de vistas XML y código JS/SCSS usando plugins nativos.
+- **Pylint-Odoo**: Suite semántica específica para Odoo que evalúa buenas prácticas de
+  manifiestos, SQL e integridad de código.

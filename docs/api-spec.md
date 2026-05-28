@@ -1,14 +1,14 @@
 ---
 description:
-  Especificación técnica de la API de Odoo 17.0, incluyendo endpoints de JSON-RPC,
+  Especificación técnica de la API de Odoo 16.0, incluyendo endpoints de JSON-RPC,
   XML-RPC y la especificación de controladores REST personalizados en español.
 alwaysApply: true
 ---
 
-# Especificación de la API de Odoo 17.0 (API Spec)
+# Especificación de la API de Odoo 16.0 (API Spec)
 
 Este documento detalla los estándares de integración y comunicación externa con Odoo
-17.0. Odoo expone servicios nativos mediante **XML-RPC** y **JSON-RPC**, además de
+16.0. Odoo expone servicios nativos mediante **XML-RPC** y **JSON-RPC**, además de
 permitir el desarrollo de controladores REST personalizados.
 
 ---

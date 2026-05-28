@@ -36,6 +36,7 @@ Se recomienda encarecidamente utilizar este kit en combinación con frameworks d
 │   ├── git-guidelines.md             # Reglas y tags oficiales de commits de Odoo
 │   ├── development-guide.md          # Guía de instalación y comandos odoo-bin
 │   ├── data-model.md                 # Modelo de datos contable de ejemplo
+│   ├── openspec-tasks-mandatory-steps.md # Pasos obligatorios del framework
 │   └── api-spec.md                   # Especificación de endpoints y controladores
 │
 ├── ai-specs/
@@ -46,17 +47,27 @@ Se recomienda encarecidamente utilizar este kit en combinación con frameworks d
 │   │
 │   └── skills/                       # Habilidades y flujos reutilizables (skills)
 │       ├── enrich-us/                # Enriquecimiento de requerimientos (Jira/Plane MCP)
-│       ├── code-review/              # Revisión adversarial, seguridad estática y autoreparación
+│       ├── code-review-and-repair/   # Revisión de código, trazabilidad de SDD y autoreparación
+│       ├── security-audit/           # Auditoría adversarial y seguridad estática
 │       ├── commit-odoo/              # Creación de commits estilo Odoo y PRs con gh CLI
 │       ├── code-auditing/            # Auditoría sistemática de calidad y linter de Odoo
 │       ├── explain/                  # Mentoría conceptual de Odoo con quizzes interactivos
+│       ├── meta-prompt/              # Reescribe prompts usando mejores prácticas de prompt engineering
 │       ├── odoo-scaffold/            # Generación del andamiaje físico de nuevos módulos
 │       ├── odoo-test-runner/         # Formulación y ejecución de comandos de prueba
-│       ├── sync-agent-symlinks/      # Sincronización de espejos (.claude, .cursor, .agents)
+│       ├── show-spec-working/        # Demostración funcional en vivo (navegador/API) de un spec
+│       ├── sync-agent-symlinks/      # Sincronización de espejos (.claude, .cursor, .agent)
 │       ├── update-docs/              # Actualización de documentación técnica según cambios
 │       └── writing-skills/           # Metodología TDD para creación de nuevas skills
 │
+├── config/                           # Archivos de configuración local
+│   └── local.paths.example.json      # Plantilla de rutas locales (Odoo Community/Enterprise)
+│
+├── scripts/                          # Scripts utilitarios
+│   └── setup_assistant.py            # Asistente de configuración e inicialización de rutas
+│
 ├── AGENTS.md, CLAUDE.md, GEMINI.md   # Accesos de copilots apuntando a base-standards
+├── .pre-commit-config.yaml           # Configuración de hooks pre-commit para calidad de código
 ├── .ruff.toml                        # Configuración de linter Ruff para Python/Odoo
 └── .pylintrc                         # Configuración de linter Pylint (pylint-odoo)
 ```
@@ -70,7 +81,7 @@ Este repositorio utiliza **enlaces simbólicos (symlinks)** y **convenciones de 
 - **`AGENTS.md`** → Reglas genéricas de agentes (compatible con la mayoría de copilots).
 - **`CLAUDE.md`** → Optimizado para Claude/Cursor.
 - **`GEMINI.md`** → Optimizado para Google Gemini.
-- **`codex.md`** → Optimizado para GitHub Copilot / Codex.
+- **`codex.md`** → Optimizado para GitHub Copilot/Codex.
 
 Todos estos archivos enlazan a la misma fuente de verdad en `docs/base-standards.md`, asegurando la coherencia entre diferentes herramientas de IA y permitiendo personalizaciones para copilots específicos.
 
@@ -103,13 +114,15 @@ cd su-proyecto-odoo
 openspec init
 ```
 
+Si quieres el flujo de trabajo expandido (`/opsx:new`, `/opsx:continue`, `/opsx:ff`, `/opsx:verify`, `/opsx:bulk-archive`, `/opsx:onboard`), selecciónalo con `openspec config profile` y aplícalo con `openspec update`.
+
 ### 2) Importar el Kit en tu Proyecto
 
 Copie todo el contenido de este repositorio en la raíz de su proyecto Odoo. Al importar, asegúrese de no sobreescribir archivos específicos del proyecto que ya existan (como el `README.md` original de su módulo):
 
 ```bash
-# Copiar recursivamente sin sobreescribir (-n)
-cp -rn odoo-spec-kit/* su-proyecto-odoo/
+# Clone or copy this repository into your project (`-n`: do not overwrite existing files so you keep project's original README)
+cp -rn odoo-spec-kit/* your-project/
 ```
 
 ### 3) Personalizar `docs/` para tu Proyecto (Obligatorio)
@@ -118,39 +131,51 @@ Este paso es obligatorio. Si lo omite, su asistente de IA utilizará contexto t�
 
 Actualice los archivos en `docs/` para que coincidan con su base de datos de desarrollo, módulos personalizados, dependencias de Odoo, flujos contables y localizaciones requeridas. Consulte la sección [Personalización](#-personalización) para obtener instrucciones detalladas.
 
-### 3.1) Configurar Rutas Locales de Odoo (Obligatorio para `/enrich-us`)
-
-Para mantener la portabilidad del kit, las rutas locales no se hardcodean en las skills.
-Configure su entorno local con:
-
-```bash
-python scripts/setup_assistant.py init
-python scripts/setup_assistant.py check
-python scripts/setup_assistant.py show
-```
-
-Reglas:
-- `odoo_community_root`: obligatoria.
-- `odoo_enterprise_root`: opcional.
-
-Archivos de configuración:
-- Plantilla versionada: `config/local.paths.example.json`
-- Config local (ignorada por git): `config/local.paths.json`
-
 ### 4) Apuntar la Configuración de OpenSpec a `docs/` y `ai-specs/`
 
 Después de inicializar OpenSpec e importar el kit, debe indicarle a OpenSpec cómo cargar y usar las reglas y agentes del proyecto. Envíe el siguiente prompt a su copilot para configurar de forma automática el archivo `config.yml`:
 
 ```text
-Actualiza la sección context de mi archivo config.yml de OpenSpec para hacer referencia a la documentación y la estructura de ai-specs de este repositorio.
+Actualiza el contexto de mi config.yml de openspec para referenciar la estructura de docs y ai-specs de este repositorio.
 
 Requisitos:
-- Usar docs/base-standards.md como la única fuente de verdad.
-- Incluir docs/backend-standards.md, docs/frontend-standards.md y docs/documentation-standards.md.
-- Incluir docs/api-spec.md y docs/data-model.md.
-- Indicar al agente de IA que adopte ai-specs/agents/odoo-module-developer.md para tareas de backend y vistas XML, y ai-specs/agents/odoo-owl-developer.md para tareas de frontend OWL 2/SCSS.
-- Indicar que utilice ai-specs/skills/ como guía de procesos y flujos de trabajo cuando aplique.
-- Asegurar que todas las rutas sean relativas a la raíz del proyecto.
+- Usar docs/base-standards.md como única fuente de verdad.
+- Incluir docs/backend-standards.md, docs/frontend-standards.md, docs/documentation-standards.md.
+- Incluir docs/api-spec.yml y docs/data-model.md.
+- Indicarle al agente que adopte ai-specs/agents/odoo-module-developer.md para tareas de backend y vistas XML, y ai-specs/agents/odoo-owl-developer.md para tareas de frontend OWL 2/SCSS.
+- Mencionar ai-specs/skills como guía de flujo de trabajo.
+- Mantener todas las rutas relativas a la raíz del proyecto.
+
+```
+
+Ejemplo (`config.yml`):
+
+```yml
+context: |
+  Tech stack: TypeScript, Node.js, Express, Prisma, Domain-Driven Design (DDD)
+  Architecture: Clean Architecture with Domain, Application, and Presentation layers
+  We use conventional commits
+  Domain: LTI (Leadership. Technology. Impact) ATS platform
+  All code, comments, documentation, and technical artifacts must be in English
+
+  Project specs (single source of truth): All artifact creation and implementation MUST follow the project's technical context in ai-specs/. Read and apply these when creating or implementing:
+  - docs/base-standards.md — core principles, TDD, language standards, links to backend/frontend/docs standards
+  - docs/backend-standards.md — API, database, testing, security (backend changes)
+  - docs/frontend-standards.md — React, UI/UX (frontend changes)
+  - docs/api-spec.yml — API contracts and endpoint definitions
+  - docs/data-model.md — domain and data model
+  - docs/documentation-standards.md — docs structure and maintenance
+  For implementation: adopt the relevant agent from ai-specs/agents/ (e.g. backend-developer.md for backend, frontend-developer.md for frontend). Use ai-specs/skills/ for workflow guidance when applicable.
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+rules:
+  # Global: apply ai-specs when creating any artifact
+  _global:
+    - Before creating any artifact, read and apply docs/base-standards.md
+    - For backend-related artifacts, read docs/backend-standards.md and adopt guidelines from ai-specs/agents/backend-developer.md
+    - For frontend-related artifacts, read docs/frontend-standards.md and adopt guidelines from ai-specs/agents/frontend-developer.md
+    - Use docs/api-spec.yml and docs/data-model.md for API and data consistency in specs and tasks
 ```
 
 ---
@@ -159,7 +184,7 @@ Requisitos:
 
 Realice este paso de validación después de completar los pasos de configuración y setup descritos anteriormente. Su copilot o agente de IA debería cargar automáticamente el archivo de configuración base al iniciar su sesión:
 
-- **Claude CLI / Cursor**: Carga `CLAUDE.md` → Enlazado a `docs/base-standards.md`.
+- **Claude/Cursor**: Carga `CLAUDE.md` → Enlazado a `docs/base-standards.md`.
 - **GitHub Copilot**: Carga `codex.md` → Enlazado a `docs/base-standards.md`.
 - **Gemini**: Carga `GEMINI.md` → Enlazado a `docs/base-standards.md`.
 
@@ -174,11 +199,11 @@ El desarrollo utilizando **odoo-spec-kit** sigue un ciclo de vida estrictamente 
 1. **`/enrich-us`**: Analiza y enriquece el requerimiento de negocio conectándose a Jira o Plane MCP, y buscando de forma obligatoria en el código real de Odoo en lugar de adivinar nombres de campos.
 2. **`/propose`**: Diseña la especificación técnica en markdown detallando modelos, campos, lógica de negocio y pruebas.
 3. **`/apply`**: Escribe el código fuente de forma incremental.
-4. **`/verify` + `/code-review`**:
-   - `/verify` ejecuta las pruebas nativas de Odoo (`odoo-bin --test-enable`).
-   - `/code-review` ejecuta la auditoría estática de seguridad, valida accesos y activa el **Bucle de Autoreparación** si hay fallos en las pruebas.
+4. **`/verify` + `/security-audit` + `/code-review-and-repair`**:
+   - Tras completar el código, el agente prueba la especificación con `/verify`.
+   - Luego, se ejecutan las auditorías de seguridad y funcionales que activan el **Bucle de Autoreparación** si hay fallos en las pruebas.
 5. **`/archive`**: Archiva el ciclo de cambios.
-6. **`/commit-odoo`**: Archiva el ciclo de cambios y empaqueta el commit con el formato oficial de Odoo (ej. `[ADD] mi_modulo: agregar facturación local`).
+6. **`/commit-odoo`**: Crea commits enfocados y gestiona PR después de la verificación con el formato oficial de Odoo (ej. `[ADD] mi_modulo: agregar facturación local`).
 
 ### Opcional: Integraciones MCP (Jira + Plane)
 
@@ -188,16 +213,17 @@ Este flujo de trabajo se ve reforzado con servidores de Protocolo de Contexto de
 
 ### Ejemplo: Flujo de Extremo a Extremo (End-to-End)
 
-Ejecute estos comandos en secuencia para desarrollar una tarea:
+Usa estos comandos en secuencia:
 
-*Paso inicial opcional (recomendado): Crear una rama aislada utilizando la skill de git worktrees antes de arrancar.*
+Primer paso opcional (recomendado): crea un worktree dedicado antes de ejecutar el flujo de comandos y límpialo al terminar. El skill `using-git-worktrees` puede automatizar esto.
 
 ```bash
 /enrich-us TICKET-101
 /propose TICKET-101
 /apply TICKET-101
 /verify TICKET-101
-/code-review TICKET-101
+/security-audit TICKET-101
+/code-review-and-repair TICKET-101
 /archive TICKET-101
 /commit-odoo
 ```
@@ -206,14 +232,17 @@ Los artefactos se gestionan y guardan a través de las carpetas de OpenSpec dura
 
 ### Habilidades (Skills) Útiles
 
-Las habilidades del kit residen en `ai-specs/skills/` y se vinculan a `.claude/skills/` y `.cursor/skills/` para facilitar su descubrimiento:
+Las habilidades del kit residen en `ai-specs/skills/` y se vinculan a `.agent/skills/`, `.claude/skills/` y `.cursor/skills/` para facilitar su descubrimiento:
 
 - **`enrich-us`** — Convierte requerimientos ambiguos de Jira o Plane en especificaciones técnicas de Odoo detallando modelos, campos y XPath XML.
-- **`code-review`** — Auditoría pre-merge de calidad y seguridad Odoo + Bucle autónomo de Autoreparación de 3 intentos ante tracebacks.
+- **`security-audit`** — Auditoría pre-merge de calidad y seguridad adversarial de Odoo.
+- **`code-review-and-repair`** — Trazabilidad funcional SDD + Bucle autónomo de Autoreparación de 3 intentos ante tracebacks.
 - **`commit-odoo`** — Valida y formatea mensajes de commit bajo los tags oficiales de Odoo (`[ADD]`, `[FIX]`, `[IMP]`, etc.) y crea la PR.
 - **`code-auditing`** — Metodología sistemática de 6 fases para detectar código muerto, antipatrones ORM, inyecciones SQL y deuda técnica.
+- **`meta-prompt`** — Mejora y reescribe prompts de usuario aplicando mejores prácticas de ingeniería de prompts.
 - **`odoo-scaffold`** — Creación de la estructura física estándar de nuevos addons de Odoo con manifiestos LGPL y plantillas CSV.
 - **`odoo-test-runner`** — Ayuda a formular comandos optimizados con `--test-tags` y a extraer tracebacks limpios para la IA.
+- **`show-spec-working`** — Demuestra una especificación funcional en un entorno ejecutable automatizando el navegador o llamadas a API.
 - **`explain`** — Mentoría conceptual interactiva sobre el ORM, OWL, seguridad y contabilidad de Odoo mediante preguntas y respuestas.
 - **`update-docs`** — Identifica y actualiza la documentación técnica en `docs/` de acuerdo con los cambios de código aplicados.
 - **`sync-agent-symlinks`** — Sincroniza y mantiene la integridad de los enlaces y junctions del kit.
@@ -278,13 +307,15 @@ Todo el desarrollo del proyecto sigue los principios fundamentales definidos en 
 Utilice este prompt con su copilot para adaptar el kit a su proyecto manteniendo la misma estructura base:
 
 ```text
-Siguiendo la misma estructura base presente en docs/, actualiza todos los documentos de contexto técnico según las especificaciones de este proyecto.
+Siguiendo la misma estructura base ya presente en docs/, actualiza todos los documentos de contexto técnico según los detalles específicos de este proyecto.
 
 Requisitos:
-- Mantener los mismos nombres de archivos en docs/.
-- Reemplazar el contenido genérico con los datos reales de la base de datos de desarrollo, módulos personalizados, dependencias de Odoo y localizaciones de este proyecto.
-- Actualizar los estándares de backend y frontend para reflejar las prácticas de este equipo.
-- Asegurar que todas las referencias sean coherentes internamente y se redacten en español.
+- Mantener el mismo conjunto de documentos y nombres de archivo en docs/.
+- Reemplazar el contenido genérico con el stack real del proyecto, sus patrones de arquitectura, convenciones de código y terminología de dominio.
+- Actualizar los estándares de backend, frontend y documentación para reflejar las prácticas reales del equipo.
+- Actualizar docs/api-spec.yml y docs/data-model.md para que coincidan con los endpoints y entidades reales del proyecto.
+- Asegurar que todas las referencias sean internamente consistentes y estén alineadas entre sí dentro de docs/.
+- Mantener todo en español y hacer que las guías estén listas para ser implementadas por agentes de IA.
 ```
 
 ### Mantenimiento de los Estándares

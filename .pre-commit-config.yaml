@@ -36,7 +36,7 @@ repos:
       - id: oca-gen-addon-readme
         args:
           - --addons-dir=.
-          - --branch=17.0
+          - --branch=16.0
           - --org-name=focuz-ai
           - --repo-name=odoo-spec-kit
           - --if-source-changed

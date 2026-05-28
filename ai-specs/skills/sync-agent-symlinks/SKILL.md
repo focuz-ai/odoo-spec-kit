@@ -1,71 +1,157 @@
 ---
 name: sync-agent-symlinks
 description:
-  Sincroniza y mantiene la integridad de los enlaces simbólicos (symlinks) de skills y
-  agentes desde ai-specs/ hacia .claude/, .cursor/ y .agents/.
-author: Focuz AI
+  Analyze and synchronize agent skill and agent exposure after ai-specs changes. Use when skills or agents are
+  added/removed in ai-specs and .agent, .claude, and .cursor must stay aligned through symlinks.
+author: LIDR.co
 version: 1.0.0
 ---
 
-# Skill: Sincronización de Enlaces Simbólicos (/sync-agent-symlinks)
+# sync-agent-symlinks Skill
 
-Esta skill permite mantener alineados los directorios de copilots específicos
-(`.claude/`, `.cursor/`, `.agents/`) con la fuente canónica de agentes y skills del
-proyecto: `ai-specs/`.
+Keep agent-facing skill and agent structures synchronized with `ai-specs/skills` and `ai-specs/agents` as the canonical
+sources.
 
----
+Use this skill after any change in `ai-specs/skills` or `ai-specs/agents` (new, removed, renamed, or moved), especially
+when you need to avoid stale or broken symlinks.
 
-## Directrices y Reglas de Seguridad
+## Scope and Safety Rules
 
-- **Fuentes Canónicas**:
-  - `ai-specs/skills/` (Directorio de skills).
-  - `ai-specs/agents/` (Directorio de agentes).
-- **Directorios Destino (Espejos)**:
-  - `.claude/skills/` y `.claude/agents/`
-  - `.cursor/skills/` y `.cursor/agents/`
-  - `.agents/skills/` y `.agents/agents/` (Compatibilidad con Antigravity 2.0 / CLI).
-- **Solo Symlinks**: Solo se deben gestionar entradas que correspondan a enlaces
-  simbólicos que apunten a `ai-specs/`. Nunca elimine directorios reales o archivos
-  locales creados por el usuario en las carpetas espejo.
+- Canonical sources are `ai-specs/skills` and `ai-specs/agents`.
+- Mirror targets are:
+  - `.agent/skills` and `.agent/agents`
+  - `.claude/skills` and `.claude/agents`
+  - `.cursor/skills` and `.cursor/agents`
+- Manage only entries that are symlinks to `../../ai-specs/skills/<skill-name>` or
+  `../../ai-specs/agents/<agent-name>.md`.
+- Do not delete non-symlink directories in mirror targets unless the user explicitly asks.
+- Never overwrite a real directory automatically; report it as a conflict.
 
----
+## Workflow
 
-## Flujo de Trabajo
+### Step 1 - Build inventories
 
-### Paso 1: Inventario de Recursos
+Collect three inventories:
 
-1. Leer los recursos físicos en la fuente canónica (`ai-specs/skills` y
-   `ai-specs/agents`).
-2. Listar el contenido de los directorios destino para identificar:
-   - **Enlazados**: Symlinks válidos que apuntan al archivo canónico.
-   - **Rotos**: Enlaces simbólicos cuyo destino físico ya no existe.
-   - **Huérfanos**: Enlaces simbólicos de la política canónica que apuntan a un elemento
-     eliminado.
-   - **Conflictos**: Directorios o archivos reales (no enlaces) con el mismo nombre de
-     un elemento canónico.
+1. Canonical items from `ai-specs/skills/*/SKILL.md` and `ai-specs/agents/*.md`
+2. Mirror entries in `.agent/skills` and `.agent/agents`
+3. Mirror entries in `.claude/skills` and `.claude/agents`
+4. Mirror entries in `.cursor/skills` and `.cursor/agents`
 
-### Paso 2: Plan de Sincronización
+From mirror entries, classify:
 
-Calcular las acciones requeridas para cada destino:
+- `linked`: valid symlink pointing to existing canonical skill
+- `broken`: symlink target missing
+- `orphan`: symlink points to canonical namespace but skill no longer exists
+- `conflict`: non-symlink entry with same name as canonical skill
+- `external`: entry not managed by canonical symlink policy (leave unchanged)
 
-- `to_add`: Elementos canónicos nuevos ausentes en el destino.
-- `to_fix`: Enlaces rotos que deben recrearse.
-- `to_remove`: Enlaces huérfanos que deben eliminarse.
-- `to_skip`: Conflictos y elementos externos que no deben tocarse.
+### Step 2 - Compute sync plan
 
-### Paso 3: Aplicación Segura de Cambios
+For each mirror target:
 
-Ejecutar las operaciones utilizando comandos de terminal según el sistema operativo (en
-Windows, mediante PowerShell `New-Item -ItemType SymbolLink` o `cmd /c mklink`):
+- `to_add`: canonical skills missing in mirror target
+- `to_fix`: broken canonical symlinks that should be recreated
+- `to_remove`: orphan canonical symlinks with no canonical source
+- `to_skip`: conflicts and external entries (report only)
 
-```powershell
-# Ejemplo de creación de enlace simbólico de skill en Windows (PowerShell)
-New-Item -ItemType SymbolicLink -Path ".claude\skills\mi-skill" -Value "..\..\ai-specs\skills\mi-skill"
+### Step 3 - Apply sync safely
+
+Apply changes in this order:
+
+1. Add missing symlinks:
+   - `<mirror>/skills/<skill-name> -> ../../ai-specs/skills/<skill-name>`
+   - `<mirror>/agents/<agent-name>.md -> ../../ai-specs/agents/<agent-name>.md`
+2. Fix broken canonical symlinks:
+   - Remove broken link and recreate the same canonical link
+3. Remove orphan canonical symlinks:
+   - Remove symlink only if it points to canonical namespace and skill is gone
+
+Never remove:
+
+- non-symlink directories
+- files not under canonical symlink policy
+
+### Step 4 - Verify integrity
+
+After changes:
+
+- Confirm every canonical skill exists in both mirrors as a valid symlink, or is explicitly listed as conflict.
+- Confirm no broken canonical symlinks remain.
+- Confirm external entries remain untouched.
+
+### Step 5 - Report results
+
+Return a concise sync report:
+
+- Canonical items (skills/agents) count
+- Per mirror target:
+  - added
+  - fixed
+  - removed
+  - conflicts
+  - skipped external entries
+- Remaining blockers (if any)
+
+## Add/Remove Scenarios
+
+### Scenario A - New skill or agent added in ai-specs
+
+Expected behavior:
+
+- Add missing symlink in `.agent/skills` or `.agent/agents`
+- Add missing symlink in `.claude/skills` or `.claude/agents`
+- Add missing symlink in `.cursor/skills` or `.cursor/agents`
+- Verify all links resolve to canonical folder/file
+
+### Scenario B - Skill or agent removed from ai-specs
+
+Expected behavior:
+
+- Remove orphan canonical symlink from `.agent/skills` or `.agent/agents`
+- Remove orphan canonical symlink from `.claude/skills` or `.claude/agents`
+- Remove orphan canonical symlink from `.cursor/skills` or `.cursor/agents`
+- Keep non-canonical directories untouched and report them
+
+## Command Patterns (Reference)
+
+Use equivalent commands for your environment:
+
+```bash
+# list canonical skill directories and agent files
+ls ai-specs/skills
+ls ai-specs/agents
+
+# inspect mirror entries with link metadata
+ls -la .agent/skills
+ls -la .agent/agents
+ls -la .claude/skills
+ls -la .claude/agents
+ls -la .cursor/skills
+ls -la .cursor/agents
+
+# add canonical link (example for agent and skill)
+ln -s ../../ai-specs/skills/<skill-name> .agent/skills/<skill-name>
+ln -s ../../ai-specs/agents/<agent-name>.md .agent/agents/<agent-name>.md
+# Note: On Windows PowerShell, use `New-Item -ItemType SymbolicLink` or `cmd /c mklink`
+
+# remove orphan canonical link
+rm .agent/skills/<skill-name>
+rm .agent/agents/<agent-name>.md
 ```
 
-### Paso 4: Reporte final
+## Red Flags
 
-Retornar un resumen de la sincronización en el chat indicando:
+Never:
 
-- Número de elementos canónicos sincronizados.
-- Detalle por destino (agregados, corregidos, eliminados, conflictos).
+- treat `ai-specs` as non-canonical
+- auto-delete real directories in mirror targets
+- leave broken canonical symlinks after sync
+- silently skip conflicts without reporting
+
+Always:
+
+- analyze before changing
+- apply minimal safe changes
+- preserve non-canonical entries
+- provide a final sync report with blockers
