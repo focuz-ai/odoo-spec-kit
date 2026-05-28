@@ -1,16 +1,16 @@
 ---
 name: odoo-scaffold
 description:
-  Use esta skill cuando necesite inicializar la estructura de carpetas y archivos base
-  de un nuevo módulo o addon para Odoo 16.0.
-author: Focuz AI
+  Use esta skill cuando necesite inicializar la estructura de carpetas y archivos base de un nuevo módulo o addon para
+  Odoo 16.0.
+author: Focuz.io
 version: 1.0.0
 ---
 
 # Skill: Scaffolding de Módulos Odoo (/odoo-scaffold)
 
-Esta skill define la automatización del andamiaje (scaffold) para crear módulos Odoo
-robustos y alineados con las directrices de `docs/coding-guidelines.md`.
+Esta skill define la automatización del andamiaje (scaffold) para crear módulos Odoo robustos y alineados con las
+directrices de `docs/coding-guidelines.md`.
 
 ---
 
