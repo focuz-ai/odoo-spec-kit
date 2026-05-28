@@ -113,5 +113,5 @@ técnica en primer lugar:
    especificaciones técnicas y `tasks.md`).
 2. Implementar los cambios en el código únicamente después de que los artefactos de
    especificación reflejen la nueva solicitud.
-3. Ejecutar de nuevo la validación del workflow (`/verify` y `/code-review`) antes de
+3. Ejecutar de nuevo la validación del workflow (`/verify`, `/security-audit` y `/code-review-and-repair`) antes de
    archivar.

@@ -1,7 +1,7 @@
 ---
 description:
   Define los pasos obligatorios y las reglas de ejecución del workflow OpenSpec adaptado para Odoo 16.0 (enrich-us,
-  propose, apply, verify, code-review, archive, commit-odoo).
+  propose, apply, verify, security-audit, code-review-and-repair, archive, commit-odoo).
 alwaysApply: true
 ---
 
@@ -18,7 +18,7 @@ obligatoria.
 Toda implementación técnica debe organizarse en base al siguiente flujo lógico secuencial:
 
 ```
-Paso 0: Setup de Rama ➔ Fase de Codificación ➔ Paso N: Pruebas (/verify) ➔ Paso N+1: Auditoría (/code-review) ➔ Paso N+2: Documentación ➔ Paso N+3: Commit (/commit-odoo)
+Paso 0: Setup de Rama ➔ Fase de Codificación ➔ Paso N: Pruebas (/verify) ➔ Paso N+1: Auditoría de Seguridad (/security-audit) ➔ Paso N+2: Revisión y Reparación (/code-review-and-repair) ➔ Paso N+3: Documentación ➔ Paso N+4: Commit (/commit-odoo)
 ```
 
 ---
@@ -46,7 +46,7 @@ Todas las tareas de desarrollo deben incluir estos pasos exactamente en el orden
 - **Reporte de Verificación**: El agente debe documentar los resultados (pruebas pasadas, fallidas, tiempos) en un
   reporte guardado en la carpeta de especificaciones del cambio.
 
-### Paso N+1: Revisión de Código y Cruce de Seguridad (`code-review`) (MANDATORIO)
+### Paso N+1: Auditoría de Seguridad y Revisión de Código (/security-audit, /code-review-and-repair) (MANDATORIO)
 
 - **Acción**: Ejecutar una revisión adversarial y una auditoría estática de seguridad antes de marcar la tarea como
   lista para integrar.
@@ -87,7 +87,7 @@ Todas las tareas de desarrollo deben incluir estos pasos exactamente en el orden
 - [ ] 8.2 Verificar que el estado de base de datos se revierta tras las pruebas
 - [ ] 8.3 Guardar reporte de resultados en la carpeta del cambio
 
-## 9. Backend: Revisión de Código e Integridad de Seguridad (/code-review) (MANDATORIO)
+## 9. Backend: Auditoría de Seguridad y Revisión de Código (/security-audit, /code-review-and-repair) (MANDATORIO)
 
 - [ ] 9.1 Realizar cruce de seguridad estático entre modelos de Python y registros CSV de ACLs
 - [ ] 9.2 Ejecutar bucle de autoreparación (máximo 3 intentos) si se reportan tracebacks o fallos
@@ -109,4 +109,4 @@ Todas las tareas de desarrollo deben incluir estos pasos exactamente en el orden
 - El agente **NUNCA** debe marcar una tarea como completada (`[x]`) en `task.md` si no ha ejecutado los comandos de
   prueba y validación correspondientes en la consola.
 - Los fallos o tracebacks en las pruebas deben ser atacados proactivamente mediante el bucle de autoreparación de
-  `/code-review` antes de notificar al usuario.
+  `/security-audit` y `/code-review-and-repair` antes de notificar al usuario.

@@ -58,7 +58,7 @@ Si el CLI de GitHub (`gh`) está configurado y disponible:
 - Ejecute `gh pr create` para abrir un Pull Request de la rama activa hacia la rama base.
 - **Título del PR**: Alineado al commit (ej. `[ADD] mi_modulo: agregar facturación local`).
 - **Descripción**: Resumen del objetivo, enlaces a tickets de Jira/Plane y confirmación de que las pruebas de `/verify`
-  y `/code-review` pasaron exitosamente.
+  y `/code-review-and-repair` pasaron exitosamente.
 
 ### 6. Reporte Final
 

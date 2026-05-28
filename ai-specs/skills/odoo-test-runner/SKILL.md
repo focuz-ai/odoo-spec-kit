@@ -64,4 +64,4 @@ python odoo-bin -c odoo.conf -d db_test --test-enable --stop-after-init --test-t
 - **Acción del Agente**:
   - Extraer la sección del traceback correspondiente a los archivos de nuestro módulo, omitiendo llamadas del core de
     Odoo.
-  - Pasar este traceback limpio al bucle de autoreparación de `/code-review`.
+  - Pasar este traceback limpio al bucle de autoreparación de `/code-review-and-repair`.
