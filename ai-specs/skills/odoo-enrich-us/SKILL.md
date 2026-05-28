@@ -37,9 +37,8 @@ Sigue estos pasos:
 5. **Validación de Funcionalidad Existente (No reinventar la rueda):** Odoo es un ERP sumamente extenso. Antes de
    proponer un nuevo desarrollo personalizado, evalúa y busca en todo el código base (Community, Enterprise y **módulos
    propios/custom del proyecto**) si la funcionalidad solicitada ya existe nativamente o fue desarrollada previamente.
-   Si la necesidad se puede cubrir instalando un módulo estándar, reutilizando un módulo propio, o mediante
-   configuraciones existentes, la propuesta debe enfocarse en la **configuración/instalación/reutilización** en lugar de
-   crear código redundante.
+   - **ESCENARIO A (Ya existe):** Si la necesidad se puede cubrir instalando un módulo estándar, reutilizando un módulo propio, o mediante configuraciones, **DETÉN el proceso de especificación técnica y aborta los pasos siguientes**. Tu respuesta debe limitarse a explicar al usuario qué módulo instalar, qué configuraciones activar (ej. Ajustes > Ventas > Variantes) y cómo usarlo, sin generar el formato de salida "Enhanced Odoo Spec".
+   - **ESCENARIO B (Requiere desarrollo):** Si la funcionalidad no existe o requiere customización obligatoria, procede con los siguientes pasos para diseñar la arquitectura.
 6. Entiende el problema descrito en el ticket, siguiendo el principio de _Anti-Vibe-Coding_ (diseñar antes de
    programar). Asegúrate de que el valor de negocio, los flujos de usuario y los casos extremos (edge cases) estén
    claramente identificados desde una perspectiva de Product Management.
@@ -58,11 +57,12 @@ Sigue estos pasos:
 9. **Estándares de Idioma:** Asegúrate de que todo el texto descriptivo, reglas de negocio y contexto estén escritos en
    **Español**, pero mantén estrictamente todos los nombres técnicos (modelos, campos, métodos, IDs de XML) en
    **Inglés**.
-10. El formato de salida debe incluir siempre la siguiente estructura en markdown:
+10. **Formato de Salida (Solo si aplica ESCENARIO B):**
+    El formato de salida debe incluir siempre la siguiente estructura en markdown:
     - `## Original`
     - `## Enhanced (Odoo Spec)`
       - `### 1. Contexto y Reglas de Negocio (Visión de Producto)`
-      - `### 2. Arquitectura de Modelos (ORM) o Configuración Nativa`
+      - `### 2. Arquitectura de Modelos (ORM) o Configuración`
       - `### 3. Vistas y UI (XML/OWL - Específico por versión)`
       - `### 4. Seguridad y Control de Accesos`
       - `### 5. Lógica de Negocio (Python/Wizards)`
