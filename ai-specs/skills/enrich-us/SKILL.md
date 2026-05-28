@@ -75,8 +75,7 @@ Sigue estos pasos:
 11. La reescritura en la herramienta de Project Management es opcional y solo aplica en modo Jira/Plane:
     - Actualiza el ticket agregando el contenido enriquecido después del contenido original, con secciones `h2` claras
       `[original]` y `[enhanced]` y un formato legible (listas/bloques de código cuando sea útil).
-    - Si el estado del ticket es `Para refinar` (o equivalente en Plane), muévelo a
-      `Pendiente de validación de refinamiento` (Pending refinement validation).
+    - Si el estado del ticket es `To refine` (o equivalente en Plane), muévelo a `Pending refinement validation`.
 
 ## Notas
 
