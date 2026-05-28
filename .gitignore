@@ -6,3 +6,4 @@
 !.cursor/rules
 .idea/
 *.log
+.ruff_cache/
