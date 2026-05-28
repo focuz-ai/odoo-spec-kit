@@ -2,13 +2,13 @@
 name: code-auditing
 description:
   Metodología estructurada en español para realizar auditorías de calidad de código y detectar deuda técnica en módulos
-  Odoo 16.0.
+  Odoo.
 version: 2.0.0
 ---
 
-# Skill: Code Auditing (Odoo 16.0)
+# Skill: Code Auditing (Odoo)
 
-Metodología integral para auditar calidad, seguridad, mantenibilidad y deuda técnica en código Odoo 16.0 (backend,
+Metodología integral para auditar calidad, seguridad, mantenibilidad y deuda técnica en código Odoo (backend,
 vistas XML y frontend OWL/QWeb).
 
 ## Cuándo usar

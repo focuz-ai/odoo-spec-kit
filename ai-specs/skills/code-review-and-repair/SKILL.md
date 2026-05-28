@@ -9,7 +9,7 @@ version: 1.0.0
 
 # Skill: Code Review y Bucle de Autoreparación (/code-review-and-repair)
 
-Esta skill consolida la auditoría de calidad funcional, rendimiento y el manejo autónomo de la corrección de errores en Odoo 16.0 Enterprise, basándose en la filosofía de Spec-Driven Development (SDD).
+Esta skill consolida la auditoría de calidad funcional, rendimiento y el manejo autónomo de la corrección de errores en Odoo Enterprise, basándose en la filosofía de Spec-Driven Development (SDD).
 
 ---
 
