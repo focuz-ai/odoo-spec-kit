@@ -1,5 +1,5 @@
 ---
-name: enrich-us
+name: odoo-enrich-us
 description:
   Analiza y enriquece historias de usuario con detalles técnicos completos y listos para implementación en Odoo EE
   siguiendo el Spec-Driven Development.
@@ -7,7 +7,7 @@ author: Focuz.io
 version: 1.4.0
 ---
 
-# Skill enrich-us
+# Skill odoo-enrich-us
 
 Úsalo cuando se requiera este flujo de trabajo en el proyecto para refinar y enriquecer una Historia de Usuario (User
 Story) antes de su implementación.
@@ -34,44 +34,43 @@ Sigue estos pasos:
    para buscar activamente en el código fuente actual utilizando las rutas identificadas. Verifica la existencia de
    módulos base, vistas heredadas y lógica de negocio actual relacionada con el ticket para evitar alucinar estructuras
    o dependencias.
-5. **Validación de Funcionalidad Nativa (No reinventar la rueda):** Odoo es un ERP sumamente extenso. Antes de proponer
-   un desarrollo personalizado, evalúa y busca en el código base (Community/Enterprise) si la funcionalidad solicitada
-   ya existe nativamente. Si la necesidad se puede cubrir instalando un módulo estándar o mediante configuraciones
-   existentes, la propuesta debe enfocarse en la **configuración/instalación** en lugar de en el desarrollo de código.
+   - **Introspección Dinámica (Odoo MCP Server)**: Si el servidor `mcp-server-odoo` está configurado en tu entorno, estás **obligado** a utilizar su recurso nativo `odoo://{model}/fields` para leer el esquema exacto y vivo de la base de datos (incluyendo campos custom) **antes** de sugerir campos nuevos o alteraciones en el mapeo de datos.
+   - **Reglas Inquebrantables**: Lee siempre el documento `docs/odoo-core-topology.md` para respetar la topología base del ERP.
+5. **Validación de Funcionalidad Existente (No reinventar la rueda):** Odoo es un ERP sumamente extenso. Antes de
+   proponer un nuevo desarrollo personalizado, evalúa y busca en todo el código base (Community, Enterprise y **módulos
+   propios/custom del proyecto**) si la funcionalidad solicitada ya existe nativamente o fue desarrollada previamente.
+   - **ESCENARIO A (Ya existe):** Si la necesidad se puede cubrir instalando un módulo estándar, reutilizando un módulo propio, o mediante configuraciones, **DETÉN el proceso de especificación técnica y aborta los pasos siguientes**. Tu respuesta debe limitarse a explicar al usuario qué módulo instalar, qué configuraciones activar (ej. Ajustes > Ventas > Variantes) y cómo usarlo, sin generar el formato de salida "Enhanced Odoo Spec".
+   - **ESCENARIO B (Requiere desarrollo):** Si la funcionalidad no existe o requiere customización obligatoria, procede con los siguientes pasos para diseñar la arquitectura.
 6. Entiende el problema descrito en el ticket, siguiendo el principio de _Anti-Vibe-Coding_ (diseñar antes de
    programar). Asegúrate de que el valor de negocio, los flujos de usuario y los casos extremos (edge cases) estén
    claramente identificados desde una perspectiva de Product Management.
-7. **Validación de Completitud Técnica (Específica por Versión):** Decide si la Historia de Usuario está completamente
-   detallada de acuerdo con las mejores prácticas de Odoo para la **versión específica de Odoo** utilizada en el
-   proyecto (ej. Odoo). Valida que incluya:
-   - Descripción completa de la funcionalidad y reglas de negocio.
-   - **Modelos de Datos (ORM):** Nuevos modelos, campos, relaciones (`Many2one`, etc.), campos calculados (computes) y
-     restricciones (constraints) válidos para la versión objetivo. _(Solo si requiere desarrollo)._
-   - **Vistas y UI:** Herencia de vistas (XPath), Form, Tree, Kanban, Menús y Acciones compatibles con el frontend de la
-     versión objetivo (ej. OWL 2 / legacy QWeb para Odoo 16+). _(Solo si requiere desarrollo)._
-   - **Seguridad:** Grupos de seguridad (`res.groups`), Derechos de Acceso (`ir.model.access.csv`) y Reglas de Registro
-     (`ir.rule`).
-   - **Lógica de Negocio:** Wizards, sobreescritura de métodos estándar (`create`, `write`) o Acciones de Servidor.
-     _(Solo si requiere desarrollo)._
-   - **Mejores Prácticas de Odoo:** Consideraciones técnicas para la versión específica (ej. evitar N+1 queries, uso
-     correcto de `@api.depends`, reutilización de módulos estándar de Odoo).
-   - Definición de Hecho (DoD - pasos de implementación y entrega).
+7. **Validación de Completitud Técnica (Específica por Versión):** Decide si la Historia de Usuario está completamente detallada para ser enviada a la fase de Diseño Técnico (`/propose`). Verifica de manera crítica que incluya:
+   - **Contexto de Negocio y Funcionalidad**: Descripción completa del "Qué" y el "Por qué", alineado con los flujos nativos de Odoo (ej. Ventas, Inventario).
+   - **Mapeo de Datos (Data Mapping)**: Lista de los modelos de Odoo implicados (`res.partner`, `sale.order`) y campos conceptuales a modificar o crear.
+   - **Puntos de Interacción (UI/API)**: Vistas afectadas (Form, Tree, Kanban), Controladores web (Rutas HTTP/JSON-RPC) o Acciones de servidor requeridas.
+   - **Análisis de Dependencias**: Identificación clara de qué módulos base o de terceros se verán impactados (para el `depends` del manifest).
+   - **Requisitos de Pruebas (Test Plan)**: Definición de escenarios críticos de negocio y edge cases que requerirán tests unitarios obligatorios en Odoo (`TransactionCase` / `SavepointCase`).
+   - **Impacto en Documentación**: Qué guías, tooltips o manuales funcionales deberán ser actualizados a raíz de este desarrollo.
+   - **Requisitos No Funcionales y Seguridad**: Definición de ACLs necesarias (grupos de permisos), Reglas de Registro (`ir.rule`) y expectativas de rendimiento (evitar N+1).
+   - **Definition of Done (DoD)**: Criterios de aceptación (AC) claros, comprobables y exhaustivos (preferiblemente estilo BDD - Given/When/Then).
 8. Si la historia carece del detalle técnico suficiente para una implementación autónoma, proporciona una versión
    mejorada que sea más clara, específica y concisa, alineada con los pasos 6 y 7. Usa el contexto técnico del proyecto
    desde `@documentation`.
 9. **Estándares de Idioma:** Asegúrate de que todo el texto descriptivo, reglas de negocio y contexto estén escritos en
    **Español**, pero mantén estrictamente todos los nombres técnicos (modelos, campos, métodos, IDs de XML) en
    **Inglés**.
-10. El formato de salida debe incluir siempre la siguiente estructura en markdown:
+10. **Formato de Salida (Solo si aplica ESCENARIO B):**
+    El formato de salida debe incluir siempre la siguiente estructura en markdown:
     - `## Original`
     - `## Enhanced (Odoo Spec)`
       - `### 1. Contexto y Reglas de Negocio (Visión de Producto)`
-      - `### 2. Arquitectura de Modelos (ORM) o Configuración Nativa`
+      - `### 2. Arquitectura de Modelos (ORM)`
       - `### 3. Vistas y UI (XML/OWL - Específico por versión)`
       - `### 4. Seguridad y Control de Accesos`
       - `### 5. Lógica de Negocio (Python/Wizards)`
       - `### 6. Consideraciones Técnicas (Rutas de Módulos y Odoo Best Practices)`
-      - `### 7. Criterios de Aceptación (DoD)`
+      - `### 7. Pruebas y Documentación (Test & Docs)`
+      - `### 8. Criterios de Aceptación (DoD)`
 11. La reescritura en la herramienta de Project Management es opcional y solo aplica en modo Jira/Plane:
     - Actualiza el ticket agregando el contenido enriquecido después del contenido original, con secciones `h2` claras
       `[original]` y `[enhanced]` y un formato legible (listas/bloques de código cuando sea útil).

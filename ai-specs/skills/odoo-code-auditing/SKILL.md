@@ -1,5 +1,5 @@
 ---
-name: code-auditing
+name: odoo-code-auditing
 description:
   Metodología estructurada en español para realizar auditorías de calidad de código y detectar deuda técnica en módulos
   Odoo.
@@ -8,8 +8,8 @@ version: 2.0.0
 
 # Skill: Code Auditing (Odoo)
 
-Metodología integral para auditar calidad, seguridad, mantenibilidad y deuda técnica en código Odoo (backend,
-vistas XML y frontend OWL/QWeb).
+Metodología integral para auditar calidad, seguridad, mantenibilidad y deuda técnica en código Odoo (backend, vistas XML
+y frontend OWL/QWeb).
 
 ## Cuándo usar
 
@@ -67,7 +67,7 @@ Para cada archivo relevante, analizar:
   - Ausencia de validaciones (`@api.constrains`, `@api.onchange`) cuando son críticas.
 - Vistas XML y datos:
   - XPath frágiles o IDs inconsistentes.
-  - `attrs`/`states` incorrectos para Odoo 16.
+  - `attrs`/`states` incorrectos para Odoo.
   - Acciones/botones sin control de permisos.
   - Inconsistencias entre datos XML y modelos destino.
 - Frontend OWL/QWeb:
@@ -117,7 +117,7 @@ Generar un reporte con:
 
 **Impacto:** Efecto técnico o de negocio.
 
-**Recomendación:** Cambio sugerido alineado a Odoo 16 y estándares del repo.
+**Recomendación:** Cambio sugerido alineado a Odoo y estándares del repo.
 
 **Esfuerzo:** S | M | L | XL
 ```
