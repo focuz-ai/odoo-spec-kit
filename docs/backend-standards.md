@@ -236,6 +236,10 @@ prueba se guardan en el subdirectorio `tests/` y se importan explícitamente en 
   `@tagged('post_install', '-at_install')`). Las etiquetas aplican únicamente a clases.
 - **Tests de Integración (Tours)**: Los tours JavaScript se guardan en `static/tests/tours/` y se registran en
   `web.assets_tests`. En Python, se disparan con `self.start_tour()`.
+
+> [!IMPORTANT]
+> **Prohibición de Herramientas E2E Externas**: Queda estrictamente prohibido utilizar herramientas de automatización externas como **Playwright, Cypress o Selenium** para pruebas E2E (End-to-End). El DOM dinámico generado por OWL hace que estas herramientas sean extremadamente frágiles y costosas de mantener. Las pruebas de integración que requieran interacción con el navegador web deben implementarse *exclusivamente* mediante los **Odoo JS Tours** nativos (`@web_tour`) y las clases `HttpCase` de Python.
+
 - **Mocking en Pruebas**: Al probar código que realiza llamadas a APIs o servicios externos, es obligatorio aislar las
   pruebas. Utilice `patch` de `unittest.mock` para simular las respuestas de los servicios externos y evitar dependencia
   de red en la ejecución de pruebas.

@@ -67,6 +67,7 @@ Para directrices y estándares específicos de diferentes áreas del proyecto, c
   commits de Odoo y flujos de integración.
 - [Estándares de Documentación](./documentation-standards.md) - Estructura y
   mantenimiento de la documentación técnica y archivos de configuración de IA.
+- [Topología Core de Odoo](./odoo-core-topology.md) - Reglas inquebrantables de modelos base y uso de MCP para introspección.
 - [Pasos Obligatorios OpenSpec](./openspec-tasks-mandatory-steps.md) - Lista de
   verificación y reglas obligatorias para tareas del workflow OpenSpec.
 
