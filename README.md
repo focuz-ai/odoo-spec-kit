@@ -114,13 +114,15 @@ cd su-proyecto-odoo
 openspec init
 ```
 
+Si quieres el flujo de trabajo expandido (`/opsx:new`, `/opsx:continue`, `/opsx:ff`, `/opsx:verify`, `/opsx:bulk-archive`, `/opsx:onboard`), selecciónalo con `openspec config profile` y aplícalo con `openspec update`.
+
 ### 2) Importar el Kit en tu Proyecto
 
 Copie todo el contenido de este repositorio en la raíz de su proyecto Odoo. Al importar, asegúrese de no sobreescribir archivos específicos del proyecto que ya existan (como el `README.md` original de su módulo):
 
 ```bash
-# Copiar recursivamente sin sobreescribir (--ignore-existing)
-cp -rn lidr-specboot/* your-project/
+# Clone or copy this repository into your project (`-n`: do not overwrite existing files so you keep project's original README)
+cp -rn odoo-spec-kit/* your-project/
 ```
 
 ### 3) Personalizar `docs/` para tu Proyecto (Obligatorio)
