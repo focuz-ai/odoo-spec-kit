@@ -1,6 +1,6 @@
-# Metodología de Auditoría de Código (Odoo 16.0)
+# Metodología de Auditoría de Código (Odoo)
 
-Guía operativa para ejecutar auditorías técnicas de addons Odoo 16.0 con foco en seguridad, comportamiento y
+Guía operativa para ejecutar auditorías técnicas de addons Odoo con foco en seguridad, comportamiento y
 mantenibilidad.
 
 ## 1. Preparación

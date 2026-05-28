@@ -1,7 +1,7 @@
 ---
 name: security-audit
 description:
-  Realiza la auditoría estática de seguridad y permisos en módulos de Odoo EE 16.0.
+  Realiza la auditoría estática de seguridad y permisos en módulos de Odoo EE.
   Cruza ACLs, reglas de registro, detecta inyecciones SQL y previene XSS en vistas QWeb.
 author: Focuz.io
 version: 1.0.0
@@ -9,7 +9,7 @@ version: 1.0.0
 
 # Skill: Auditoría de Seguridad (/security-audit)
 
-Esta skill consolida la auditoría estricta de seguridad y permisos para Odoo 16.0 Enterprise Edition.
+Esta skill consolida la auditoría estricta de seguridad y permisos para Odoo Enterprise Edition.
 Debe ejecutarse para prevenir brechas de seguridad, fugas de datos entre compañías o escaladas de privilegios no autorizadas.
 
 ---

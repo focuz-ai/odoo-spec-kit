@@ -1,4 +1,4 @@
-# Estándares de Desarrollo Backend y Vistas XML en Odoo 16.0 (Backend Standards)
+# Estándares de Desarrollo Backend y Vistas XML en Odoo (Backend Standards)
 
 > [!IMPORTANT] Este documento rige todas las decisiones de diseño técnico, estructura y codificación del backend y las
 > vistas XML del proyecto. Todos los agentes de IA deben utilizarlo como la guía maestra de estándares backend.
@@ -8,7 +8,7 @@
 ## 1. Stack Tecnológico
 
 - **Lenguaje**: Python 3.10+
-- **Plataforma**: Odoo 16.0 (Community y Enterprise)
+- **Plataforma**: Odoo (Community y Enterprise)
 - **Base de Datos**: PostgreSQL 12+
 - **API**: JSON-RPC 2.0 y XML-RPC para integraciones externas.
 
@@ -24,7 +24,7 @@ Odoo cuenta con tres clases base fundamentales para la persistencia de datos:
 - **`models.AbstractModel`**: Modelos abstractos que no tienen tabla física propia, pero sirven para heredar campos y
   comportamientos a múltiples modelos.
 
-### Buenas Prácticas y Patrones de Odoo 16.0:
+### Buenas Prácticas y Patrones de Odoo:
 
 - **Decorador `@api.model_create_multi`**: Obligatorio en todos los métodos `create(self, vals_list)`. Este decorador
   permite que Odoo procese la creación de registros en lotes eficientes (batching), reduciendo el número de queries
@@ -116,7 +116,7 @@ Odoo soporta tres tipos principales de herencia:
 # CORRECTO
 self.env.cr.execute("SELECT name FROM res_partner WHERE id = %s", (partner_id,))
 
-# CORRECTO (Con composición condicional de consultas en Odoo 16.0)
+# CORRECTO (Con composición condicional de consultas en Odoo)
 query = "SELECT name FROM res_partner"
 params = []
 if partner_id:
@@ -136,7 +136,7 @@ self.env.cr.execute(query, tuple(params))
 
 Las vistas XML de Odoo deben ser limpias y usar herencia mediante expresiones `xpath` precisas.
 
-> [!IMPORTANT] > **Uso obligatorio de `attrs` y `states`**: En Odoo 16.0, para la visibilidad, obligatoriedad o edición
+> [!IMPORTANT] > **Uso obligatorio de `attrs` y `states`**: En Odoo, para la visibilidad, obligatoriedad o edición
 > dinámica de campos, se debe utilizar el atributo `attrs` en las vistas XML (ej.
 > `attrs="{'invisible': [('state', '!=', 'draft')]}"`) o `states` (ej. `states="draft,sent"`). Los atributos booleanos
 > directos con expresiones lógicas (ej. `invisible="state != 'draft'"`) no son soportados de forma nativa en la mayoría
