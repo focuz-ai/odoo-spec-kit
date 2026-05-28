@@ -34,6 +34,8 @@ Sigue estos pasos:
    para buscar activamente en el código fuente actual utilizando las rutas identificadas. Verifica la existencia de
    módulos base, vistas heredadas y lógica de negocio actual relacionada con el ticket para evitar alucinar estructuras
    o dependencias.
+   - **Introspección Dinámica (Odoo MCP Server)**: Si el servidor `mcp-server-odoo` está configurado en tu entorno, estás **obligado** a utilizar su recurso nativo `odoo://{model}/fields` para leer el esquema exacto y vivo de la base de datos (incluyendo campos custom) **antes** de sugerir campos nuevos o alteraciones en el mapeo de datos.
+   - **Reglas Inquebrantables**: Lee siempre el documento `docs/odoo-core-topology.md` para respetar la topología base del ERP.
 5. **Validación de Funcionalidad Existente (No reinventar la rueda):** Odoo es un ERP sumamente extenso. Antes de
    proponer un nuevo desarrollo personalizado, evalúa y busca en todo el código base (Community, Enterprise y **módulos
    propios/custom del proyecto**) si la funcionalidad solicitada ya existe nativamente o fue desarrollada previamente.
