@@ -62,7 +62,7 @@ Sigue estos pasos:
     - `## Original`
     - `## Enhanced (Odoo Spec)`
       - `### 1. Contexto y Reglas de Negocio (Visión de Producto)`
-      - `### 2. Arquitectura de Modelos (ORM) o Configuración`
+      - `### 2. Arquitectura de Modelos (ORM)`
       - `### 3. Vistas y UI (XML/OWL - Específico por versión)`
       - `### 4. Seguridad y Control de Accesos`
       - `### 5. Lógica de Negocio (Python/Wizards)`

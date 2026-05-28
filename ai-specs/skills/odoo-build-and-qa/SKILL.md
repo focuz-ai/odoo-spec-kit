@@ -30,15 +30,12 @@ negocio insalvable:
    - Ejecuta e invoca tu skill `/odoo-security-audit` para auditar proactivamente la seguridad (ACLs, ir.rule,
      inyecciones SQL, XSS en QWeb).
 
-4. **Revisión Integral y Auto-Reparación Delegada:**
+4. **Revisión Adversarial (Red Team):**
    - **Obligatoriamente**, invoca y transfiere el control a tu skill `odoo-adversarial-review`.
    - Proporciónale los hallazgos de seguridad y auditoría previa.
-   - Delega en esa skill la responsabilidad total de evaluar a fondo la funcionalidad, el rendimiento y cumplimiento de
-     directrices de Odoo, así como de manejar la auto-reparación usando su propia metodología RCA (Root Cause Analysis)
-     y su bucle interno de 3 intentos.
+   - Delega en esa skill la responsabilidad total de auditar a fondo la funcionalidad, el rendimiento y cumplimiento de directrices de Odoo frente a la Especificación Técnica.
+   - **IMPORTANTE:** La skill de revisión adversarial NO repara código, solo emite un reporte de hallazgos y un veredicto (PASS/FAIL).
 
-5. **Condiciones de Salida:**
-   - Si la skill `odoo-adversarial-review` informa que ha agotado sus intentos de reparación sin éxito, detén este
-     orquestador y solicita ayuda al humano.
-   - Si la skill finaliza exitosamente (código íntegro, seguro y óptimo), da por concluido el flujo y notifica que el
-     módulo está listo para enviarse (`/odoo-ship`).
+5. **Condiciones de Salida y Bucle de Reparación:**
+   - Si la revisión adversarial arroja un **FAIL**, asume el control nuevamente. Deberás analizar el reporte de hallazgos e intentar realizar las correcciones necesarias en el código (Autoreparación) o detenerte y pedir ayuda al humano si el fallo es crítico o arquitectónico.
+   - Si la revisión adversarial arroja **PASS** (código íntegro, seguro y óptimo), da por concluido el flujo y notifica que el módulo está listo para enviarse (`/odoo-ship`).
