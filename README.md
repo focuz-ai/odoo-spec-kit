@@ -46,19 +46,6 @@ Se recomienda encarecidamente utilizar este kit en combinación con frameworks d
 │   │   └── product-strategy-analyst.md # Analista funcional de producto Odoo
 │   │
 │   └── skills/                       # Habilidades y flujos reutilizables (skills)
-│       ├── enrich-us/                # Enriquecimiento de requerimientos (Jira/Plane MCP)
-│       ├── code-review-and-repair/   # Revisión de código, trazabilidad de SDD y autoreparación
-│       ├── security-audit/           # Auditoría adversarial y seguridad estática
-│       ├── commit-odoo/              # Creación de commits estilo Odoo y PRs con gh CLI
-│       ├── code-auditing/            # Auditoría sistemática de calidad y linter de Odoo
-│       ├── explain/                  # Mentoría conceptual de Odoo con quizzes interactivos
-│       ├── meta-prompt/              # Reescribe prompts usando mejores prácticas de prompt engineering
-│       ├── odoo-scaffold/            # Generación del andamiaje físico de nuevos módulos
-│       ├── odoo-test-runner/         # Formulación y ejecución de comandos de prueba
-│       ├── show-spec-working/        # Demostración funcional en vivo (navegador/API) de un spec
-│       ├── sync-agent-symlinks/      # Sincronización de espejos (.claude, .cursor, .agent)
-│       ├── update-docs/              # Actualización de documentación técnica según cambios
-│       └── writing-skills/           # Metodología TDD para creación de nuevas skills
 │
 ├── config/                           # Archivos de configuración local
 │   └── local.paths.example.json      # Plantilla de rutas locales (Odoo Community/Enterprise)
@@ -124,6 +111,8 @@ Copie todo el contenido de este repositorio en la raíz de su proyecto Odoo. Al 
 # Clone or copy this repository into your project (`-n`: do not overwrite existing files so you keep project's original README)
 cp -rn odoo-spec-kit/* your-project/
 ```
+
+Usar skill `ai-specs\skills\sync-agent-symlinks` en el Copilito de su elección para mantener alineados los symlinks de `.agents`, `.claude` y `.cursor`.
 
 ### 3) Personalizar `docs/` para tu Proyecto (Obligatorio)
 
@@ -232,21 +221,22 @@ Los artefactos se gestionan y guardan a través de las carpetas de OpenSpec dura
 
 ### Habilidades (Skills) Útiles
 
-Las habilidades del kit residen en `ai-specs/skills/` y se vinculan a `.agent/skills/`, `.claude/skills/` y `.cursor/skills/` para facilitar su descubrimiento:
+Las habilidades del kit residen en `ai-specs/skills/` y se vinculan a `.agents/skills/`, `.claude/skills/` y `.cursor/skills/` para facilitar su descubrimiento:
 
-- **`enrich-us`** — Convierte requerimientos ambiguos de Jira o Plane en especificaciones técnicas de Odoo detallando modelos, campos y XPath XML.
-- **`security-audit`** — Auditoría pre-merge de calidad y seguridad adversarial de Odoo.
-- **`code-review-and-repair`** — Trazabilidad funcional SDD + Bucle autónomo de Autoreparación de 3 intentos ante tracebacks.
-- **`commit-odoo`** — Valida y formatea mensajes de commit bajo los tags oficiales de Odoo (`[ADD]`, `[FIX]`, `[IMP]`, etc.) y crea la PR.
-- **`code-auditing`** — Metodología sistemática de 6 fases para detectar código muerto, antipatrones ORM, inyecciones SQL y deuda técnica.
-- **`meta-prompt`** — Mejora y reescribe prompts de usuario aplicando mejores prácticas de ingeniería de prompts.
-- **`odoo-scaffold`** — Creación de la estructura física estándar de nuevos addons de Odoo con manifiestos LGPL y plantillas CSV.
-- **`odoo-test-runner`** — Ayuda a formular comandos optimizados con `--test-tags` y a extraer tracebacks limpios para la IA.
-- **`show-spec-working`** — Demuestra una especificación funcional en un entorno ejecutable automatizando el navegador o llamadas a API.
-- **`explain`** — Mentoría conceptual interactiva sobre el ORM, OWL, seguridad y contabilidad de Odoo mediante preguntas y respuestas.
-- **`update-docs`** — Identifica y actualiza la documentación técnica en `docs/` de acuerdo con los cambios de código aplicados.
-- **`sync-agent-symlinks`** — Sincroniza y mantiene la integridad de los enlaces y junctions del kit.
-- **`writing-skills`** — Guía metodológica en TDD para la creación de nuevas habilidades para los copilots.
+- **`code-auditing`** — Metodología estructurada en español para realizar auditorías de calidad de código y detectar deuda técnica en módulos Odoo.
+- **`code-review-and-repair`** — Revisa la funcionalidad, rendimiento y cumplimiento de directrices del código Odoo. Incluye verificación contra el Spec Funcional (SDD) y un bucle de autoreparación autónomo ante fallos.
+- **`commit-odoo`** — Crea commits y abre Pull Requests estructurados siguiendo las directrices oficiales de Odoo (Git Guidelines) y en idioma español.
+- **`enrich-us`** — Analiza y enriquece historias de usuario con detalles técnicos completos y listos para implementación en Odoo EE siguiendo el Spec-Driven Development.
+- **`explain`** — Enseña conceptos fundamentales y avanzados de Odoo (ORM, OWL, Contabilidad, Seguridad) cerrando brechas conceptuales mediante modelos mentales y cuestionarios interactivos.
+- **`meta-prompt`** — Reescribe prompts utilizando las mejores prácticas de ingeniería de prompts para obtener resultados precisos y completos.
+- **`odoo-scaffold`** — Inicializa la estructura de carpetas y archivos base de un nuevo módulo o addon para Odoo.
+- **`odoo-test-runner`** — Ejecuta la suite de pruebas unitarias o de integración en Odoo, filtrando por módulo o etiqueta y extrayendo resultados detallados.
+- **`security-audit`** — Realiza la auditoría estática de seguridad y permisos en módulos de Odoo EE. Cruza ACLs, reglas de registro, detecta inyecciones SQL y previene XSS en vistas QWeb.
+- **`show-spec-working`** — Úselo cuando se solicite una demostración ("show me X", "demo X") o revisión interactiva de una especificación, característica o ticket.
+- **`sync-agent-symlinks`** — Analiza y sincroniza las habilidades de los agentes tras cambios en `ai-specs`. Mantiene alineados los symlinks de `.agents`, `.claude` y `.cursor`.
+- **`update-docs`** — Identifica y actualiza la documentación técnica requerida basándose en los cambios implementados.
+- **`using-git-worktrees`** — Aísla el trabajo en una característica creando o utilizando git worktrees antes de ejecutar planes de implementación.
+- **`writing-skills`** — Crea nuevas skills, edita las existentes o verifica el funcionamiento de las skills antes de su despliegue.
 
 ---
 
