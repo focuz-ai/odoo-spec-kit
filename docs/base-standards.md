@@ -1,9 +1,12 @@
 ---
 description:
   Este documento contiene todas las reglas y directrices de desarrollo para este
-  proyecto, aplicables a todos los agentes de IA (Claude, Cursor, Codex, Gemini, etc.).
+  proyecto, aplicables a todos los agentes de IA (Claude, Cursor, Codex, Gemini, etc.)
+  en Odoo 16.0.
 alwaysApply: true
 ---
+
+# Reglas de Agentes y Estándares de Ingeniería (Odoo 16.0)
 
 ## 1. Principios Core
 
@@ -42,7 +45,7 @@ alwaysApply: true
   - El archivo de manifiesto de Odoo (`__manifest__.py`), incluyendo el título,
     descripción, sumario y metadatos del addon.
   - Pruebas y tests (nombres de métodos de test, aserciones y descripciones de pruebas
-    en Python y JS Hoot).
+    en Python y JS QUnit).
   - Mensajes de commit de Git y descripciones de Pull Requests (siguiendo el formato
     oficial de Odoo, ej: `[ADD] module_name: add invoice generation logic`).
 
@@ -53,7 +56,7 @@ Para directrices y estándares específicos de diferentes áreas del proyecto, c
 - [Estándares Backend](./backend-standards.md) - Desarrollo de modelos ORM,
   controladores web, wizards, reportes, seguridad y pruebas backend en Odoo.
 - [Estándares Frontend](./frontend-standards.md) - Componentes OWL 2, plantillas QWeb,
-  SCSS, assets y pruebas unitarias con HOOT.
+  SCSS, assets y pruebas unitarias con QUnit.
 - [Directrices de Estilo de Código (Coding Guidelines)](./coding-guidelines.md) -
   Síntesis oficial de estilos de Odoo para Python, JS, CSS y XML.
 - [Directrices de Git (Git Guidelines)](./git-guidelines.md) - Estructura oficial de
@@ -110,5 +113,5 @@ técnica en primer lugar:
    especificaciones técnicas y `tasks.md`).
 2. Implementar los cambios en el código únicamente después de que los artefactos de
    especificación reflejen la nueva solicitud.
-3. Ejecutar de nuevo la validación del workflow (`/verify` y `/code-review`) antes de
+3. Ejecutar de nuevo la validación del workflow (`/verify`, `/security-audit` y `/code-review-and-repair`) antes de
    archivar.

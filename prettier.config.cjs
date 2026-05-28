@@ -3,7 +3,7 @@
 const config = {
   plugins: [require.resolve("@prettier/plugin-xml")],
   bracketSpacing: false,
-  printWidth: 88,
+  printWidth: 120,
   proseWrap: "always",
   semi: true,
   trailingComma: "es5",
