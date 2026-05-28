@@ -1,6 +1,6 @@
 .antigravitycli/
 .vscode/
-.agent/
+.agents/
 .claude/
 .cursor/*
 !.cursor/rules/
