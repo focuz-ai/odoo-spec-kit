@@ -1,14 +1,14 @@
 ---
 description:
-  Documentación y ejemplo del modelo de datos de Contabilidad (Accounting) en Odoo 18.0,
+  Documentación y ejemplo del modelo de datos de Contabilidad (Accounting) en Odoo 16.0,
   detallando las entidades principales, campos clave, reglas relacionales y diagrama ER.
 alwaysApply: true
 ---
 
-# Modelo de Datos: Contabilidad en Odoo 18.0 (Data Model)
+# Modelo de Datos: Contabilidad en Odoo 16.0 (Data Model)
 
 Este documento detalla la arquitectura de base de datos y modelos del módulo de
-Contabilidad (`account`) de Odoo 18.0, sirviendo de referencia de diseño técnico para la
+Contabilidad (`account`) de Odoo 16.0, sirviendo de referencia de diseño técnico para la
 creación o extensión de módulos contables.
 
 ---
@@ -119,7 +119,7 @@ ventas o compras.
 ## 2. Diagrama de Entidad-Relación (ERD)
 
 El siguiente diagrama representa cómo se vinculan los modelos de contabilidad en Odoo
-18.0:
+16.0:
 
 ```mermaid
 erDiagram
@@ -207,7 +207,7 @@ erDiagram
    (`sum(debit) == sum(credit)`). Si esto no se cumple, el asiento no puede pasar del
    estado `draft` a `posted`.
 
-2. **Multicompañía Estricto**: Odoo 18.0 valida rigurosamente los accesos multicompañía.
+2. **Multicompañía Estricto**: Odoo 16.0 valida rigurosamente los accesos multicompañía.
    Los campos `company_id` actúan como filtros duros. No se pueden mezclar líneas de
    asientos contables apuntando a cuentas de una Compañía A en un asiento perteneciente
    a la Compañía B.

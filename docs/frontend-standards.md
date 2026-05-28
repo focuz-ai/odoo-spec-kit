@@ -1,4 +1,4 @@
-# Estándares de Desarrollo Frontend en Odoo 19.0 (Frontend Standards)
+# Estándares de Desarrollo Frontend en Odoo 16.0 (Frontend Standards)
 
 ## Tabla de Contenidos
 
@@ -8,7 +8,7 @@
 4. [Uso e Integración de Servicios del Core](#uso-e-integración-de-servicios-del-core)
 5. [Registro de Assets en el Manifest](#registro-de-assets-en-el-manifest)
 6. [Estilos SCSS y Diseño Responsivo](#estilos-scss-y-diseño-responsivo)
-7. [Pruebas Frontend con HOOT y Web Test Helpers](#pruebas-frontend-con-hoot-y-web-test-helpers)
+7. [Pruebas Frontend con QUnit y Web Test Helpers](#pruebas-frontend-con-qunit-y-web-test-helpers)
 8. [Creación de Widgets de Campos Personalizados](#creación-de-widgets-de-campos-personalizados)
 9. [Convenciones de Nombres y Estructura de Archivos](#convenciones-de-nombres-y-estructura-de-archivos)
 
@@ -16,19 +16,19 @@
 
 ## 1. Stack Tecnológico
 
-El frontend del cliente web de Odoo 19.0 está construido sobre las siguientes
+El frontend del cliente web de Odoo 16.0 está construido sobre las siguientes
 tecnologías principales:
 
 - **OWL 2 (Odoo Web Library)**: Framework moderno de componentes reactivos basado en
-  clases y hooks de JavaScript, adaptado al nuevo DOM virtual rápido (blockdom).
+  clases y hooks de JavaScript, adaptado al DOM virtual.
 - **QWeb (XML)**: Motor de plantillas XML utilizado tanto para renderizado en servidor
   como para renderizado dinámico en cliente (JS).
 - **Bootstrap 5**: Framework CSS subyacente personalizado para la estructura y
   componentes UI nativos.
 - **SCSS**: Preprocesador de CSS utilizado para extender y modificar el diseño visual de
   Odoo.
-- **HOOT**: El framework de pruebas unitarias y de integración oficial de Odoo para
-  JavaScript.
+- **QUnit**: El framework de pruebas unitarias y de integración oficial de Odoo 16.0
+  para JavaScript.
 
 ---
 
@@ -149,7 +149,7 @@ reactiva ante los cambios del estado del componente.
 ### Directivas Esenciales:
 
 - **`t-esc` / `t-out`**: Para evaluar y escapar/renderizar variables de texto en el DOM
-  (en Odoo 18, `t-out` reemplaza en la mayoría de los casos a `t-raw` por seguridad
+  (en Odoo 16+, `t-out` reemplaza en la mayoría de los casos a `t-raw` por seguridad
   contra inyección XSS).
 - **`t-if` / `t-elif` / `t-else`**: Para renderizado condicional.
 - **`t-foreach` + `t-as`**: Para bucles iterativos. Es obligatorio incluir un atributo
@@ -201,20 +201,17 @@ utilizando "Bundles" definidos en el archivo `__manifest__.py`.
 # __manifest__.py
 {
     'name': 'Mi Módulo Frontend',
-    'version': '1.0',
+    'version': '16.0.1.0.0',
     'depends': ['web'],
     'data': [
         # Archivos XML de backend tradicionales van aquí (vistas, security)
     ],
     'assets': {
-        # Bundle principal del backend del cliente web
+        # Bundle principal del backend del cliente web (incluye JS, XML y SCSS)
         'web.assets_backend': [
             'mi_modulo/static/src/js/**/*.js',
-            'mi_modulo/static/src/scss/**/*.scss',
-        ],
-        # Bundle de plantillas QWeb JS (obligatorio en Odoo 18.0)
-        'web.assets_qweb': [
             'mi_modulo/static/src/xml/**/*.xml',
+            'mi_modulo/static/src/scss/**/*.scss',
         ],
         # Bundle de pruebas unitarias/integración
         'web.assets_tests': [
@@ -224,10 +221,11 @@ utilizando "Bundles" definidos en el archivo `__manifest__.py`.
 }
 ```
 
-> [!IMPORTANT] **Cambio en Odoo 18.0**: No se deben importar archivos JavaScript o SCSS
-> directamente en las vistas XML usando etiquetas HTML. Todo recurso estático del
-> cliente web debe ser registrado y empaquetado a través de los bundles de assets del
-> manifiesto.
+> [!IMPORTANT] > **Registro en Odoo 16.0**: En Odoo 16.0+, las plantillas QWeb JS se
+> registran directamente dentro del bundle principal (como `'web.assets_backend'`) y no
+> bajo un bundle separado de QWeb. Además, todo recurso estático debe ser registrado en
+> los assets del manifiesto y no importado mediante etiquetas de script/style en vistas
+> XML.
 
 ---
 
@@ -261,61 +259,76 @@ utilizando "Bundles" definidos en el archivo `__manifest__.py`.
 
 ---
 
-## 7. Pruebas Frontend con HOOT y Web Test Helpers
+## 7. Pruebas Frontend con QUnit y Web Test Helpers
 
-Odoo 18.0 introduce **HOOT**, un framework de pruebas moderno, rápido y modular.
-Sustituye las pruebas basadas en QUnit e integra helpers avanzados de prueba en
-`@web/../tests/web_test_helpers`.
+Odoo 16.0 utiliza **QUnit** como su motor de pruebas unitarias y de integración oficial
+para JavaScript en el cliente web.
 
-### Conceptos Clave de HOOT:
+### Conceptos Clave de QUnit:
 
-- **`describe` / `test`**: Para estructurar y modularizar los casos de prueba.
-- **`expect`**: Aseveraciones con sintaxis fluida.
+- **`QUnit.module` / `QUnit.test`**: Para estructurar, agrupar y nombrar los casos de
+  prueba.
+- **`assert`**: Objeto que provee las aserciones de prueba (ej. `assert.strictEqual`,
+  `assert.containsOnce`, `assert.ok`).
 - **Helpers de Simulación**:
-  - `defineModels`: Cargar y simular la existencia de modelos ORM virtuales o del núcleo
-    para la prueba.
-  - `mountView`: Montar una vista declarativa XML ficticia o real.
-  - `onRpc`: Simular y capturar llamadas RPC/ORM hacia el backend.
-  - `patchWithCleanup`: Modificar temporalmente métodos o servicios y deshacer el parche
-    automáticamente al finalizar el test.
-  - `mountWithCleanup`: Montar un componente OWL limpiando el DOM virtual y listeners
-    después de cada prueba.
+  - `makeTestEnv`: Inicializar un entorno de pruebas simulado del cliente web
+    (`mock_env`).
+  - `getFixture`: Obtener el contenedor DOM limpio de la suite para poder renderizar
+    nuestro componente.
+  - `mount`: Montar de forma asíncrona un componente OWL dentro de nuestro contenedor
+    DOM de pruebas.
+  - `nextTick`: Esperar de forma asíncrona al siguiente ciclo de renderizado del DOM de
+    OWL después de cambiar el estado reactivo.
+  - `click`: Helper para disparar un evento de click simulado sobre un selector DOM.
+  - `patchWithCleanup`: Modificar temporalmente comportamientos de servicios o clases
+    del core y restablecerlos automáticamente tras finalizar la prueba.
 
-### Ejemplo de Test Unitario OWL con HOOT:
+### Ejemplo de Test Unitario OWL con QUnit:
 
 ```javascript
 // static/tests/mi_componente_tests.js
-import {describe, test, expect} from "@odoo/hoot";
-import {mountWithCleanup} from "@web/../tests/web_test_helpers";
+import {makeTestEnv} from "@web/../tests/helpers/mock_env";
+import {getFixture, mount, nextTick, click} from "@web/../tests/helpers/utils";
 import {MiComponente} from "../src/js/mi_componente";
 
-describe("MiComponente OWL Tests", () => {
-  test("Debería renderizar el mensaje y reaccionar al click", async () => {
-    let contadorCambio = 0;
+let target;
 
-    // Montar el componente con propiedades y simulación
-    const comp = await mountWithCleanup(MiComponente, {
-      props: {
-        mensaje: "Test Unitario",
-        activo: true,
-        onCambio: (val) => {
-          contadorCambio = val;
-        },
+QUnit.module("MiComponente OWL Tests", {
+  beforeEach() {
+    target = getFixture();
+  },
+});
+
+QUnit.test("Debería renderizar el mensaje y reaccionar al click", async (assert) => {
+  let contadorCambio = 0;
+
+  const env = await makeTestEnv();
+  await mount(MiComponente, target, {
+    env,
+    props: {
+      mensaje: "Test Unitario",
+      activo: true,
+      onCambio: (val) => {
+        contadorCambio = val;
       },
-    });
-
-    // Verificar el renderizado inicial en el DOM
-    expect(".o_mi_modulo_componente").toExist();
-    expect(".o_mi_modulo_componente h4").toHaveText("Test Unitario");
-    expect(".badge").toHaveText("0");
-
-    // Simular click en el botón de incrementar usando HOOT-dom helpers
-    await click(".o_mi_modulo_componente button");
-
-    // Verificar cambio de estado y llamada al callback prop
-    expect(".badge").toHaveText("1");
-    expect(contadorCambio).toBe(1);
+    },
   });
+
+  // Verificar el renderizado inicial en el DOM
+  assert.containsOnce(target, ".o_mi_modulo_componente");
+  assert.strictEqual(
+    target.querySelector(".o_mi_modulo_componente h4").textContent.trim(),
+    "Test Unitario"
+  );
+  assert.strictEqual(target.querySelector(".badge").textContent.trim(), "0");
+
+  // Simular click en el botón de incrementar usando el helper click
+  await click(target, ".o_mi_modulo_componente button");
+  await nextTick();
+
+  // Verificar cambio de estado y llamada al callback prop
+  assert.strictEqual(target.querySelector(".badge").textContent.trim(), "1");
+  assert.strictEqual(contadorCambio, 1);
 });
 ```
 
@@ -323,50 +336,36 @@ describe("MiComponente OWL Tests", () => {
 
 ## 8. Creación de Widgets de Campos Personalizados
 
-En Odoo 19.0, los widgets de campos del formulario se crean heredando del componente
-base y registrándolos en el `fields` registry. Es altamente recomendado el uso del hook
-`useRecordObserver` para reaccionar ante cambios en los datos del recordset de forma
-limpia:
+En Odoo 16.0, los widgets de campos del formulario se crean extendiendo de `Component`
+de OWL 2, recibiendo propiedades estándar del formulario en `props` (como `value` para
+el valor del campo y `update` para actualizarlo) y registrando la clase directamente en
+el registry `fields`.
 
 ```javascript
 // static/src/js/campos/mi_campo_color.js
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
-import {useRecordObserver} from "@web/model/relational_model/utils";
-import {Component, useState} from "@odoo/owl";
+import {Component} from "@odoo/owl";
 
 export class MiCampoColor extends Component {
-  static template = "mi_modulo.MiCampoColor";
-  static props = {
-    ...standardFieldProps,
-  };
-
-  setup() {
-    this.state = useState({
-      valorColor: "light",
-    });
-
-    // Escuchar cambios reactivos en el registro (Recomendado en Odoo 19.0)
-    useRecordObserver((record) => {
-      this.state.valorColor = record.data[this.props.name] || "light";
-    });
-  }
-
   get colorClass() {
-    return `bg-${this.state.valorColor}`;
+    return `bg-${this.props.value || "light"}`;
   }
 
   seleccionarColor(color) {
-    // Actualizar el valor del campo en el recordset del formulario
-    this.props.record.update({[this.props.name]: color});
+    // Actualizar el valor del campo llamando a la función update provista en las props
+    this.props.update(color);
   }
 }
 
+MiCampoColor.template = "mi_modulo.MiCampoColor";
+MiCampoColor.props = {
+  ...standardFieldProps,
+};
+MiCampoColor.supportedTypes = ["char", "selection"];
+
 // Registrar el widget para hacerlo utilizable en XML mediante widget="mi_campo_color"
-registry.category("fields").add("mi_campo_color", {
-  component: MiCampoColor,
-  supportedTypes: ["char", "selection"],
-});
+registry.category("fields").add("mi_campo_color", MiCampoColor);
 ```
 
 ---
