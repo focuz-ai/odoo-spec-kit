@@ -1,4 +1,4 @@
-# Metodología de Detección de Código Muerto (Odoo 16.0)
+# Metodología de Detección de Código Muerto (Odoo)
 
 Guía para detectar código no utilizado en addons Odoo minimizando falsos positivos.
 

@@ -43,7 +43,7 @@ Sigue estos pasos:
    claramente identificados desde una perspectiva de Product Management.
 7. **Validación de Completitud Técnica (Específica por Versión):** Decide si la Historia de Usuario está completamente
    detallada de acuerdo con las mejores prácticas de Odoo para la **versión específica de Odoo** utilizada en el
-   proyecto (ej. Odoo 16.0). Valida que incluya:
+   proyecto (ej. Odoo). Valida que incluya:
    - Descripción completa de la funcionalidad y reglas de negocio.
    - **Modelos de Datos (ORM):** Nuevos modelos, campos, relaciones (`Many2one`, etc.), campos calculados (computes) y
      restricciones (constraints) válidos para la versión objetivo. _(Solo si requiere desarrollo)._
