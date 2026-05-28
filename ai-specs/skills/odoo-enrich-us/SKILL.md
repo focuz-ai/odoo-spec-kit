@@ -48,8 +48,10 @@ Sigue estos pasos:
    - **Mapeo de Datos (Data Mapping)**: Lista de los modelos de Odoo implicados (`res.partner`, `sale.order`) y campos conceptuales a modificar o crear.
    - **Puntos de Interacción (UI/API)**: Vistas afectadas (Form, Tree, Kanban), Controladores web (Rutas HTTP/JSON-RPC) o Acciones de servidor requeridas.
    - **Análisis de Dependencias**: Identificación clara de qué módulos base o de terceros se verán impactados (para el `depends` del manifest).
-   - **Definition of Done (DoD)**: Criterios de aceptación (AC) claros, comprobables y exhaustivos (preferiblemente estilo BDD - Given/When/Then).
+   - **Requisitos de Pruebas (Test Plan)**: Definición de escenarios críticos de negocio y edge cases que requerirán tests unitarios obligatorios en Odoo (`TransactionCase` / `SavepointCase`).
+   - **Impacto en Documentación**: Qué guías, tooltips o manuales funcionales deberán ser actualizados a raíz de este desarrollo.
    - **Requisitos No Funcionales y Seguridad**: Definición de ACLs necesarias (grupos de permisos), Reglas de Registro (`ir.rule`) y expectativas de rendimiento (evitar N+1).
+   - **Definition of Done (DoD)**: Criterios de aceptación (AC) claros, comprobables y exhaustivos (preferiblemente estilo BDD - Given/When/Then).
 8. Si la historia carece del detalle técnico suficiente para una implementación autónoma, proporciona una versión
    mejorada que sea más clara, específica y concisa, alineada con los pasos 6 y 7. Usa el contexto técnico del proyecto
    desde `@documentation`.
@@ -65,7 +67,8 @@ Sigue estos pasos:
       - `### 4. Seguridad y Control de Accesos`
       - `### 5. Lógica de Negocio (Python/Wizards)`
       - `### 6. Consideraciones Técnicas (Rutas de Módulos y Odoo Best Practices)`
-      - `### 7. Criterios de Aceptación (DoD)`
+      - `### 7. Pruebas y Documentación (Test & Docs)`
+      - `### 8. Criterios de Aceptación (DoD)`
 11. La reescritura en la herramienta de Project Management es opcional y solo aplica en modo Jira/Plane:
     - Actualiza el ticket agregando el contenido enriquecido después del contenido original, con secciones `h2` claras
       `[original]` y `[enhanced]` y un formato legible (listas/bloques de código cuando sea útil).
