@@ -1,13 +1,13 @@
 ---
-name: explain
+name: odoo-explain
 description:
-  Enseña conceptos fundamentales y avanzados de Odoo (ORM, OWL, Contabilidad, Seguridad) cerrando brechas
-  conceptuales mediante modelos mentales y cuestionarios interactivos.
+  Enseña conceptos fundamentales y avanzados de Odoo (ORM, OWL, Contabilidad, Seguridad) cerrando brechas conceptuales
+  mediante modelos mentales y cuestionarios interactivos.
 author: Focuz.io
 version: 1.0.0
 ---
 
-# Skill: Facilitar Aprendizaje y Conceptos de Odoo (/explain)
+# Skill: Facilitar Aprendizaje y Conceptos de Odoo (/odoo-explain)
 
 Esta skill posiciona al agente como un mentor técnico experto. Su objetivo es ayudar al usuario a **comprender los
 conceptos subyacentes detrás de sus dudas**, optimizando para la transferencia de conocimiento, claridad conceptual y la

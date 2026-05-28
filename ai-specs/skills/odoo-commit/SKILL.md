@@ -1,5 +1,5 @@
 ---
-name: commit-odoo
+name: odoo-commit
 description:
   Crea commits y abre Pull Requests estructurados siguiendo las directrices oficiales de Odoo (Git Guidelines) y en
   idioma español.
@@ -7,7 +7,7 @@ author: Focuz.io
 version: 1.0.0
 ---
 
-# Skill: Crear Commit y PR Estilo Odoo (/commit-odoo)
+# Skill: Crear Commit y PR Estilo Odoo (/odoo-commit)
 
 Esta skill guía al agente en el empaquetado de sus cambios en un commit Git y la posterior creación o actualización de
 un Pull Request en GitHub, adhiriéndose al estándar oficial de contribuciones de Odoo.
@@ -58,7 +58,7 @@ Si el CLI de GitHub (`gh`) está configurado y disponible:
 - Ejecute `gh pr create` para abrir un Pull Request de la rama activa hacia la rama base.
 - **Título del PR**: Alineado al commit (ej. `[ADD] mi_modulo: agregar facturación local`).
 - **Descripción**: Resumen del objetivo, enlaces a tickets de Jira/Plane y confirmación de que las pruebas de `/verify`
-  y `/code-review-and-repair` pasaron exitosamente.
+  y `/odoo-adversarial-review` pasaron exitosamente.
 
 ### 6. Reporte Final
 
