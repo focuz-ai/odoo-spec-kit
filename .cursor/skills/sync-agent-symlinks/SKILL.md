@@ -1,15 +1,19 @@
 ---
 name: sync-agent-symlinks
-description: Analyze and synchronize agent skill and agent exposure after ai-specs changes. Use when skills or agents are added/removed in ai-specs and .agent, .claude, and .cursor must stay aligned through symlinks.
+description:
+  Analyze and synchronize agent skill and agent exposure after ai-specs changes. Use when skills or agents are
+  added/removed in ai-specs and .agent, .claude, and .cursor must stay aligned through symlinks.
 author: LIDR.co
 version: 1.0.0
 ---
 
 # sync-agent-symlinks Skill
 
-Keep agent-facing skill and agent structures synchronized with `ai-specs/skills` and `ai-specs/agents` as the canonical sources.
+Keep agent-facing skill and agent structures synchronized with `ai-specs/skills` and `ai-specs/agents` as the canonical
+sources.
 
-Use this skill after any change in `ai-specs/skills` or `ai-specs/agents` (new, removed, renamed, or moved), especially when you need to avoid stale or broken symlinks.
+Use this skill after any change in `ai-specs/skills` or `ai-specs/agents` (new, removed, renamed, or moved), especially
+when you need to avoid stale or broken symlinks.
 
 ## Scope and Safety Rules
 
@@ -18,7 +22,8 @@ Use this skill after any change in `ai-specs/skills` or `ai-specs/agents` (new, 
   - `.agent/skills` and `.agent/agents`
   - `.claude/skills` and `.claude/agents`
   - `.cursor/skills` and `.cursor/agents`
-- Manage only entries that are symlinks to `../../ai-specs/skills/<skill-name>` or `../../ai-specs/agents/<agent-name>.md`.
+- Manage only entries that are symlinks to `../../ai-specs/skills/<skill-name>` or
+  `../../ai-specs/agents/<agent-name>.md`.
 - Do not delete non-symlink directories in mirror targets unless the user explicitly asks.
 - Never overwrite a real directory automatically; report it as a conflict.
 
@@ -34,6 +39,7 @@ Collect three inventories:
 4. Mirror entries in `.cursor/skills` and `.cursor/agents`
 
 From mirror entries, classify:
+
 - `linked`: valid symlink pointing to existing canonical skill
 - `broken`: symlink target missing
 - `orphan`: symlink points to canonical namespace but skill no longer exists
@@ -62,6 +68,7 @@ Apply changes in this order:
    - Remove symlink only if it points to canonical namespace and skill is gone
 
 Never remove:
+
 - non-symlink directories
 - files not under canonical symlink policy
 
@@ -91,6 +98,7 @@ Return a concise sync report:
 ### Scenario A - New skill or agent added in ai-specs
 
 Expected behavior:
+
 - Add missing symlink in `.agent/skills` or `.agent/agents`
 - Add missing symlink in `.claude/skills` or `.claude/agents`
 - Add missing symlink in `.cursor/skills` or `.cursor/agents`
@@ -99,6 +107,7 @@ Expected behavior:
 ### Scenario B - Skill or agent removed from ai-specs
 
 Expected behavior:
+
 - Remove orphan canonical symlink from `.agent/skills` or `.agent/agents`
 - Remove orphan canonical symlink from `.claude/skills` or `.claude/agents`
 - Remove orphan canonical symlink from `.cursor/skills` or `.cursor/agents`
@@ -134,12 +143,14 @@ rm .agent/agents/<agent-name>.md
 ## Red Flags
 
 Never:
+
 - treat `ai-specs` as non-canonical
 - auto-delete real directories in mirror targets
 - leave broken canonical symlinks after sync
 - silently skip conflicts without reporting
 
 Always:
+
 - analyze before changing
 - apply minimal safe changes
 - preserve non-canonical entries

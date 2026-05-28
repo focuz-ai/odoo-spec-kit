@@ -1,7 +1,7 @@
 # Metodología de Auditoría de Código (Odoo 16.0)
 
-Guía operativa para ejecutar auditorías técnicas de addons Odoo 16.0 con foco en
-seguridad, comportamiento y mantenibilidad.
+Guía operativa para ejecutar auditorías técnicas de addons Odoo 16.0 con foco en seguridad, comportamiento y
+mantenibilidad.
 
 ## 1. Preparación
 
@@ -15,8 +15,7 @@ seguridad, comportamiento y mantenibilidad.
    - `docs/coding-guidelines.md`
 3. Inventariar estructura del addon:
    - `__manifest__.py`, `__init__.py`
-   - `models/`, `views/`, `security/`, `data/`, `report/`, `wizard(s)/`, `controllers/`,
-     `static/`, `tests/`.
+   - `models/`, `views/`, `security/`, `data/`, `report/`, `wizard(s)/`, `controllers/`, `static/`, `tests/`.
 4. Tomar baseline:
    - Ejecutar validaciones automáticas disponibles (por ejemplo: `pre-commit run -a`).
    - Registrar warning/error inicial para diferenciar deuda existente vs deuda nueva.
@@ -27,8 +26,7 @@ seguridad, comportamiento y mantenibilidad.
 
 - Enumerar modelos `models.Model`, `models.TransientModel`, `models.AbstractModel`.
 - Revisar herencias (`_inherit`, `_inherits`) y posibles conflictos.
-- Identificar métodos críticos: `create`, `write`, `unlink`, cómputos, constraints,
-  acciones.
+- Identificar métodos críticos: `create`, `write`, `unlink`, cómputos, constraints, acciones.
 
 ### 2.2 Seguridad
 
@@ -53,8 +51,7 @@ seguridad, comportamiento y mantenibilidad.
 ### 2.5 Testing
 
 - Revisar `tests/` y cobertura de casos críticos.
-- Verificar uso de clases adecuadas (`TransactionCase`, `HttpCase`, QUnit según
-  aplique).
+- Verificar uso de clases adecuadas (`TransactionCase`, `HttpCase`, QUnit según aplique).
 - Señalar ausencia de pruebas para áreas de alto riesgo.
 
 ## 3. Análisis de hallazgos
@@ -72,8 +69,7 @@ Para cada hallazgo, documentar:
 Buscar y consolidar problemas transversales:
 
 - Deficiencias de seguridad repetidas (ACL, rules, `sudo`, SQL).
-- Patrones de rendimiento ineficientes (N+1, loops no vectorizados, búsquedas
-  redundantes).
+- Patrones de rendimiento ineficientes (N+1, loops no vectorizados, búsquedas redundantes).
 - Inconsistencias de convención o arquitectura.
 - Oportunidades de refactor para extensibilidad.
 

@@ -1,25 +1,13 @@
 ---
 name: update-docs
-description:
-  Identifica y actualiza la documentación técnica requerida tras realizar cambios en el código de Odoo, guiándose por
-  los estándares de documentación del proyecto.
-author: Focuz.io
+description: Identify and update required technical documentation based on implemented changes.
+author: LIDR.co
 version: 1.0.0
 ---
+# update-docs Skill
 
-# Skill: Actualizar Documentación (/update-docs)
+Use it when this workflow is required in the project.
 
-Esta skill indica al agente que debe escanear el conjunto de cambios realizados en el módulo de Odoo y actualizar la
-documentación técnica correspondiente.
+## Instructions
 
----
-
-## Instrucciones de Ejecución
-
-1. Analizar el alcance de los cambios aplicados en la rama git.
-2. Cargar y seguir las directrices especificadas en `docs/documentation-standards.md` para identificar qué archivos
-   requieren actualización.
-3. Actualizar la documentación técnica (ej. `docs/data-model.md` para modelos/campos, `docs/api-spec.md` para
-   controladores) redactando el contenido de forma clara y rigurosa en **Español**.
-4. Informar al usuario en el chat sobre cuáles archivos de documentación fueron actualizados y el resumen de los cambios
-   añadidos.
+Use `docs/documentation-standards.md` to update whatever documentation is needed according to the changes made

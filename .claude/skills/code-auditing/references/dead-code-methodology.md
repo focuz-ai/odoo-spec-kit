@@ -4,8 +4,7 @@ Guía para detectar código no utilizado en addons Odoo minimizando falsos posit
 
 ## Objetivo
 
-Reducir deuda técnica y complejidad eliminando artefactos no usados sin romper puntos de
-entrada dinámicos de Odoo.
+Reducir deuda técnica y complejidad eliminando artefactos no usados sin romper puntos de entrada dinámicos de Odoo.
 
 ## Alcance de código muerto
 
@@ -31,15 +30,14 @@ Antes de marcar como muerto, verificar referencias en:
 ### 1. Descubrimiento inicial
 
 - Listar archivos Python/XML/JS/SCSS por addon.
-- Detectar importaciones y símbolos aparentemente no usados con herramientas disponibles
-  (`ruff`, búsqueda textual, revisión manual).
+- Detectar importaciones y símbolos aparentemente no usados con herramientas disponibles (`ruff`, búsqueda textual,
+  revisión manual).
 
 ### 2. Verificación de falsos positivos
 
 Para cada candidato, validar:
 
-1. Referencias dinámicas por strings (`env[model_name]`, nombres de métodos en XML,
-   registry frontend).
+1. Referencias dinámicas por strings (`env[model_name]`, nombres de métodos en XML, registry frontend).
 2. Carga por manifest aunque no exista import directo.
 3. Uso por herencia o extensión de terceros.
 4. Uso solo en pruebas o solo en demo data.
@@ -55,8 +53,7 @@ Para cada candidato, validar:
 
 1. Eliminar en cambios pequeños y atómicos.
 2. Actualizar `__init__.py`, `__manifest__.py`, XML IDs y assets relacionados.
-3. Ejecutar validaciones disponibles (`pre-commit`, tests del módulo si están
-   disponibles).
+3. Ejecutar validaciones disponibles (`pre-commit`, tests del módulo si están disponibles).
 4. Confirmar que no se rompan vistas, acciones ni carga del addon.
 
 ## Checklist de validación por tipo

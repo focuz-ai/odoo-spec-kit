@@ -1,15 +1,15 @@
 ---
 name: code-auditing
 description:
-  Metodología estructurada en español para realizar auditorías de calidad de código y
-  detectar deuda técnica en módulos Odoo 16.0.
+  Metodología estructurada en español para realizar auditorías de calidad de código y detectar deuda técnica en módulos
+  Odoo 16.0.
 version: 2.0.0
 ---
 
 # Skill: Code Auditing (Odoo 16.0)
 
-Metodología integral para auditar calidad, seguridad, mantenibilidad y deuda técnica en
-código Odoo 16.0 (backend, vistas XML y frontend OWL/QWeb).
+Metodología integral para auditar calidad, seguridad, mantenibilidad y deuda técnica en código Odoo 16.0 (backend,
+vistas XML y frontend OWL/QWeb).
 
 ## Cuándo usar
 
@@ -37,8 +37,7 @@ código Odoo 16.0 (backend, vistas XML y frontend OWL/QWeb).
 ### Fase 0: Contexto y baseline
 
 1. Identificar alcance (addon/es, carpetas, versión Odoo, dependencias).
-2. Revisar `__manifest__.py`, `README.md`, `security/`, `models/`, `views/`, `data/`,
-   `static/`, `tests/`.
+2. Revisar `__manifest__.py`, `README.md`, `security/`, `models/`, `views/`, `data/`, `static/`, `tests/`.
 3. Ejecutar baseline local disponible (ej. `pre-commit run -a`) y registrar resultados.
 4. Preparar checklist de validación para backend, seguridad, XML y OWL/QWeb.
 
@@ -146,5 +145,4 @@ Generar un reporte con:
 ## Recursos
 
 - `references/audit-methodology.md` - Metodología detallada de auditoría Odoo.
-- `references/dead-code-methodology.md` - Metodología para detección segura de código
-  muerto en Odoo.
+- `references/dead-code-methodology.md` - Metodología para detección segura de código muerto en Odoo.

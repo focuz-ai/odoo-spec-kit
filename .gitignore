@@ -1,2 +1,8 @@
 .antigravitycli/
 .vscode/
+.agent/
+.claude/
+.cursor/
+!.cursor/rules
+.idea/
+*.log
