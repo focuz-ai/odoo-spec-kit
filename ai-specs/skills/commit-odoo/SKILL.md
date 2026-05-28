@@ -10,7 +10,7 @@ version: 1.0.0
 # Skill: Crear Commit y PR Estilo Odoo (/commit-odoo)
 
 Esta skill guía al agente en el empaquetado de sus cambios en un commit Git y la posterior creación o actualización de
-un Pull Request en GitHub, adhiriéndose al estándar oficial de contribuciones de Odoo 16.0.
+un Pull Request en GitHub, adhiriéndose al estándar oficial de contribuciones de Odoo.
 
 ---
 
