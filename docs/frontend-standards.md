@@ -264,6 +264,9 @@ utilizando "Bundles" definidos en el archivo `__manifest__.py`.
 Odoo utiliza **QUnit** como su motor de pruebas unitarias y de integración oficial
 para JavaScript en el cliente web.
 
+> [!IMPORTANT]
+> **Prohibición de Herramientas E2E Externas**: Al igual que en el backend, queda terminantemente prohibido configurar o recomendar herramientas E2E de terceros (Playwright, Cypress, Selenium). El ecosistema de Odoo dicta que las pruebas de componentes puros se hacen con **QUnit**, y las simulaciones de flujo de usuario completo se hacen con **Odoo JS Tours**. No contamine el proyecto con dependencias E2E ajenas a Odoo.
+
 ### Conceptos Clave de QUnit:
 
 - **`QUnit.module` / `QUnit.test`**: Para estructurar, agrupar y nombrar los casos de
