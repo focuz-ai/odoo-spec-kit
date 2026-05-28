@@ -1,4 +1,9 @@
 .antigravitycli/
-config/local.paths.json
-
-__pycache__/
+.vscode/
+.agent/
+.claude/
+.cursor/*
+!.cursor/rules/
+.idea/
+*.log
+.ruff_cache/
