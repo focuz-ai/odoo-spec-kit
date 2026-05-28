@@ -1,12 +1,16 @@
 ---
-description:
-  Este documento contiene todas las reglas y directrices de desarrollo para este
-  proyecto, aplicables a todos los agentes de IA (Claude, Cursor, Codex, Gemini, etc.)
-  en Odoo 16.0.
-alwaysApply: true
+description: >
+  Reglas base y lineamientos absolutos que gobiernan el comportamiento de todos los agentes.
+  Es la única fuente de verdad global de Odoo.
 ---
 
-# Reglas de Agentes y Estándares de Ingeniería (Odoo 16.0)
+```yaml
+# Contexto Global del Proyecto
+ODOO_TARGET_VERSION: "16.0"
+EDITION: "Enterprise / Community"
+```
+
+# Reglas de Agentes y Estándares de Ingeniería
 
 ## 1. Principios Core
 

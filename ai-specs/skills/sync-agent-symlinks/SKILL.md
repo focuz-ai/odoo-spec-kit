@@ -2,7 +2,7 @@
 name: sync-agent-symlinks
 description:
   Analyze and synchronize agent skill and agent exposure after ai-specs changes. Use when skills or agents are
-  added/removed in ai-specs and .agent, .claude, and .cursor must stay aligned through symlinks.
+  added/removed in ai-specs and .agents, .claude, and .cursor must stay aligned through symlinks.
 author: LIDR.co
 version: 1.0.0
 ---
@@ -19,7 +19,7 @@ when you need to avoid stale or broken symlinks.
 
 - Canonical sources are `ai-specs/skills` and `ai-specs/agents`.
 - Mirror targets are:
-  - `.agent/skills` and `.agent/agents`
+  - `.agents/skills` and `.agents/agents`
   - `.claude/skills` and `.claude/agents`
   - `.cursor/skills` and `.cursor/agents`
 - Manage only entries that are symlinks to `../../ai-specs/skills/<skill-name>` or
@@ -34,7 +34,7 @@ when you need to avoid stale or broken symlinks.
 Collect three inventories:
 
 1. Canonical items from `ai-specs/skills/*/SKILL.md` and `ai-specs/agents/*.md`
-2. Mirror entries in `.agent/skills` and `.agent/agents`
+2. Mirror entries in `.agents/skills` and `.agents/agents`
 3. Mirror entries in `.claude/skills` and `.claude/agents`
 4. Mirror entries in `.cursor/skills` and `.cursor/agents`
 
@@ -99,7 +99,7 @@ Return a concise sync report:
 
 Expected behavior:
 
-- Add missing symlink in `.agent/skills` or `.agent/agents`
+- Add missing symlink in `.agents/skills` or `.agents/agents`
 - Add missing symlink in `.claude/skills` or `.claude/agents`
 - Add missing symlink in `.cursor/skills` or `.cursor/agents`
 - Verify all links resolve to canonical folder/file
@@ -108,7 +108,7 @@ Expected behavior:
 
 Expected behavior:
 
-- Remove orphan canonical symlink from `.agent/skills` or `.agent/agents`
+- Remove orphan canonical symlink from `.agents/skills` or `.agents/agents`
 - Remove orphan canonical symlink from `.claude/skills` or `.claude/agents`
 - Remove orphan canonical symlink from `.cursor/skills` or `.cursor/agents`
 - Keep non-canonical directories untouched and report them
@@ -123,21 +123,29 @@ ls ai-specs/skills
 ls ai-specs/agents
 
 # inspect mirror entries with link metadata
-ls -la .agent/skills
-ls -la .agent/agents
+ls -la .agents/skills
+ls -la .agents/agents
 ls -la .claude/skills
 ls -la .claude/agents
 ls -la .cursor/skills
 ls -la .cursor/agents
 
 # add canonical link (example for agent and skill)
-ln -s ../../ai-specs/skills/<skill-name> .agent/skills/<skill-name>
-ln -s ../../ai-specs/agents/<agent-name>.md .agent/agents/<agent-name>.md
+ln -s ../../ai-specs/skills/<skill-name> .agents/skills/<skill-name>
+ln -s ../../ai-specs/agents/<agent-name>.md .agents/agents/<agent-name>.md
+ln -s ../../ai-specs/skills/<skill-name> .claude/skills/<skill-name>
+ln -s ../../ai-specs/agents/<agent-name>.md .claude/agents/<agent-name>.md
+ln -s ../../ai-specs/skills/<skill-name> .cursor/skills/<skill-name>
+ln -s ../../ai-specs/agents/<agent-name>.md .cursor/agents/<agent-name>.md
 # Note: On Windows PowerShell, use `New-Item -ItemType SymbolicLink` or `cmd /c mklink`
 
 # remove orphan canonical link
-rm .agent/skills/<skill-name>
-rm .agent/agents/<agent-name>.md
+rm .agents/skills/<skill-name>
+rm .agents/agents/<agent-name>.md
+rm .claude/skills/<skill-name>
+rm .claude/agents/<agent-name>.md
+rm .cursor/skills/<skill-name>
+rm .cursor/agents/<agent-name>.md
 ```
 
 ## Red Flags
