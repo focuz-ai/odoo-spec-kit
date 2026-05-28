@@ -2,8 +2,8 @@
 .vscode/
 .agent/
 .claude/
-.cursor/
-!.cursor/rules
+.cursor/*
+!.cursor/rules/
 .idea/
 *.log
 .ruff_cache/
