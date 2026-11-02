@@ -53,12 +53,6 @@ Se recomienda encarecidamente utilizar este kit en combinación con frameworks d
 ├── scripts/                          # Scripts utilitarios
 │   └── setup_assistant.py            # Asistente de configuración e inicialización de rutas
 │
-├── config/                           # Archivos de configuración local
-│   └── local.paths.example.json      # Plantilla de rutas locales (Odoo Community/Enterprise)
-│
-├── scripts/                          # Scripts utilitarios
-│   └── setup_assistant.py            # Asistente de configuración e inicialización de rutas
-│
 ├── AGENTS.md, CLAUDE.md, GEMINI.md   # Accesos de copilots apuntando a base-standards
 ├── .pre-commit-config.yaml           # Configuración de hooks pre-commit para calidad de código
 ├── .ruff.toml                        # Configuración de linter Ruff para Python/Odoo
