@@ -35,10 +35,14 @@ EDITION: "Enterprise / Community"
   - Artefactos de diseño de OpenSpec (historias de usuario, especificaciones técnicas de diseño, planes de
     implementación, walkthroughs y `tasks.md`).
   - Documentación técnica orientada al repositorio (README del proyecto y guías de configuración externas).
-- **Inglés (Para toda la Programación y Código Fuente)**:
+- **Inglés (Para TODO el Desarrollo y Código Fuente, sin excepciones)**:
   - Código fuente Python (modelos, campos, métodos, decoradores, comentarios, mensajes de error técnicos y logs).
   - Código fuente JavaScript (componentes OWL, lógica de frontend, comentarios y JSDoc).
   - Vistas XML, reportes XML, data XML y archivos de seguridad CSV (nombres técnicos de grupos y reglas).
+  - **Textos orientados al usuario en el código** (`string=`, `help=`, `_("...")` y el contenido de las plantillas
+    QWeb): se escriben en inglés como idioma base. **Nunca** se codifican textos en español directamente en el código;
+    la traducción a cualquier idioma se gestiona exclusivamente vía i18n (archivos `.po`), siendo `es_419` (español de
+    Latinoamérica) la traducción predeterminada.
   - El archivo de manifiesto de Odoo (`__manifest__.py`), incluyendo el título, descripción, sumario y metadatos del
     addon.
   - Pruebas y tests (nombres de métodos de test, aserciones y descripciones de pruebas en Python y JS QUnit).

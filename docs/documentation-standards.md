@@ -30,11 +30,13 @@ técnica y las especificaciones de comportamiento para agentes de IA dentro de p
 >   implementación, walkthroughs y `tasks.md`).
 > - README del repositorio y guías de instalación.
 >
-> **En Inglés (Toda la Programación):**
+> **En Inglés (TODO el Desarrollo, sin excepciones):**
 >
 > - Todo el código fuente de programación (Python, JavaScript, XML, CSV).
 > - Comentarios dentro del código, nombres de variables, funciones, clases y métodos.
-> - Mensajes de error técnicos, logs, descripciones de campos de modelos de Odoo (`string="..."`, `help="..."`).
+> - Mensajes de error técnicos, logs y **todos los textos orientados al usuario en el código** (`string="..."`,
+>   `help="..."`, `_("...")` y el contenido de las plantillas QWeb). Nunca se escriben textos en español directamente en
+>   el código: la localización se gestiona vía i18n (archivos `.po`), con `es_419` como idioma predeterminado.
 > - Archivo de manifiesto de Odoo (`__manifest__.py`), incluyendo el sumario y descripción.
 > - Commits de Git y descripciones de Pull Requests.
 
