@@ -1,7 +1,7 @@
 ---
 description:
-  Define los pasos obligatorios y las reglas de ejecución del workflow OpenSpec adaptado para Odoo (enrich-us,
-  propose, apply, verify, security-audit, code-review-and-repair, archive, commit-odoo).
+  Define los pasos obligatorios y las reglas de ejecución del workflow OpenSpec adaptado para Odoo (odoo-enrich-us,
+  propose, apply, verify, odoo-security-audit, odoo-adversarial-review, archive, odoo-commit).
 alwaysApply: true
 ---
 
@@ -18,7 +18,7 @@ obligatoria.
 Toda implementación técnica debe organizarse en base al siguiente flujo lógico secuencial:
 
 ```
-Paso 0: Setup de Rama ➔ Fase de Codificación ➔ Paso N: Pruebas (/verify) ➔ Paso N+1: Auditoría de Seguridad (/security-audit) ➔ Paso N+2: Revisión y Reparación (/code-review-and-repair) ➔ Paso N+3: Documentación ➔ Paso N+4: Commit (/commit-odoo)
+Paso 0: Setup de Rama ➔ Fase de Codificación ➔ Paso N: Pruebas (/verify) ➔ Paso N+1: Auditoría de Seguridad (/odoo-security-audit) ➔ Paso N+2: Revisión y Reparación (/odoo-adversarial-review) ➔ Paso N+3: Documentación ➔ Paso N+4: Commit (/odoo-commit)
 ```
 
 ---
@@ -46,7 +46,7 @@ Todas las tareas de desarrollo deben incluir estos pasos exactamente en el orden
 - **Reporte de Verificación**: El agente debe documentar los resultados (pruebas pasadas, fallidas, tiempos) en un
   reporte guardado en la carpeta de especificaciones del cambio.
 
-### Paso N+1: Auditoría de Seguridad y Revisión de Código (/security-audit, /code-review-and-repair) (MANDATORIO)
+### Paso N+1: Auditoría de Seguridad y Revisión de Código (/odoo-security-audit, /odoo-adversarial-review) (MANDATORIO)
 
 - **Acción**: Ejecutar una revisión adversarial y una auditoría estática de seguridad antes de marcar la tarea como
   lista para integrar.
@@ -58,10 +58,10 @@ Todas las tareas de desarrollo deben incluir estos pasos exactamente en el orden
 
 ### Paso N+2: Actualizar Documentación Técnica (MANDATORIO)
 
-- **Acción**: Actualizar los archivos de documentación correspondientes en `docs/` (como `data-model.md` ante cambios de
-  base de datos o `api-spec.md` para nuevos endpoints).
+- **Acción**: Actualizar los archivos de documentación correspondientes en `docs/` (como el modelo en
+  `docs/data-models/` ante cambios de base de datos o `docs/rpc-and-controllers.md` para nuevos endpoints/servicios).
 
-### Paso N+3: Creación de Commit Odoo-Style (`commit-odoo`) (MANDATORIO)
+### Paso N+3: Creación de Commit Odoo-Style (`odoo-commit`) (MANDATORIO)
 
 - **Acción**: Realizar el commit git siguiendo el formato oficial de Odoo descrito en `docs/git-guidelines.md`.
 
@@ -72,14 +72,14 @@ Todas las tareas de desarrollo deben incluir estos pasos exactamente en el orden
 ```markdown
 ## 0. Setup: Crear Rama de Característica (MANDATORIO)
 
-- [ ] 0.1 Crear y cambiarse a la rama `feature/localizacion-contable`
+- [ ] 0.1 Crear y cambiarse a la rama `feature/accounting-localization`
 - [ ] 0.2 Confirmar estado limpio del working tree
 
 ## 1. Backend: Implementar Modelo de Factura Local
 
-- [ ] 1.1 Crear modelo `factura.local` con campos requeridos y restricciones
+- [ ] 1.1 Crear modelo `local.invoice` con campos requeridos y restricciones
 - [ ] 1.2 Declarar accesos del modelo en `security/ir.model.access.csv`
-- [ ] 1.3 Crear vista de formulario y árbol en `views/factura_local_views.xml`
+- [ ] 1.3 Crear vista de formulario y árbol en `views/local_invoice_views.xml`
 
 ## 8. Backend: Ejecutar Pruebas de Odoo (/verify) (MANDATORIO)
 
@@ -87,7 +87,7 @@ Todas las tareas de desarrollo deben incluir estos pasos exactamente en el orden
 - [ ] 8.2 Verificar que el estado de base de datos se revierta tras las pruebas
 - [ ] 8.3 Guardar reporte de resultados en la carpeta del cambio
 
-## 9. Backend: Auditoría de Seguridad y Revisión de Código (/security-audit, /code-review-and-repair) (MANDATORIO)
+## 9. Backend: Auditoría de Seguridad y Revisión de Código (/odoo-security-audit, /odoo-adversarial-review) (MANDATORIO)
 
 - [ ] 9.1 Realizar cruce de seguridad estático entre modelos de Python y registros CSV de ACLs
 - [ ] 9.2 Ejecutar bucle de autoreparación (máximo 3 intentos) si se reportan tracebacks o fallos
@@ -95,11 +95,12 @@ Todas las tareas de desarrollo deben incluir estos pasos exactamente en el orden
 
 ## 10. Documentación: Actualizar Estándares (MANDATORIO)
 
-- [ ] 10.1 Actualizar `docs/data-model.md` con la definición del modelo de datos creado
+- [ ] 10.1 Actualizar el archivo del modelo en `docs/data-models/` (ej. `docs/data-models/account.md`) con la definición
+      del modelo de datos creado
 
-## 11. Git: Crear Commit Odoo-Style (/commit-odoo) (MANDATORIO)
+## 11. Git: Crear Commit Odoo-Style (/odoo-commit) (MANDATORIO)
 
-- [ ] 11.1 Crear commit con formato `[ADD] mi_modulo: agregar facturación local` y descripción larga
+- [ ] 11.1 Crear commit con formato `[ADD] my_module: add local invoicing` y descripción larga
 ```
 
 ---
@@ -109,4 +110,4 @@ Todas las tareas de desarrollo deben incluir estos pasos exactamente en el orden
 - El agente **NUNCA** debe marcar una tarea como completada (`[x]`) en `task.md` si no ha ejecutado los comandos de
   prueba y validación correspondientes en la consola.
 - Los fallos o tracebacks en las pruebas deben ser atacados proactivamente mediante el bucle de autoreparación de
-  `/security-audit` y `/code-review-and-repair` antes de notificar al usuario.
+  `/odoo-security-audit` y `/odoo-adversarial-review` antes de notificar al usuario.
