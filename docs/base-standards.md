@@ -112,8 +112,8 @@ debe tratar como una actualización de la especificación técnica en primer lug
    `tasks.md`).
 2. Implementar los cambios en el código únicamente después de que los artefactos de especificación reflejen la nueva
    solicitud.
-3. Ejecutar de nuevo la validación del workflow (`/verify`, `/security-audit` y `/code-review-and-repair`) antes de
-   archivar.
+3. Ejecutar de nuevo la validación del workflow (`/verify`, `/odoo-security-audit` y `/odoo-adversarial-review`) antes
+   de archivar.
 
 ## 8. Comandos de Desarrollo y Calidad
 

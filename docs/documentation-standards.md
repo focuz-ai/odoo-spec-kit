@@ -47,12 +47,12 @@ técnica y las especificaciones de comportamiento para agentes de IA dentro de p
 Antes de finalizar cualquier tarea o realizar un commit/push, el agente debe revisar y actualizar la documentación
 técnica del módulo si se han modificado los siguientes elementos:
 
-| Cambio Realizado               | Acción de Documentación Requerida                                                                                                                            |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Nuevo modelo o campo**       | Actualizar `docs/data-model.md` con la nueva estructura de campos y relaciones. Agregar comentarios detallados (`help="..."`) en el código Python del campo. |
-| **Nuevo Controller / Ruta**    | Documentar el endpoint en `docs/api-spec.md` con los parámetros esperados, respuestas y modo de autenticación.                                               |
-| **Cambio de dependencia**      | Actualizar el archivo `__manifest__.py` y reflejar el cambio en la guía de instalación (`docs/development-guide.md`) si requiere librerías del sistema.      |
-| **Actualización de Seguridad** | Documentar nuevos grupos, accesos CSV o reglas de registro (`record rules`) en el archivo correspondiente.                                                   |
+| Cambio Realizado               | Acción de Documentación Requerida                                                                                                                                                                                                        |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Nuevo modelo o campo**       | Actualizar el archivo del modelo correspondiente en `docs/data-models/` (ej. `docs/data-models/account.md`) con la nueva estructura de campos y relaciones. Agregar comentarios detallados (`help="..."`) en el código Python del campo. |
+| **Nuevo Controller / Ruta**    | Documentar el endpoint/servicio en `docs/rpc-and-controllers.md` con los parámetros esperados, respuestas y modo de autenticación.                                                                                                       |
+| **Cambio de dependencia**      | Actualizar el archivo `__manifest__.py` y reflejar el cambio en la guía de instalación (`docs/development-guide.md`) si requiere librerías del sistema.                                                                                  |
+| **Actualización de Seguridad** | Documentar nuevos grupos, accesos CSV o reglas de registro (`record rules`) en el archivo correspondiente.                                                                                                                               |
 
 ### Documentación Estándar de un Módulo Odoo:
 

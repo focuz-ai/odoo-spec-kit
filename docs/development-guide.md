@@ -93,7 +93,7 @@ db_password = odoo_pwd
 addons_path =
     D:/Projects/Odoo/o16-env/odoo/addons,
     D:/Projects/Odoo/o16-env/enterprise,
-    D:/Projects/AI/odoo-specboot
+    D:/Projects/AI/odoo-spec-kit
 
 ; Configuración de desarrollo y rendimiento
 admin_passwd = admin_master_password
