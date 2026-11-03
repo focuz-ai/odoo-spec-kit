@@ -171,7 +171,7 @@ erDiagram
         integer company_id FK
     }
 
-    ;; Relaciones entre entidades
+    %% Relaciones entre entidades
     account_journal ||--o{ account_move : "registra"
     account_account ||--o{ account_journal : "cuenta_por_defecto"
     account_account ||--o{ account_move_line : "apunta_a"
