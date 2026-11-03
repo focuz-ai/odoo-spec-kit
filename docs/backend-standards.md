@@ -40,32 +40,32 @@ Odoo cuenta con tres clases base fundamentales para la persistencia de datos:
 ```python
 from odoo import models, fields, api, _
 
-class FacturaLocal(models.Model):
-    _name = 'factura.local'
-    _description = 'Factura Contable Localizada'
+class LocalInvoice(models.Model):
+    _name = 'local.invoice'
+    _description = 'Localized Accounting Invoice'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(string='Referencia', required=True, tracking=True)
-    company_id = fields.Many2one('res.company', string='Compañía', required=True, default=lambda self: self.env.company)
-    partner_id = fields.Many2one('res.partner', string='Cliente', required=True, check_company=True)
+    name = fields.Char(string='Reference', required=True, tracking=True)
+    company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
+    partner_id = fields.Many2one('res.partner', string='Customer', required=True, check_company=True)
 
-    # Campo computado almacenado y pre-calculado
-    monto_total = fields.Monetary(string='Total', compute='_compute_monto_total', store=True, precompute=True)
+    # Stored and precomputed field
+    total_amount = fields.Monetary(string='Total', compute='_compute_total_amount', store=True, precompute=True)
     currency_id = fields.Many2one('res.currency', related='company_id.currency_id')
 
     @api.depends('partner_id')
-    def _compute_monto_total(self) -> None:
+    def _compute_total_amount(self) -> None:
         for record in self:
-            # Lógica del cálculo
-            record.monto_total = 100.0
+            # Computation logic
+            record.total_amount = 100.0
 
     @api.model_create_multi
     def create(self, vals_list):
-        # Implementación por lotes
+        # Batch implementation
         return super().create(vals_list)
 
     def write(self, vals) -> bool:
-        # Método write
+        # Write method
         return super().write(vals)
 ```
 
@@ -79,8 +79,8 @@ Odoo soporta tres tipos principales de herencia:
   sin cambiar su tabla o su nombre técnico.
 - **Herencia por Delegación**: `_inherits = {'res.partner': 'partner_id'}` Mapea un registro hijo a uno padre
   automáticamente creando una relación One2one física en base de datos.
-- **Herencia por Clonación (Polimorfismo de Prototipo)**: `_name = 'nuevo.partner'` `_inherit = 'res.partner'` Crea una
-  nueva tabla física (`nuevo.partner`) que clona todos los campos y la lógica del modelo heredado (`res.partner`).
+- **Herencia por Clonación (Polimorfismo de Prototipo)**: `_name = 'new.partner'` `_inherit = 'res.partner'` Crea una
+  nueva tabla física (`new.partner`) que clona todos los campos y la lógica del modelo heredado (`res.partner`).
 
 ---
 
@@ -98,7 +98,7 @@ Odoo soporta tres tipos principales de herencia:
 - **Evitar N+1 y queries ineficientes**: Utilizar `filtered()`, `mapped()` y `sorted()` sobre recordsets cargados. Si se
   requiere agrupar datos, usar `read_group()` para que la agregación la haga PostgreSQL.
 - **Propagación del Contexto**: Pasar siempre el contexto al llamar métodos del ORM (ej.
-  `self.with_context(mi_contexto).write(...)`).
+  `self.with_context(my_context).write(...)`).
 
 ---
 
@@ -109,14 +109,14 @@ Odoo soporta tres tipos principales de herencia:
 - **Record Rules (XML)**: Utilizar record rules con `domain_force` para restringir el acceso a nivel de fila
   (multi-compañía, multi-sucursal).
 - **Prevención de Inyección SQL**: **NUNCA** construya consultas crudas concatenando o formateando variables
-  (`f"SELECT ... WHERE id = {mi_id}"`). Es obligatorio utilizar la parametrización de consultas pasando los argumentos
+  (`f"SELECT ... WHERE id = {my_id}"`). Es obligatorio utilizar la parametrización de consultas pasando los argumentos
   como una tupla o lista al método `execute`:
 
 ```python
-# CORRECTO
+# CORRECT
 self.env.cr.execute("SELECT name FROM res_partner WHERE id = %s", (partner_id,))
 
-# CORRECTO (Con composición condicional de consultas en Odoo)
+# CORRECT (with conditional query composition in Odoo)
 query = "SELECT name FROM res_partner"
 params = []
 if partner_id:
@@ -145,16 +145,16 @@ Las vistas XML de Odoo deben ser limpias y usar herencia mediante expresiones `x
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-  <!-- Vista Form estándar -->
-  <record id="factura_local_view_form" model="ir.ui.view">
-    <field name="name">factura.local.view.form</field>
-    <field name="model">factura.local</field>
+  <!-- Standard form view -->
+  <record id="local_invoice_view_form" model="ir.ui.view">
+    <field name="name">local.invoice.view.form</field>
+    <field name="model">local.invoice</field>
     <field name="arch" type="xml">
-      <form string="Factura Local">
+      <form string="Local Invoice">
         <header>
           <button
-            name="action_aprobar"
-            string="Aprobar"
+            name="action_approve"
+            string="Approve"
             type="object"
             class="oe_highlight"
             attrs="{'invisible': [('state', '!=', 'draft')]}"
@@ -169,7 +169,7 @@ Las vistas XML de Odoo deben ser limpias y usar herencia mediante expresiones `x
             </group>
             <group>
               <field name="company_id" groups="base.group_multi_company" />
-              <field name="monto_total" />
+              <field name="total_amount" />
             </group>
           </group>
         </sheet>
@@ -182,15 +182,15 @@ Las vistas XML de Odoo deben ser limpias y usar herencia mediante expresiones `x
     </field>
   </record>
 
-  <!-- Vista de lista / Tree -->
-  <record id="factura_local_view_list" model="ir.ui.view">
-    <field name="name">factura.local.view.list</field>
-    <field name="model">factura.local</field>
+  <!-- List / Tree view -->
+  <record id="local_invoice_view_list" model="ir.ui.view">
+    <field name="name">local.invoice.view.list</field>
+    <field name="model">local.invoice</field>
     <field name="arch" type="xml">
-      <tree string="Facturas Locales">
+      <tree string="Local Invoices">
         <field name="name" />
         <field name="partner_id" />
-        <field name="monto_total" sum="Total General" />
+        <field name="total_amount" sum="Grand Total" />
         <field name="state" />
       </tree>
     </field>

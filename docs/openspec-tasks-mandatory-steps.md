@@ -72,14 +72,14 @@ Todas las tareas de desarrollo deben incluir estos pasos exactamente en el orden
 ```markdown
 ## 0. Setup: Crear Rama de Característica (MANDATORIO)
 
-- [ ] 0.1 Crear y cambiarse a la rama `feature/localizacion-contable`
+- [ ] 0.1 Crear y cambiarse a la rama `feature/accounting-localization`
 - [ ] 0.2 Confirmar estado limpio del working tree
 
 ## 1. Backend: Implementar Modelo de Factura Local
 
-- [ ] 1.1 Crear modelo `factura.local` con campos requeridos y restricciones
+- [ ] 1.1 Crear modelo `local.invoice` con campos requeridos y restricciones
 - [ ] 1.2 Declarar accesos del modelo en `security/ir.model.access.csv`
-- [ ] 1.3 Crear vista de formulario y árbol en `views/factura_local_views.xml`
+- [ ] 1.3 Crear vista de formulario y árbol en `views/local_invoice_views.xml`
 
 ## 8. Backend: Ejecutar Pruebas de Odoo (/verify) (MANDATORIO)
 
@@ -99,7 +99,7 @@ Todas las tareas de desarrollo deben incluir estos pasos exactamente en el orden
 
 ## 11. Git: Crear Commit Odoo-Style (/commit-odoo) (MANDATORIO)
 
-- [ ] 11.1 Crear commit con formato `[ADD] mi_modulo: agregar facturación local` y descripción larga
+- [ ] 11.1 Crear commit con formato `[ADD] my_module: add local invoicing` y descripción larga
 ```
 
 ---

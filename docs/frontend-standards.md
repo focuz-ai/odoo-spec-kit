@@ -38,51 +38,51 @@ Todos los componentes de OWL 2 se definen utilizando clases estándar de ES6 que
 import {Component, useState, onWillStart, onMounted, onWillUnmount} from "@odoo/owl";
 import {useService} from "@web/core/utils/hooks";
 
-export class MiComponente extends Component {
-  static template = "mi_modulo.MiComponente";
+export class MyComponent extends Component {
+  static template = "my_module.MyComponent";
   static props = {
-    mensaje: {type: String, optional: true},
-    activo: Boolean,
-    onCambio: Function,
+    message: {type: String, optional: true},
+    active: Boolean,
+    onChange: Function,
   };
   static defaultProps = {
-    mensaje: "Hola Mundo",
+    message: "Hello World",
   };
 
   setup() {
-    // Inicialización de estado reactivo
+    // Reactive state initialization
     this.state = useState({
-      contador: 0,
-      cargando: false,
+      counter: 0,
+      loading: false,
     });
 
-    // Inyección de servicios del core
+    // Core service injection
     this.notification = useService("notification");
 
-    // Ganchos del ciclo de vida (Hooks)
+    // Lifecycle hooks
     onWillStart(async () => {
-      this.state.cargando = true;
-      await this._cargarDatosIniciales();
-      this.state.cargando = false;
+      this.state.loading = true;
+      await this._loadInitialData();
+      this.state.loading = false;
     });
 
     onMounted(() => {
-      console.log("Componente montado en el DOM");
+      console.log("Component mounted in the DOM");
     });
 
     onWillUnmount(() => {
-      console.log("Componente listo para ser destruido");
+      console.log("Component ready to be destroyed");
     });
   }
 
-  async _cargarDatosIniciales() {
-    // Simulación o llamada al servidor
+  async _loadInitialData() {
+    // Simulation or server call
   }
 
-  incrementar() {
-    this.state.contador++;
-    this.props.onCambio(this.state.contador);
-    this.notification.add(`Contador incrementado a ${this.state.contador}`, {
+  increment() {
+    this.state.counter++;
+    this.props.onChange(this.state.counter);
+    this.notification.add(`Counter incremented to ${this.state.counter}`, {
       type: "info",
     });
   }
@@ -106,32 +106,32 @@ estado del componente.
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <templates xml:space="preserve">
-    <t t-name="mi_modulo.MiComponente">
-    <div class="o_mi_modulo_componente p-3 border rounded shadow-sm">
+    <t t-name="my_module.MyComponent">
+    <div class="o_my_module_component p-3 border rounded shadow-sm">
       <h4 class="mb-2">
-        <t t-esc="props.mensaje" />
+        <t t-esc="props.message" />
       </h4>
 
-      <p t-if="state.cargando" class="text-muted">
-                <i class="fa fa-spin fa-spinner me-1" />Cargando datos...
+      <p t-if="state.loading" class="text-muted">
+                <i class="fa fa-spin fa-spinner me-1" />Loading data...
             </p>
 
       <t t-else="">
         <div class="d-flex align-items-center gap-2">
           <span class="badge bg-primary fs-6">
-            <t t-esc="state.contador" />
+            <t t-esc="state.counter" />
           </span>
           <button
             class="btn btn-sm btn-outline-primary"
-            t-on-click="incrementar"
-            t-att-disabled="props.activo ? '' : '1'"
+            t-on-click="increment"
+            t-att-disabled="props.active ? '' : '1'"
           >
-                        Incrementar
+                        Increment
                     </button>
         </div>
       </t>
 
-      <!-- Renderizado de contenido hijo opcional a través de Slots -->
+      <!-- Optional child content rendering via Slots -->
       <div class="mt-3 border-top pt-2" t-if="slots and slots.default">
         <t t-slot="default" />
       </div>
@@ -162,14 +162,14 @@ Odoo expone una arquitectura basada en servicios del core mediante el hook `useS
 | Servicio           | Propósito                                                  | Ejemplo de Uso                                                              |
 | ------------------ | ---------------------------------------------------------- | --------------------------------------------------------------------------- |
 | **`orm`**          | Realizar consultas CRUD rápidas a modelos de base de datos | `this.orm.searchRead("res.partner", [["is_company", "=", true]], ["name"])` |
-| **`rpc`**          | Llamar a métodos de Python customizados del backend        | `this.rpc("/mi_modulo/mi_ruta_json", { params })`                           |
-| **`notification`** | Mostrar toasts informativos de éxito, alerta o peligro     | `this.notification.add("Éxito", { type: "success" })`                       |
-| **`dialog`**       | Renderizar ventanas modales flotantes                      | `this.dialog.add(ConfirmationDialog, { body: "Confirmar acción" })`         |
+| **`rpc`**          | Llamar a métodos de Python customizados del backend        | `this.rpc("/my_module/my_json_route", { params })`                          |
+| **`notification`** | Mostrar toasts informativos de éxito, alerta o peligro     | `this.notification.add("Success", { type: "success" })`                     |
+| **`dialog`**       | Renderizar ventanas modales flotantes                      | `this.dialog.add(ConfirmationDialog, { body: "Confirm action" })`           |
 | **`action`**       | Desparar acciones de ventana (`ir.actions.act_window`)     | `this.action.doAction("account.action_move_out_invoice_type")`              |
 | **`user`**         | Obtener metadatos y contexto del usuario activo            | `const isCompanyUser = this.user.hasGroup("base.group_user")`               |
 
 ```javascript
-// Ejemplo de consulta ORM desde un componente
+// Example of an ORM query from a component
 setup() {
     this.orm = useService("orm");
     onWillStart(async () => {
@@ -192,22 +192,22 @@ el archivo `__manifest__.py`.
 ```python
 # __manifest__.py
 {
-    'name': 'Mi Módulo Frontend',
+    'name': 'My Frontend Module',
     'version': '<ODOO_VERSION>.1.0.0',
     'depends': ['web'],
     'data': [
-        # Archivos XML de backend tradicionales van aquí (vistas, security)
+        # Traditional backend XML files go here (views, security)
     ],
     'assets': {
-        # Bundle principal del backend del cliente web (incluye JS, XML y SCSS)
+        # Main web client backend bundle (includes JS, XML, and SCSS)
         'web.assets_backend': [
-            'mi_modulo/static/src/js/**/*.js',
-            'mi_modulo/static/src/xml/**/*.xml',
-            'mi_modulo/static/src/scss/**/*.scss',
+            'my_module/static/src/js/**/*.js',
+            'my_module/static/src/xml/**/*.xml',
+            'my_module/static/src/scss/**/*.scss',
         ],
-        # Bundle de pruebas unitarias/integración
+        # Unit/integration test bundle
         'web.assets_tests': [
-            'mi_modulo/static/tests/tours/**/*.js',
+            'my_module/static/tests/tours/**/*.js',
         ],
     },
 }
@@ -231,12 +231,12 @@ el archivo `__manifest__.py`.
   la especificidad CSS usando selectores más concretos.
 
 ```scss
-// static/src/scss/mi_componente.scss
-.o_mi_modulo_componente {
+// static/src/scss/my_component.scss
+.o_my_module_component {
   background-color: $o-view-background-color;
   border: 1px solid rgba($o-brand-primary, 0.2);
 
-  .o_contador_valor {
+  .o_counter_value {
     font-family: $o-font-family-monospace;
     color: $o-brand-odoo;
     font-size: 1.5rem;
@@ -273,46 +273,46 @@ Odoo utiliza **QUnit** como su motor de pruebas unitarias y de integración ofic
 ### Ejemplo de Test Unitario OWL con QUnit:
 
 ```javascript
-// static/tests/mi_componente_tests.js
+// static/tests/my_component_tests.js
 import {makeTestEnv} from "@web/../tests/helpers/mock_env";
 import {getFixture, mount, nextTick, click} from "@web/../tests/helpers/utils";
-import {MiComponente} from "../src/js/mi_componente";
+import {MyComponent} from "../src/js/my_component";
 
 let target;
 
-QUnit.module("MiComponente OWL Tests", {
+QUnit.module("MyComponent OWL Tests", {
   beforeEach() {
     target = getFixture();
   },
 });
 
-QUnit.test("Debería renderizar el mensaje y reaccionar al click", async (assert) => {
-  let contadorCambio = 0;
+QUnit.test("Should render the message and react to click", async (assert) => {
+  let counterChanged = 0;
 
   const env = await makeTestEnv();
-  await mount(MiComponente, target, {
+  await mount(MyComponent, target, {
     env,
     props: {
-      mensaje: "Test Unitario",
-      activo: true,
-      onCambio: (val) => {
-        contadorCambio = val;
+      message: "Unit Test",
+      active: true,
+      onChange: (val) => {
+        counterChanged = val;
       },
     },
   });
 
-  // Verificar el renderizado inicial en el DOM
-  assert.containsOnce(target, ".o_mi_modulo_componente");
-  assert.strictEqual(target.querySelector(".o_mi_modulo_componente h4").textContent.trim(), "Test Unitario");
+  // Verify initial DOM rendering
+  assert.containsOnce(target, ".o_my_module_component");
+  assert.strictEqual(target.querySelector(".o_my_module_component h4").textContent.trim(), "Unit Test");
   assert.strictEqual(target.querySelector(".badge").textContent.trim(), "0");
 
-  // Simular click en el botón de incrementar usando el helper click
-  await click(target, ".o_mi_modulo_componente button");
+  // Simulate a click on the increment button using the click helper
+  await click(target, ".o_my_module_component button");
   await nextTick();
 
-  // Verificar cambio de estado y llamada al callback prop
+  // Verify state change and prop callback invocation
   assert.strictEqual(target.querySelector(".badge").textContent.trim(), "1");
-  assert.strictEqual(contadorCambio, 1);
+  assert.strictEqual(counterChanged, 1);
 });
 ```
 
@@ -325,30 +325,30 @@ estándar del formulario en `props` (como `value` para el valor del campo y `upd
 clase directamente en el registry `fields`.
 
 ```javascript
-// static/src/js/campos/mi_campo_color.js
+// static/src/js/fields/my_color_field.js
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 import {Component} from "@odoo/owl";
 
-export class MiCampoColor extends Component {
+export class MyColorField extends Component {
   get colorClass() {
     return `bg-${this.props.value || "light"}`;
   }
 
-  seleccionarColor(color) {
-    // Actualizar el valor del campo llamando a la función update provista en las props
+  selectColor(color) {
+    // Update the field value by calling the update function provided in props
     this.props.update(color);
   }
 }
 
-MiCampoColor.template = "mi_modulo.MiCampoColor";
-MiCampoColor.props = {
+MyColorField.template = "my_module.MyColorField";
+MyColorField.props = {
   ...standardFieldProps,
 };
-MiCampoColor.supportedTypes = ["char", "selection"];
+MyColorField.supportedTypes = ["char", "selection"];
 
-// Registrar el widget para hacerlo utilizable en XML mediante widget="mi_campo_color"
-registry.category("fields").add("mi_campo_color", MiCampoColor);
+// Register the widget to make it usable in XML via widget="my_color_field"
+registry.category("fields").add("my_color_field", MyColorField);
 ```
 
 ---
@@ -359,7 +359,7 @@ registry.category("fields").add("mi_campo_color", MiCampoColor);
   negocio.
 - **Archivos Estáticos**:
   - Un componente compuesto de JS + XML + SCSS debe compartir el mismo nombre base en minúsculas y snake_case (ej.
-    `mi_tarjeta.js`, `mi_tarjeta.xml`, `mi_tarjeta.scss`).
+    `my_card.js`, `my_card.xml`, `my_card.scss`).
   - Guarde siempre los widgets en `static/src/js/fields/` o `static/src/components/`.
 - **Plantillas QWeb**: El `t-name` de la plantilla XML debe coincidir exactamente con el nombre de clase completo
-  calificado (ej. `mi_modulo.MiComponente`).
+  calificado (ej. `my_module.MyComponent`).

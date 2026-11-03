@@ -32,9 +32,9 @@ Para consumir los servicios mediante JSON-RPC, primero se debe obtener una sesi�
   "jsonrpc": "2.0",
   "method": "call",
   "params": {
-    "db": "mi_base_datos",
-    "login": "admin@empresa.com",
-    "password": "mi_password_segura"
+    "db": "my_database",
+    "login": "admin@example.com",
+    "password": "my_secure_password"
   }
 }
 ```
@@ -88,18 +88,18 @@ from odoo import http
 from odoo.http import request
 import json
 
-class FacturaController(http.Controller):
+class InvoiceController(http.Controller):
 
-    @http.route('/api/v1/facturas', type='http', auth='user', methods=['GET'], csrf=False)
-    def obtener_facturas(self, **kwargs):
-        # La autenticación ya está garantizada por auth='user'
-        facturas = request.env['account.move'].search([('move_type', '=', 'out_invoice')])
+    @http.route('/api/v1/invoices', type='http', auth='user', methods=['GET'], csrf=False)
+    def get_invoices(self, **kwargs):
+        # Authentication is already guaranteed by auth='user'
+        invoices = request.env['account.move'].search([('move_type', '=', 'out_invoice')])
         data = []
-        for fac in facturas:
+        for invoice in invoices:
             data.append({
-                'id': fac.id,
-                'nombre': fac.name,
-                'total': fac.amount_total
+                'id': invoice.id,
+                'name': invoice.name,
+                'total': invoice.amount_total
             })
 
         return request.make_response(
@@ -113,10 +113,10 @@ class FacturaController(http.Controller):
 ```python
 class FrontendController(http.Controller):
 
-    @http.route('/mi_modulo/obtener_datos', type='json', auth='user')
-    def obtener_datos(self, parametro_x):
-        # Odoo se encarga de serializar el return a JSON automáticamente
-        return {'resultado': parametro_x * 2}
+    @http.route('/my_module/get_data', type='json', auth='user')
+    def get_data(self, param_x):
+        # Odoo automatically serializes the return value to JSON
+        return {'result': param_x * 2}
 ```
 
 ---

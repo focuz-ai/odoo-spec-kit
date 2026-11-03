@@ -11,31 +11,31 @@
 La organización de archivos de un módulo Odoo debe seguir la estructura estándar:
 
 ```text
-mi_modulo/
+my_module/
 ├── __init__.py
 ├── __manifest__.py
 ├── models/
 │   ├── __init__.py
-│   ├── mi_modelo.py
+│   ├── my_model.py
 │   └── res_partner.py
 ├── views/
-│   ├── mi_modelo_views.xml
+│   ├── my_model_views.xml
 │   └── templates.xml
 ├── security/
 │   ├── ir.model.access.csv
-│   └── mi_modelo_security.xml
+│   └── my_model_security.xml
 ├── data/
-│   └── mi_modelo_data.xml
+│   └── my_model_data.xml
 ├── demo/
-│   └── mi_modulo_demo.xml
+│   └── my_module_demo.xml
 ├── wizard/
 │   ├── __init__.py
-│   ├── mi_wizard.py
-│   └── mi_wizard_views.xml
+│   ├── my_wizard.py
+│   └── my_wizard_views.xml
 ├── report/
 │   ├── __init__.py
-│   ├── mi_reporte.py
-│   └── mi_reporte_views.xml
+│   ├── my_report.py
+│   └── my_report_views.xml
 └── static/
     └── src/
         ├── js/
@@ -68,7 +68,7 @@ mi_modulo/
   2. Importaciones de Odoo (ej. `from odoo import models, fields, api, _`).
   3. Importaciones de terceros o locales de Odoo.
 - **Formateo de Cadenas**: Utilizar el formateador `%` para cadenas que requieran traducción (ej.
-  `_("Error en el registro %s") % record.name`). Para logs y cadenas no traducibles, utilizar f-strings o `.format()`.
+  `_("Error in record %s") % record.name`). Para logs y cadenas no traducibles, utilizar f-strings o `.format()`.
 
 ---
 
@@ -90,15 +90,15 @@ Para mantener la coherencia, declare los componentes dentro de una clase de mode
 
 ## 5. Símbolos y Convenciones
 
-- **Nombres de Modelos**: Siempre en singular y con notación de punto (ej. `account.move` o `mi_modulo.documento`).
+- **Nombres de Modelos**: Siempre en singular y con notación de punto (ej. `account.move` o `my_module.document`).
 - **Clases**: En PascalCase (ej. `class AccountMove(models.Model):`).
 - **Nombres de Campos**: En `snake_case`. Sufijo `_id` para Many2one y `_ids` para x2many.
 - **Prefijos de Métodos**:
-  - Computados: `_compute_nombre_campo`
-  - Búsqueda: `_search_nombre_campo`
-  - Valor por defecto: `_default_nombre_campo`
-  - Validación: `_check_nombre_restriccion`
-  - Acciones: `action_nombre_accion`
+  - Computados: `_compute_field_name`
+  - Búsqueda: `_search_field_name`
+  - Valor por defecto: `_default_field_name`
+  - Validación: `_check_constraint_name`
+  - Acciones: `action_name`
 
 ---
 
@@ -111,8 +111,7 @@ Para mantener la coherencia, declare los componentes dentro de una clase de mode
 - **Control de Transacciones**: **NUNCA** llame a `cr.commit()` manualmente. Odoo gestiona las transacciones de forma
   segura de extremo a extremo. Forzar un commit interrumpe las pruebas y corrompe los rollbacks ante errores.
 - **Traducciones**: Utilizar `_()` para cadenas traducibles y evitar interpolar variables dentro del método de
-  traducción (ej. **CORRECTO**: `_("El total no puede ser %s") % total`, **INCORRECTO**:
-  `_(f"El total no puede ser {total}")`).
+  traducción (ej. **CORRECTO**: `_("Total cannot be %s") % total`, **INCORRECTO**: `_(f"Total cannot be {total}")`).
 
 ---
 
@@ -121,9 +120,9 @@ Para mantener la coherencia, declare los componentes dentro de una clase de mode
 - **Principio de Responsabilidad Única (SRP)**: Cada clase y método debe tener una única responsabilidad clara.
 - **Evitar Métodos Monolíticos**: No escriba funciones gigantes. Modularice la lógica compleja utilizando métodos gancho
   pequeños y enfocados:
-  - `_prepare_valores_registro(...)` para recopilar datos de creación.
-  - `_validate_valores(...)` para validaciones previas.
-  - `_do_procesar(...)` para ejecutar la lógica central.
+  - `_prepare_record_values(...)` para recopilar datos de creación.
+  - `_validate_values(...)` para validaciones previas.
+  - `_do_process(...)` para ejecutar la lógica central.
 - Esto permite a otros desarrolladores (y a los propios agentes de IA) extender y personalizar el comportamiento del
   módulo heredando métodos específicos con `super()` sin necesidad de copiar y pegar código.
 
