@@ -193,7 +193,7 @@ el archivo `__manifest__.py`.
 # __manifest__.py
 {
     'name': 'My Frontend Module',
-    'version': '<ODOO_VERSION>.1.0.0',
+    'version': '16.0.1.0.0',
     'depends': ['web'],
     'data': [
         # Traditional backend XML files go here (views, security)
@@ -213,7 +213,7 @@ el archivo `__manifest__.py`.
 }
 ```
 
-> [!IMPORTANT] > **Registro en Odoo**: En Odoo+, las plantillas QWeb JS se registran directamente dentro del bundle
+> [!IMPORTANT] > **Registro en Odoo**: En Odoo 16+, las plantillas QWeb JS se registran directamente dentro del bundle
 > principal (como `'web.assets_backend'`) y no bajo un bundle separado de QWeb. Además, todo recurso estático debe ser
 > registrado en los assets del manifiesto y no importado mediante etiquetas de script/style en vistas XML.
 

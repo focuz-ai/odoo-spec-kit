@@ -19,7 +19,7 @@ Enterprise) y ejecutar pruebas.
 Asegúrese de tener instalados los siguientes componentes en su sistema:
 
 - **Python 3.10** (versión recomendada para Odoo 16.0)
-- **PostgreSQL 15 o superior**
+- **PostgreSQL 12 o superior**
 - **Git**
 - **Node.js** y **npm** (necesarios para la compilación de recursos SCSS y la ejecución de pruebas QUnit en el
   navegador)
