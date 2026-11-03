@@ -65,6 +65,10 @@ Para directrices y estándares específicos de diferentes áreas del proyecto, c
   archivos de configuración de IA.
 - [Topología Core de Odoo](./odoo-core-topology.md) - Reglas inquebrantables de modelos base y uso de MCP para
   introspección.
+- [Integración y Controladores (RPC & Controllers)](./rpc-and-controllers.md) - XML-RPC/JSON-RPC y controladores
+  HTTP/web personalizados.
+- [Guía de Setup y Desarrollo](./development-guide.md) - Configuración del entorno, comandos `odoo-bin` y pipeline de
+  calidad pre-commit.
 - [Pasos Obligatorios OpenSpec](./openspec-tasks-mandatory-steps.md) - Lista de verificación y reglas obligatorias para
   tareas del workflow OpenSpec.
 
@@ -110,3 +114,25 @@ debe tratar como una actualización de la especificación técnica en primer lug
    solicitud.
 3. Ejecutar de nuevo la validación del workflow (`/verify`, `/security-audit` y `/code-review-and-repair`) antes de
    archivar.
+
+## 8. Comandos de Desarrollo y Calidad
+
+> Estos comandos operan sobre el proyecto Odoo destino, no sobre este kit. Consulte `docs/development-guide.md` para el
+> setup completo (venv, PostgreSQL, `odoo.conf`).
+
+- **Tests backend (módulo):** `python odoo-bin -c odoo.conf -d <bd> --test-enable --stop-after-init -i <module>`
+- **Tests filtrados por tag:** añadir `--test-tags /<module>:post_install`
+- **Un solo test / clase:** `--test-tags /<module>:<TestClass>.<test_method>`
+- **Tours frontend (Chrome headless):** `--test-tags /<module>:HttpCase`
+- **Gate de calidad local (obligatorio antes de commit):** `python -m pre_commit run --all-files` → Ruff (`.ruff.toml`),
+  Prettier (`prettier.config.cjs`, XML/JS/SCSS) y Pylint-Odoo (`.pylintrc`, `.pylintrc-mandatory`).
+
+## 9. Orden Canónico del Workflow OpenSpec
+
+- **Flujo core (orquestado, 4 pasos):** `/odoo-enrich-us` → `/propose` → `/odoo-build-and-qa` → `/odoo-ship`
+- **Flujo extendido (granular, 8 pasos):** `/odoo-enrich-us` → `/propose` → `/apply` → `/verify` →
+  `/odoo-security-audit` → `/odoo-adversarial-review` → `/archive` → `/odoo-commit`
+- La revisión adversarial es Red Team puro: emite veredicto (PASS / PASS WITH GAPS / FAIL) sin reparar; la
+  autoreparación la gestiona `/odoo-build-and-qa`.
+- Las skills viven en `ai-specs/skills/` (origen canónico) y se exponen vía symlink a `.claude/`, `.cursor/` y
+  `.agents/`.
