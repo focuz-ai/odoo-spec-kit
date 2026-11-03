@@ -1,16 +1,15 @@
 # Directrices de Git y Commits de Odoo (Git Guidelines)
 
-> [!IMPORTANT] Este documento sintetiza las directrices oficiales de Git y Commits de
-> Odoo. Es mandatorio que todos los commits realizados en este repositorio sigan esta
-> estructura y reglas de etiquetado para mantener un historial limpio, coherente y
-> fácilmente auditable.
+> [!IMPORTANT] Este documento sintetiza las directrices oficiales de Git y Commits de Odoo. Es mandatorio que todos los
+> commits realizados en este repositorio sigan esta estructura y reglas de etiquetado para mantener un historial limpio,
+> coherente y fácilmente auditable.
 
 ---
 
 ## 1. Estructura del Mensaje de Commit
 
-Cada mensaje de commit debe estar estructurado en dos partes: un título corto (cabecera)
-y una descripción larga (cuerpo), separados por una línea en blanco.
+Cada mensaje de commit debe estar estructurado en dos partes: un título corto (cabecera) y una descripción larga
+(cuerpo), separados por una línea en blanco.
 
 ```text
 [TAG] modulo_tecnico: breve descripcion en presente y menor de 50 caracteres
@@ -28,8 +27,7 @@ Fixes #456
 
 ## 2. Etiquetas Oficiales (Tags)
 
-El título debe iniciar estrictamente con una etiqueta en mayúsculas que indique la
-naturaleza del cambio:
+El título debe iniciar estrictamente con una etiqueta en mayúsculas que indique la naturaleza del cambio:
 
 | Tag           | Significado / Cuándo Usarlo                                                                                            |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------- |
@@ -52,26 +50,22 @@ naturaleza del cambio:
 
 ## 3. Reglas para la Cabecera del Commit
 
-- **Nombre del módulo**: Utilizar el nombre técnico del directorio del módulo en
-  minúsculas (ej. `account`, `sale`, `mi_modulo_contable`). Si el cambio afecta a varios
-  módulos o infraestructura, usar `models`, `views` o `core` según corresponda.
-- **Formato del título**: Redactar en tiempo presente imperativo. Debe responder a la
-  frase: _"Si se aplica, este commit `<título>`"_ (ej.
-  `[FIX] account: corregir calculo de impuestos` en lugar de
-  `[FIX] account: calculo corregido`).
-- **Longitud**: Mantener el título por debajo de los 50 caracteres para evitar recortes
-  en la interfaz de Git.
+- **Nombre del módulo**: Utilizar el nombre técnico del directorio del módulo en minúsculas (ej. `account`, `sale`,
+  `mi_modulo_contable`). Si el cambio afecta a varios módulos o infraestructura, usar `models`, `views` o `core` según
+  corresponda.
+- **Formato del título**: Redactar en tiempo presente imperativo. Debe responder a la frase: _"Si se aplica, este commit
+  `<título>`"_ (ej. `[FIX] account: corregir calculo de impuestos` en lugar de `[FIX] account: calculo corregido`).
+- **Longitud**: Mantener el título por debajo de los 50 caracteres para evitar recortes en la interfaz de Git.
 
 ---
 
 ## 4. Cuerpo del Commit (Descripción Larga)
 
-- **Explicar el POR QUÉ, no el QUÉ**: El código en sí (el diff) ya muestra _qué_ cambió.
-  La descripción larga debe enfocarse en explicar el problema original, la justificación
-  del cambio, el por qué se eligió esa solución y las implicaciones colaterales.
-- **Referencias obligatorias**: Si el cambio corresponde a una historia de usuario,
-  ticket de soporte o reporte de fallo, incluya las referencias de forma explícita al
-  final del cuerpo:
+- **Explicar el POR QUÉ, no el QUÉ**: El código en sí (el diff) ya muestra _qué_ cambió. La descripción larga debe
+  enfocarse en explicar el problema original, la justificación del cambio, el por qué se eligió esa solución y las
+  implicaciones colaterales.
+- **Referencias obligatorias**: Si el cambio corresponde a una historia de usuario, ticket de soporte o reporte de
+  fallo, incluya las referencias de forma explícita al final del cuerpo:
   - Para tareas de Plane o Jira: `task-123456`
   - Para incidencias de GitHub: `Fixes #456` o `Closes #456`
   - Para tickets de Odoo Enterprise (OPW): `opw-789012`

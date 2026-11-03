@@ -1,34 +1,30 @@
 ---
 description:
-  Documentación y ejemplo del modelo de datos de Contabilidad (Accounting) en Odoo,
-  detallando las entidades principales, campos clave, reglas relacionales y diagrama ER.
+  Documentación y ejemplo del modelo de datos de Contabilidad (Accounting) en Odoo, detallando las entidades
+  principales, campos clave, reglas relacionales y diagrama ER.
 alwaysApply: true
 ---
 
 # Modelo de Datos: Contabilidad en Odoo (Data Model)
 
-Este documento detalla la arquitectura de base de datos y modelos del módulo de
-Contabilidad (`account`) de Odoo, sirviendo de referencia de diseño técnico para la
-creación o extensión de módulos contables.
+Este documento detalla la arquitectura de base de datos y modelos del módulo de Contabilidad (`account`) de Odoo,
+sirviendo de referencia de diseño técnico para la creación o extensión de módulos contables.
 
 ---
 
 ## 1. Descripción de Modelos Core
 
-En Odoo, un asiento contable y una factura (de cliente o proveedor) comparten la misma
-tabla física (`account.move`). La diferencia radica en el tipo de asiento definido por
-el campo `move_type`.
+En Odoo, un asiento contable y una factura (de cliente o proveedor) comparten la misma tabla física (`account.move`). La
+diferencia radica en el tipo de asiento definido por el campo `move_type`.
 
 ### A. Asiento / Factura Contable (`account.move`)
 
-Representa la cabecera de un diario contable, una factura de cliente, factura
-rectificativa o una factura de proveedor.
+Representa la cabecera de un diario contable, una factura de cliente, factura rectificativa o una factura de proveedor.
 
 **Campos Clave:**
 
 - `id` (`integer`): Identificador único (Primary Key).
-- `name` (`char`): Secuencia o número único del asiento (ej. `INV/2026/05/0001` o
-  `MISC/2026/001`).
+- `name` (`char`): Secuencia o número único del asiento (ej. `INV/2026/05/0001` o `MISC/2026/001`).
 - `move_type` (`selection`): Tipo de asiento. Valores comunes:
   - `entry`: Asiento contable manual (Journal Entry).
   - `out_invoice`: Factura de cliente.
@@ -40,34 +36,28 @@ rectificativa o una factura de proveedor.
 - `invoice_date` (`date`): Fecha de emisión de la factura (solo para facturas).
 - `partner_id` (`many2one`): Referencia al cliente o proveedor (`res.partner`).
 - `journal_id` (`many2one`): Diario en el que se registra (`account.journal`).
-- `company_id` (`many2one`): Compañía dueña del registro (obligatorio,
-  `check_company=True`).
-- `line_ids` (`one2many`): Líneas de asiento contable de contrapartida
-  (`account.move.line`).
+- `company_id` (`many2one`): Compañía dueña del registro (obligatorio, `check_company=True`).
+- `line_ids` (`one2many`): Líneas de asiento contable de contrapartida (`account.move.line`).
 - `invoice_line_ids` (`one2many`): Líneas detalladas de la factura comercial.
 
 ---
 
 ### B. Línea de Asiento Contable (`account.move.line`)
 
-Representa los apuntes contables individuales (débitos y créditos) asociados a un
-asiento. Se rige por el principio de partida doble (la suma de débitos debe ser igual a
-la de créditos).
+Representa los apuntes contables individuales (débitos y créditos) asociados a un asiento. Se rige por el principio de
+partida doble (la suma de débitos debe ser igual a la de créditos).
 
 **Campos Clave:**
 
 - `id` (`integer`): Identificador único.
-- `move_id` (`many2one`): Asiento padre al que pertenece (`account.move`, cascada
-  `ondelete='cascade'`).
-- `account_id` (`many2one`): Cuenta contable asociada (`account.account`, obligatorio,
-  `check_company=True`).
+- `move_id` (`many2one`): Asiento padre al que pertenece (`account.move`, cascada `ondelete='cascade'`).
+- `account_id` (`many2one`): Cuenta contable asociada (`account.account`, obligatorio, `check_company=True`).
 - `partner_id` (`many2one`): Contacto asociado.
 - `name` (`char`): Etiqueta o glosa de la línea.
 - `debit` (`monetary`): Monto en el Debe.
 - `credit` (`monetary`): Monto en el Haber.
 - `balance` (`monetary`): Balance neto (`debit - credit`). Computado y almacenado.
-- `amount_currency` (`monetary`): Monto expresado en la moneda original de la
-  transacción.
+- `amount_currency` (`monetary`): Monto expresado en la moneda original de la transacción.
 - `currency_id` (`many2one`): Moneda de la línea (si difiere de la de la compañía).
 - `tax_ids` (`many2many`): Impuestos aplicados a esta línea (`account.tax`).
 
@@ -81,10 +71,8 @@ Define la estructura del Plan de Cuentas (Chart of Accounts).
 
 - `code` (`char`): Código numérico/alfanumérico único (ej. `101000` para Caja).
 - `name` (`char`): Nombre de la cuenta (ej. `Caja General`).
-- `account_type` (`selection`): Tipo de cuenta (ej. `asset_receivable`,
-  `liability_payable`, `income`, `expense`).
-- `reconcile` (`boolean`): Define si la cuenta permite conciliación (ej. clientes y
-  proveedores).
+- `account_type` (`selection`): Tipo de cuenta (ej. `asset_receivable`, `liability_payable`, `income`, `expense`).
+- `reconcile` (`boolean`): Define si la cuenta permite conciliación (ej. clientes y proveedores).
 - `company_id` (`many2one`): Compañía dueña de la cuenta.
 
 ---
@@ -104,8 +92,7 @@ Utilizado para agrupar transacciones del mismo tipo.
 
 ### E. Impuestos (`account.tax`)
 
-Define el cálculo de impuestos (IVA, retenciones, etc.) aplicables a las líneas de
-ventas o compras.
+Define el cálculo de impuestos (IVA, retenciones, etc.) aplicables a las líneas de ventas o compras.
 
 **Campos Clave:**
 
@@ -118,8 +105,7 @@ ventas o compras.
 
 ## 2. Diagrama de Entidad-Relación (ERD)
 
-El siguiente diagrama representa cómo se vinculan los modelos de contabilidad en Odoo
-objetivo:
+El siguiente diagrama representa cómo se vinculan los modelos de contabilidad en Odoo objetivo:
 
 ```mermaid
 erDiagram
@@ -201,18 +187,14 @@ erDiagram
 
 ## 3. Principios Clave de Diseño y Restricciones
 
-1. **Partida Doble Obligatoria**: Al crear o modificar líneas de un asiento contable
-   (`account.move.line`), el sistema verifica mediante restricciones de base de datos y
-   métodos ORM que la suma del Debe sea igual a la suma del Haber
-   (`sum(debit) == sum(credit)`). Si esto no se cumple, el asiento no puede pasar del
-   estado `draft` a `posted`.
+1. **Partida Doble Obligatoria**: Al crear o modificar líneas de un asiento contable (`account.move.line`), el sistema
+   verifica mediante restricciones de base de datos y métodos ORM que la suma del Debe sea igual a la suma del Haber
+   (`sum(debit) == sum(credit)`). Si esto no se cumple, el asiento no puede pasar del estado `draft` a `posted`.
 
-2. **Multicompañía Estricto**: Odoo valida rigurosamente los accesos multicompañía.
-   Los campos `company_id` actúan como filtros duros. No se pueden mezclar líneas de
-   asientos contables apuntando a cuentas de una Compañía A en un asiento perteneciente
-   a la Compañía B.
+2. **Multicompañía Estricto**: Odoo valida rigurosamente los accesos multicompañía. Los campos `company_id` actúan como
+   filtros duros. No se pueden mezclar líneas de asientos contables apuntando a cuentas de una Compañía A en un asiento
+   perteneciente a la Compañía B.
 
-3. **Cuentas por Tipo**: El campo `account_type` en `account.account` define el
-   comportamiento contable. Por ejemplo, las líneas de facturas de clientes solo pueden
-   apuntar a cuentas del tipo `asset_receivable`, y las de proveedores a
+3. **Cuentas por Tipo**: El campo `account_type` en `account.account` define el comportamiento contable. Por ejemplo,
+   las líneas de facturas de clientes solo pueden apuntar a cuentas del tipo `asset_receivable`, y las de proveedores a
    `liability_payable`.

@@ -1,7 +1,7 @@
 ---
 description:
-  Define los pasos obligatorios y las reglas de ejecución del workflow OpenSpec adaptado para Odoo (enrich-us,
-  propose, apply, verify, security-audit, code-review-and-repair, archive, commit-odoo).
+  Define los pasos obligatorios y las reglas de ejecución del workflow OpenSpec adaptado para Odoo (enrich-us, propose,
+  apply, verify, security-audit, code-review-and-repair, archive, commit-odoo).
 alwaysApply: true
 ---
 

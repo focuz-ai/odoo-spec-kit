@@ -1,19 +1,22 @@
 ---
 description:
-  Documentación técnica sobre cómo exponer y consumir servicios en Odoo utilizando los protocolos nativos XML-RPC / JSON-RPC y Controladores HTTP/Web personalizados.
+  Documentación técnica sobre cómo exponer y consumir servicios en Odoo utilizando los protocolos nativos XML-RPC /
+  JSON-RPC y Controladores HTTP/Web personalizados.
 alwaysApply: true
 ---
 
 # Integración y Controladores (RPC & Controllers)
 
-Este documento detalla los estándares de integración y comunicación externa con Odoo.
-A diferencia de aplicaciones basadas en REST o API-first (como NodeJS con OpenAPI), **Odoo expone su núcleo por defecto mediante XML-RPC y JSON-RPC**. La creación de APIs REST tradicionales debe ser la excepción, no la regla.
+Este documento detalla los estándares de integración y comunicación externa con Odoo. A diferencia de aplicaciones
+basadas en REST o API-first (como NodeJS con OpenAPI), **Odoo expone su núcleo por defecto mediante XML-RPC y
+JSON-RPC**. La creación de APIs REST tradicionales debe ser la excepción, no la regla.
 
 ---
 
 ## 1. Conectividad Core: XML-RPC / JSON-RPC
 
-El ORM de Odoo se expone por defecto. Cualquier sistema externo que necesite interactuar con Odoo debe utilizar preferiblemente estos protocolos nativos.
+El ORM de Odoo se expone por defecto. Cualquier sistema externo que necesite interactuar con Odoo debe utilizar
+preferiblemente estos protocolos nativos.
 
 ### A. Autenticación (`/web/session/authenticate`)
 
@@ -38,8 +41,8 @@ Para consumir los servicios mediante JSON-RPC, primero se debe obtener una sesi�
 
 ### B. Llamada General a Métodos ORM (`/web/dataset/call_kw`)
 
-Una vez autenticado, puede ejecutar cualquier método de un modelo ORM (ej.
-`search_read`, `create`, `write`, `action_post`).
+Una vez autenticado, puede ejecutar cualquier método de un modelo ORM (ej. `search_read`, `create`, `write`,
+`action_post`).
 
 - **Ruta**: `/web/dataset/call_kw`
 - **Ejemplo**:
@@ -64,7 +67,8 @@ Una vez autenticado, puede ejecutar cualquier método de un modelo ORM (ej.
 
 ## 2. Controladores Web Personalizados (`http.Controller`)
 
-Si la integración requiere webhooks (donde un sistema externo nos llama a nosotros de manera asíncrona) o un payload JSON estricto que no se ajusta a JSON-RPC, debemos declarar Controladores Personalizados en Odoo.
+Si la integración requiere webhooks (donde un sistema externo nos llama a nosotros de manera asíncrona) o un payload
+JSON estricto que no se ajusta a JSON-RPC, debemos declarar Controladores Personalizados en Odoo.
 
 ### Reglas de Diseño de Controladores:
 
@@ -97,7 +101,7 @@ class FacturaController(http.Controller):
                 'nombre': fac.name,
                 'total': fac.amount_total
             })
-            
+
         return request.make_response(
             json.dumps({'status': 'success', 'data': data}),
             headers=[('Content-Type', 'application/json')]
@@ -121,12 +125,12 @@ class FrontendController(http.Controller):
 
 Si diseña una API manual vía `type='http'`, respete el estándar HTTP:
 
-| Código HTTP              | Causa Común en Odoo                                                          |
-| ------------------------ | ---------------------------------------------------------------------------- |
-| **`200 OK`**             | Lectura o actualización exitosa de registros.                                |
-| **`201 Created`**        | Creación exitosa de un registro.                                             |
-| **`400 Bad Request`**    | JSON mal formado o tipos de datos inválidos en el payload (`kwargs`).        |
-| **`401 Unauthorized`**   | Falta la cookie de sesión o el header de API Key.                            |
-| **`403 Forbidden`**      | El usuario autenticado no pertenece al grupo de seguridad requerido (ACL).   |
-| **`404 Not Found`**      | El ID de registro especificado no existe en la base de datos.                |
-| **`500 Internal Error`** | Excepciones no capturadas de Python o error en base de datos.                |
+| Código HTTP              | Causa Común en Odoo                                                        |
+| ------------------------ | -------------------------------------------------------------------------- |
+| **`200 OK`**             | Lectura o actualización exitosa de registros.                              |
+| **`201 Created`**        | Creación exitosa de un registro.                                           |
+| **`400 Bad Request`**    | JSON mal formado o tipos de datos inválidos en el payload (`kwargs`).      |
+| **`401 Unauthorized`**   | Falta la cookie de sesión o el header de API Key.                          |
+| **`403 Forbidden`**      | El usuario autenticado no pertenece al grupo de seguridad requerido (ACL). |
+| **`404 Not Found`**      | El ID de registro especificado no existe en la base de datos.              |
+| **`500 Internal Error`** | Excepciones no capturadas de Python o error en base de datos.              |
